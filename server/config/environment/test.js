@@ -5,6 +5,6 @@
 module.exports = {
   // MongoDB connection options
   mongo: {
-    uri: 'mongodb://localhost/gangularmaterialfull-test'
+    uri: 'mongodb://localhost/sonderdb-test'
   }
 };
