@@ -1,0 +1,31 @@
+extends layout
+
+block content
+  div
+    .aspect.sixteen-nine.bg-full(style="background-image:url('http://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-334393.jpg');top:-24px;position:absolute;top:-24px;z-index:-1;padding-top:124px;")
+      .row
+          .col.s12.m6.offset-m3
+              .card
+                  .card-image.waves-effect.waves-block.waves-light
+                      h1.center(style="font-weight:100") Welcome to Sonder
+                  .card-content
+                      span.card-title.activator.grey-text.text-darken-4
+                        | Announcement
+                        i.material-icons.right more_vert
+                      p
+                        | This web is under construction, It's possible that you experiment problems with performance or other features, be patient.
+                        | Push
+                        i.material-icons more_vert
+                        | to see the options or go to 
+                        a(href="/signup") Register 
+                        | or 
+                        a(href="/signin") Login 
+                        | section
+                  .card-reveal
+                      span.card-title.grey-text.text-darken-4
+                        | Sonder Project
+                        i.material-icons.right close
+                      p.center
+                        | Made by Daniel Velasquez, Santiago Montoya, Santiago Su&aacute;rez, Andres M. Otalvaro.
+
+
