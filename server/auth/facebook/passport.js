@@ -18,7 +18,7 @@ exports.setup = function (User, config) {
         }
         if (!user) {
           try{
-            let a = profile.emails[0].value;
+            var a = profile.emails[0].value;
           }catch(e){
             profile.emails = [{value:null}];
           }
