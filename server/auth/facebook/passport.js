@@ -16,6 +16,11 @@ exports.setup = function (User, config) {
           return done(err);
         }
         if (!user) {
+          try{
+            let a = profile.emails[0].value;
+          }catch(e){
+            profile.emails = [{value:null}];
+          }
           user = new User({
             name: profile.displayName,
             email: profile.emails[0].value,
