@@ -1,13 +1,25 @@
 <div ng-include="templates/shell.html"></div>
-<md-grid-list md-cols-sm="1" md-cols-md="2" md-cols-gt-md="5" md-row-height-gt-md="1:1" md-row-height="4:3" md-gutter="8px" md-gutter-gt-sm="4px" class="things-list">
-  <md-grid-tile ng-repeat="thing in awesomeThings" ng-class="getColor($index)" md-rowspan="{{getSpan($index)}}" md-colspan="{{getSpan($index)}}" md-colspan-sm="1">
-    <md-button ng-click="deleteThing(thing)" aria-label="Remove item" class="md-icon-button delete-btn">
-      <md-icon style="fill: #fff" md-svg-icon="action:delete"></md-icon>
-    </md-button>
-    <md-icon md-svg-icon="avatar:svg-{{ ($index + 1) % 11 }}" class="avatar-icon"></md-icon>
-    <md-grid-tile-footer>
-      <h3>{{thing.name}}</h3>
-    </md-grid-tile-footer>
-  </md-grid-tile>
-</md-grid-list>
-<span><strong>Under Construction</strong></span>
+<span>
+  <strong>Elementos {{awesomeThings.length}}</strong>
+</span>
+<div class="container">
+  <div class="row">
+    <div class="col s6 m4 l3" ng-repeat="thing in awesomeThings">    
+      <div class="card">
+        <div class="card-image">
+          <img src="//placehold.it/400x300/000000/ff033e">
+          <span class="card-title">{{thing.name}}</span>
+        </div>
+        <div class="card-content">
+          <p>-algo- {{thing._id}}</p>
+        </div>
+        <div class="card-action">
+          <a href="#" ng-click="deleteThing(thing)">
+            <i class="material-icons left">delete</i>
+            Eliminar
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

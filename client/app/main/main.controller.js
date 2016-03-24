@@ -1,7 +1,11 @@
 'use strict';
 
 module.exports = function(app){
-  app.controller('MainCtrl', function ($scope, $http, socket) {
+  app.controller('MainCtrl', function ($scope, $http, socket, Auth) {
+    $scope.Auth = Auth;
+    $scope.logout = function(){
+      Auth.logout();
+    }
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -41,6 +45,16 @@ module.exports = function(app){
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.printUser = function(){
+      var user = Auth.getCurrentUser();
+      console.log(user);
+      /*user.then(function(userData){
+        console.log(userData);
+      }).catch(function(err){
+        console.err(err);
+      });*/
+    }
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');

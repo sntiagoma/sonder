@@ -161,29 +161,28 @@ var app = angular.module('Sonder', [
         'ngAnimate',
         'ngMessages',
         'btford.socket-io',
-        'ui.router',
-        'ngMaterial'
+        'ui.router'
     ])
-    .config(function($mdIconProvider) {
-        $mdIconProvider
-            .iconSet('action', '../assets/iconsets/action-icons.svg', 24)
-            .iconSet('alert', '../assets/iconsets/alert-icons.svg', 24)
-            .iconSet('av', '../assets/iconsets/av-icons.svg', 24)
-            .iconSet('communication', '../assets/iconsets/communication-icons.svg', 24)
-            .iconSet('content', '../assets/iconsets/content-icons.svg', 24)
-            .iconSet('device', '../assets/iconsets/device-icons.svg', 24)
-            .iconSet('editor', '../assets/iconsets/editor-icons.svg', 24)
-            .iconSet('file', '../assets/iconsets/file-icons.svg', 24)
-            .iconSet('hardware', '../assets/iconsets/hardware-icons.svg', 24)
-            .iconSet('icons', '../assets/iconsets/icons-icons.svg', 24)
-            .iconSet('image', '../assets/iconsets/image-icons.svg', 24)
-            .iconSet('maps', '../assets/iconsets/maps-icons.svg', 24)
-            .iconSet('navigation', '../assets/iconsets/navigation-icons.svg', 24)
-            .iconSet('notification', '../assets/iconsets/notification-icons.svg', 24)
-            .iconSet('social', '../assets/iconsets/social-icons.svg', 24)
-            .iconSet('toggle', '../assets/iconsets/toggle-icons.svg', 24)
-            .iconSet('avatar', '../assets/iconsets/avatar-icons.svg', 128);
-    })
+    // .config(function($mdIconProvider) {
+    //     $mdIconProvider
+    //         .iconSet('action', '../assets/iconsets/action-icons.svg', 24)
+    //         .iconSet('alert', '../assets/iconsets/alert-icons.svg', 24)
+    //         .iconSet('av', '../assets/iconsets/av-icons.svg', 24)
+    //         .iconSet('communication', '../assets/iconsets/communication-icons.svg', 24)
+    //         .iconSet('content', '../assets/iconsets/content-icons.svg', 24)
+    //         .iconSet('device', '../assets/iconsets/device-icons.svg', 24)
+    //         .iconSet('editor', '../assets/iconsets/editor-icons.svg', 24)
+    //         .iconSet('file', '../assets/iconsets/file-icons.svg', 24)
+    //         .iconSet('hardware', '../assets/iconsets/hardware-icons.svg', 24)
+    //         .iconSet('icons', '../assets/iconsets/icons-icons.svg', 24)
+    //         .iconSet('image', '../assets/iconsets/image-icons.svg', 24)
+    //         .iconSet('maps', '../assets/iconsets/maps-icons.svg', 24)
+    //         .iconSet('navigation', '../assets/iconsets/navigation-icons.svg', 24)
+    //         .iconSet('notification', '../assets/iconsets/notification-icons.svg', 24)
+    //         .iconSet('social', '../assets/iconsets/social-icons.svg', 24)
+    //         .iconSet('toggle', '../assets/iconsets/toggle-icons.svg', 24)
+    //         .iconSet('avatar', '../assets/iconsets/avatar-icons.svg', 128);
+    // })
     .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
         $urlRouterProvider
             .otherwise('/');
@@ -244,24 +243,17 @@ require("../components/shell/dialog/dialog.controller.js")(app);
 require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
 
-// var app = angular.module("Sonder",[]);
-
-// app.controller('SonderController', ['$scope', function($scope){
-//   $scope.title = require("./app.js").name;
-//     $scope.searchBar = true;
-//     $scope.showSearchBar = function(){
-//         $scope.searchBar = false;  
-//     };
-
-// }]);
-
 module.exports = app;
 
 },{"../components/auth/auth.service.js":10,"../components/auth/user.service.js":11,"../components/mongoose-error/mongoose-error.directive.js":12,"../components/shell/dialog/dialog.controller.js":13,"../components/shell/shell.controller.js":14,"../components/socket/socket.service.js":15,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/settings/settings.controller.js":3,"./account/signup/signup.controller.js":4,"./admin/admin.controller.js":5,"./admin/admin.js":6,"./main/main.controller.js":8,"./main/main.js":9}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
-  app.controller('MainCtrl', function ($scope, $http, socket) {
+  app.controller('MainCtrl', function ($scope, $http, socket, Auth) {
+    $scope.Auth = Auth;
+    $scope.logout = function(){
+      Auth.logout();
+    }
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {
@@ -301,6 +293,16 @@ module.exports = function(app){
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
+
+    $scope.printUser = function(){
+      var user = Auth.getCurrentUser();
+      console.log(user);
+      /*user.then(function(userData){
+        console.log(userData);
+      }).catch(function(err){
+        console.err(err);
+      });*/
+    }
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
