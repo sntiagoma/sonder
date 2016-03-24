@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .controller('LoginCtrl', function ($scope, Auth, $location, $window) {
+module.exports = function(app){
+  app.controller('LoginCtrl', function ($scope, Auth, $location, $window) {
     $scope.user = {};
     $scope.errors = {};
 
@@ -27,3 +27,4 @@ angular.module('gangularmaterialfullApp')
       $window.location.href = '/auth/' + provider;
     };
   });
+}

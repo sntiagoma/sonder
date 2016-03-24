@@ -1,22 +1,23 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .config(function ($stateProvider) {
+module.exports = function(app){
+  app.config(function ($stateProvider) {
     $stateProvider
       .state('login', {
         url: '/login',
-        templateUrl: 'app/account/login/login.html',
+        templateUrl: '/templates/login.html',
         controller: 'LoginCtrl'
       })
       .state('signup', {
         url: '/signup',
-        templateUrl: 'app/account/signup/signup.html',
+        templateUrl: '/templates/signup.html',
         controller: 'SignupCtrl'
       })
       .state('settings', {
         url: '/settings',
-        templateUrl: 'app/account/settings/settings.html',
+        templateUrl: '/templates/settings.html',
         controller: 'SettingsCtrl',
         authenticate: true
       });
   });
+}

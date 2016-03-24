@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .controller('ShellCtrl', function ($mdSidenav, $mdDialog, $scope, $location, Auth) {
+module.exports = function(app){
+  app.controller('ShellCtrl', function ($mdSidenav, $mdDialog, $scope, $location, Auth) {
 
     
     $scope.isLoggedIn = Auth.isLoggedIn;
@@ -54,8 +54,9 @@ angular.module('gangularmaterialfullApp')
       $mdDialog.show({
         parent: parentEl,
         targetEvent: $event,
-        templateUrl: 'components/shell/dialog/dialog.html',
+        templateUrl: 'templates/dialog.html',
         controller: 'DialogController'
       });
     };
   });
+}

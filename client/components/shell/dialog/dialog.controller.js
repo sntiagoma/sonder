@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .controller('DialogController', function ($scope, $mdDialog, $http) {
+module.exports = function(app){
+  app.controller('DialogController', function ($scope, $mdDialog, $http) {
   $scope.closeDialog = function() {
     $mdDialog.hide();
   };
@@ -16,3 +16,4 @@ angular.module('gangularmaterialfullApp')
     $mdDialog.hide();
   };
 });
+}

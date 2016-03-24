@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .factory('User', function ($resource) {
+module.exports = function(app){
+  app.factory('User', function ($resource) {
     return $resource('/api/users/:id/:controller', {
       id: '@_id'
     },
@@ -20,3 +20,4 @@ angular.module('gangularmaterialfullApp')
       }
 	  });
   });
+}

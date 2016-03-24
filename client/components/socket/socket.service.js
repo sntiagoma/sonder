@@ -1,8 +1,8 @@
 /* global io */
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .factory('socket', function(socketFactory) {
+module.exports = function(app){
+  app.factory('socket', function(socketFactory) {
 
     // socket.io now auto-configures its connection when we ommit a connection url
     var ioSocket = io('', {
@@ -72,3 +72,4 @@ angular.module('gangularmaterialfullApp')
       }
     };
   });
+}

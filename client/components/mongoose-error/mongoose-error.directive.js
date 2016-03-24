@@ -1,10 +1,7 @@
 'use strict';
 
-/**
- * Removes server error when user updates input
- */
-angular.module('gangularmaterialfullApp')
-  .directive('mongooseError', function () {
+module.exports = function(app){
+  app.directive('mongooseError', function () {
     return {
       restrict: 'A',
       require: 'ngModel',
@@ -15,3 +12,4 @@ angular.module('gangularmaterialfullApp')
       }
     };
   });
+}

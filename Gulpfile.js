@@ -35,13 +35,12 @@ gulp.task('browserify-pretty', function() {
     .bundle()
     .pipe(source('app.js'))
     .pipe(buffer())
-    .pipe(uglify())
     .pipe(gulp.dest(frontAppDest));
 });
 
 gulp.task('watch', function() {
     gulp.watch(sassFolder,['styles']);
-    gulp.watch('./client/app', ['browserify']);
+    gulp.watch('./client/app', ['browserify-pretty']);
     return;
 });
 
@@ -50,7 +49,7 @@ gulp.task('run', function() {
 });
 
 gulp.task('build', function() {
-    gulp.start(['browserify','styles']);
+    gulp.start(['browserify-pretty','styles']);
     return;
 });
 

@@ -1,17 +1,21 @@
 doctype html
 html(ng-app="Sonder")
   head
+    base(href='/')
     title= title
-    link(type='text/css', rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css', media='screen,projection')
+
+    link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css')
     link(href='//fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
+    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic')
+    link(href='//ajax.googleapis.com/ajax/libs/angular_material/1.0.0/angular-material.min.css')
     link(rel='stylesheet', href='/css/style.css')
+
     meta(name="viewport", content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0")
-    script(src="//ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js")
-    script(type='text/javascript', src='//code.jquery.com/jquery-2.1.1.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js')
-    script(src='//cdnjs.cloudflare.com/ajax/libs/prefixfree/1.0.7/prefixfree.min.js')
-    script(src="/js/app.js")
-  body(ng-controller="SonderController")
+    meta(charset='utf-8')
+    meta(http-equiv='X-UA-Compatible', content='IE=edge')
+    meta(name='description', content='') 
+
+  body
     ul#dropdown1.dropdown-content
       if(!user)
         li
@@ -26,18 +30,18 @@ html(ng-app="Sonder")
         a(href='/about') About
 
     nav.background.flat(role='navigation')
-      .nav-wrapper.container(ng-hide="searchBar")
-        form
-          .input-field
-            input#search(type='search', required='', placeholder="Not Working Yet")
-            label(for='search')
-              i.material-icons search
-            i.material-icons close
-      .nav-wrapper.container(ng-show="searchBar")
+      //- .nav-wrapper.container
+      //-   form
+      //-     .input-field
+      //-       input#search(type='search', required='', placeholder="Not Working Yet")
+      //-       label(for='search')
+      //-         i.material-icons search
+      //-       i.material-icons close
+      .nav-wrapper.container
         a#logo.brand-logo.text-darken-2(href='/') Sonder
         ul.right.hide-on-med-and-down
           li
-            a(ng-click="showSearchBar()")
+            a
               i.material-icons search
           //li
           //  a(href='/explore')
@@ -47,7 +51,7 @@ html(ng-app="Sonder")
               a(href="/user/#{user.username}")
                 i.material-icons person_pin
           li
-            a(href='/upload')
+            a(ui-sref="login")
               i.material-icons open_in_browser
           li
             a.dropdown-button(href='#!', data-activates='dropdown1')
@@ -58,4 +62,4 @@ html(ng-app="Sonder")
 
 
     script.
-      $(".dropdown-button").dropdown();
+      //$(".dropdown-button").dropdown();

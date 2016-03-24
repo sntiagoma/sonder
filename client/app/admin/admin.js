@@ -1,11 +1,12 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .config(function ($stateProvider) {
+module.exports = function(app){
+  app.config(function ($stateProvider) {
     $stateProvider
       .state('admin', {
         url: '/admin',
-        templateUrl: 'app/admin/admin.html',
+        templateUrl: 'templates/admin.html',
         controller: 'AdminCtrl'
       });
   });
+}

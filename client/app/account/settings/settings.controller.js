@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .controller('SettingsCtrl', function ($scope, User, Auth) {
+module.exports = function(app){
+  app.controller('SettingsCtrl', function ($scope, User, Auth) {
     $scope.errors = {};
 
     $scope.changePassword = function(form) {
@@ -19,3 +19,4 @@ angular.module('gangularmaterialfullApp')
       }
 		};
   });
+}

@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('gangularmaterialfullApp')
-  .controller('AdminCtrl', function ($scope, $http, Auth, User) {
+module.exports = function(app){
+  app.controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users
     $scope.users = User.query();
@@ -15,3 +15,4 @@ angular.module('gangularmaterialfullApp')
       });
     };
   });
+}
