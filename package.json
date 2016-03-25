@@ -1,85 +1,84 @@
 {
-    "name": "Sonder",
-    "version": "0.0.0",
-    "description": "All your likes in the same place",
-    "keywords": [
-        "Trakting",
-        "App"
-    ],
-    "contributors": [
-        {
-            "name": "Santiago Montoya Angarita",
-            "email": "sntiagoma@gmail.com",
-            "url": "https://github.com/sntiagoma"
-        },
-        {
-            "name": "Daniel Ermilson Velasquez Ocampo",
-            "email": "dvelas26@gmail.com",
-            "url": "https://github.com/dvelas26"
-        },
-        {
-            "name": "Santiago Suárez Pérez",
-            "email": "suarezperezsantiago@gmail.com",
-            "url": "https://github.com/ssuarez6"
-        },
-        {
-            "name": "Andres Mateo Otalvaro Bermudez",
-            "email": "andressmateo@gmail.com",
-            "url": "https://github.com/andressmateo"
-        }
-        ],
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/sntiagoma/sonder"
+  "name": "Sonder",
+  "version": "0.0.0",
+  "description": "All your likes in the same place",
+  "keywords": [
+    "Trakting",
+    "App"
+  ],
+  "contributors": [
+    {
+      "name": "Santiago Montoya Angarita",
+      "email": "sntiagoma@gmail.com",
+      "url": "https://github.com/sntiagoma"
     },
-    "homepage": "http://sonder-sonderserver.rhcloud.com/",
-    "engines": {
-        "node": ">= 4.4.0",
-        "npm": ">= 2.14.20"
+    {
+      "name": "Daniel Ermilson Velasquez Ocampo",
+      "email": "dvelas26@gmail.com",
+      "url": "https://github.com/dvelas26"
     },
-    "main": "server/app.js",
-    "dependencies": {
-        "express": "~4.9.0",
-        "morgan": "~1.0.0",
-        "body-parser": "~1.5.0",
-        "method-override": "~1.0.0",
-        "serve-favicon": "~2.0.1",
-        "cookie-parser": "~1.0.1",
-        "express-session": "~1.0.2",
-        "errorhandler": "~1.0.0",
-        "compression": "~1.0.1",
-        "lodash": "~3.10.1",
-        "jade": "~1.2.0",
-        "mongoose": "~4.0.3",
-        "jsonwebtoken": "^5.0.0",
-        "express-jwt": "^3.0.0",
-        "passport": "~0.2.0",
-        "passport-local": "~0.1.6",
-        "passport-facebook": "latest",
-        "passport-twitter": "latest",
-        "passport-google-oauth": "latest",
-        "composable-middleware": "^0.3.0",
-        "connect-mongo": "^0.8.1",
-        "socket.io": "^1.0.6",
-        "socket.io-client": "^1.0.6",
-        "socketio-jwt": "^3.0.0"
+    {
+      "name": "Santiago Suárez Pérez",
+      "email": "suarezperezsantiago@gmail.com",
+      "url": "https://github.com/ssuarez6"
     },
-    "devDependencies": {
-        "browserify": "^13.0.0",
-        "gulp": "^3.9.1",
-        "gulp-develop-server": "^0.5.1",
-        "gulp-sass": "^2.2.0",
-        "gulp-uglify": "^1.5.3",
-        "log": "^1.4.0",
-        "vinyl-buffer": "^1.0.0",
-        "vinyl-source-stream": "^1.1.0"
-    },
-    "engines": {
-        "node": ">=0.10.0"
-    },
-    "scripts": {
-        "start": "node server/app.js",
-        "test": "gulp test"
-    },
-    "private": true
+    {
+      "name": "Andres Mateo Otalvaro Bermudez",
+      "email": "andressmateo@gmail.com",
+      "url": "https://github.com/andressmateo"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/sntiagoma/sonder"
+  },
+  "homepage": "http://sonder-sonderserver.rhcloud.com/",
+  "engines": {
+    "node": ">=0.10.0"
+  },
+  "main": "server/app.js",
+  "dependencies": {
+    "bluebird": "^3.3.4",
+    "body-parser": "~1.5.0",
+    "composable-middleware": "^0.3.0",
+    "compression": "~1.0.1",
+    "connect-mongo": "^0.8.1",
+    "cookie-parser": "~1.0.1",
+    "errorhandler": "~1.0.0",
+    "express": "~4.9.0",
+    "express-jwt": "^3.0.0",
+    "express-session": "~1.0.2",
+    "jade": "~1.2.0",
+    "jsonwebtoken": "^5.0.0",
+    "lodash": "^3.10.1",
+    "method-override": "~1.0.0",
+    "mongoose": "~4.0.3",
+    "morgan": "~1.0.0",
+    "passport": "~0.2.0",
+    "passport-facebook": "latest",
+    "passport-google-oauth": "latest",
+    "passport-local": "~0.1.6",
+    "passport-twitter": "latest",
+    "request": "^2.69.0",
+    "request-promise": "^2.0.1",
+    "serve-favicon": "~2.0.1",
+    "socket.io": "^1.0.6",
+    "socket.io-client": "^1.0.6",
+    "socketio-jwt": "^3.0.0"
+  },
+  "devDependencies": {
+    "browserify": "^13.0.0",
+    "gulp": "^3.9.1",
+    "gulp-develop-server": "^0.5.1",
+    "gulp-sass": "^2.2.0",
+    "gulp-uglify": "^1.5.3",
+    "log": "^1.4.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
+  },
+  "scripts": {
+    "start": "node server/app.js",
+    "test": "gulp test"
+  },
+  "private": true
 }

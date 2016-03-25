@@ -242,10 +242,11 @@ require("../components/mongoose-error/mongoose-error.directive.js")(app);
 require("../components/shell/dialog/dialog.controller.js")(app);
 require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
-
+require("./media/books/book.controller.js")(app);
+require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":10,"../components/auth/user.service.js":11,"../components/mongoose-error/mongoose-error.directive.js":12,"../components/shell/dialog/dialog.controller.js":13,"../components/shell/shell.controller.js":14,"../components/socket/socket.service.js":15,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/settings/settings.controller.js":3,"./account/signup/signup.controller.js":4,"./admin/admin.controller.js":5,"./admin/admin.js":6,"./main/main.controller.js":8,"./main/main.js":9}],8:[function(require,module,exports){
+},{"../components/auth/auth.service.js":12,"../components/auth/user.service.js":13,"../components/mongoose-error/mongoose-error.directive.js":14,"../components/shell/dialog/dialog.controller.js":15,"../components/shell/shell.controller.js":16,"../components/socket/socket.service.js":17,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/settings/settings.controller.js":3,"./account/signup/signup.controller.js":4,"./admin/admin.controller.js":5,"./admin/admin.js":6,"./main/main.controller.js":8,"./main/main.js":9,"./media/books/book.controller.js":10,"./media/media.js":11}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -261,27 +262,6 @@ module.exports = function(app){
       socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
-    $scope.getColor = function($index) {
-      var _d = ($index + 1) % 11;
-      var bg = '';
-
-      switch(_d) {
-        case 1:       bg = 'red';         break;
-        case 2:       bg = 'green';       break;
-        case 3:       bg = 'darkBlue';    break;
-        case 4:       bg = 'blue';        break;
-        case 5:       bg = 'yellow';      break;
-        case 6:       bg = 'pink';        break;
-        case 7:       bg = 'darkBlue';    break;
-        case 8:       bg = 'purple';      break;
-        case 9:       bg = 'deepBlue';    break;
-        case 10:      bg = 'lightPurple'; break;
-        default:      bg = 'yellow';      break;
-      }
-
-      return bg;
-    };
-
     $scope.getSpan = function($index) {
       var _d = ($index + 1) % 11;
 
@@ -293,16 +273,6 @@ module.exports = function(app){
     $scope.deleteThing = function(thing) {
       $http.delete('/api/things/' + thing._id);
     };
-
-    $scope.printUser = function(){
-      var user = Auth.getCurrentUser();
-      console.log(user);
-      /*user.then(function(userData){
-        console.log(userData);
-      }).catch(function(err){
-        console.err(err);
-      });*/
-    }
 
     $scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
@@ -323,6 +293,32 @@ module.exports = function(app){
   });
 }
 },{}],10:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app){
+  app.controller('BooksCtrl', function ($scope, $http, socket) {
+    $scope.books = [];
+    $scope.waiting = true;
+    $http.get("/api/books").success(function(books){
+      $scope.books = books.sort(function() {return Math.random() - 0.5});
+      $scope.waiting = false;
+    });
+  });
+}
+},{}],11:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app){
+  app.config(function ($stateProvider) {
+    $stateProvider
+      .state('books', {
+        url: '/books',
+        templateUrl: 'templates/books.html',
+        controller: 'BooksCtrl'
+      });
+  });
+}
+},{}],12:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -470,7 +466,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],11:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -494,7 +490,7 @@ module.exports = function(app){
 	  });
   });
 }
-},{}],12:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -510,7 +506,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],13:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -530,7 +526,7 @@ module.exports = function(app){
   };
 });
 }
-},{}],14:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -593,7 +589,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],15:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 /* global io */
 'use strict';
 

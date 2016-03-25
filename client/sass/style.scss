@@ -48,3 +48,12 @@ body{
     background-size: cover;
     background-repeat: no-repeat;
 }
+
+.sndr-align-children{
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.margin-zero{
+    margin: 0;
+}
