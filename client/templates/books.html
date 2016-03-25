@@ -3,9 +3,9 @@
       <div class="indeterminate"></div>
   </div>  
 </div>
-<div class="container">
-  <div class="row sndr-align-children">
-    <div class="col s6 m4 l3" ng-repeat="(key, book) in books">
+
+<ul class="dynamic-grid" angular-grid="books" grid-width="300" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
+     <li data-ng-repeat="book in books" class="grid">
       <div class="card">
         <div class="card-image">
           <img ng-src="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg">
@@ -18,6 +18,5 @@
           <a href="#">This is a link</a>
         </div>
       </div>
-    </div>
-  </div>      
-</div>
+     </li>
+ </ul>

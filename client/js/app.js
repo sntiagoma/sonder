@@ -161,7 +161,8 @@ var app = angular.module('Sonder', [
         'ngAnimate',
         'ngMessages',
         'btford.socket-io',
-        'ui.router'
+        'ui.router',
+        'angularGrid'
     ])
     // .config(function($mdIconProvider) {
     //     $mdIconProvider
