@@ -28,14 +28,19 @@ function handleData(err, data){
 	}
 	console.log("Successfully fetched top tracks in Colombia");
 	console.log(data);
+	console.log(data.track[0].image[1]["#text"]);
+	console.log(data.track[0].artist);
+	//$scope.music = data.track;
 }
-
+//un-comment in DEV
 lfm.geo.getTopTracks(params, handleData);
 
 
 module.exports = function(app){
 	app.controller('MusicCtrl', function($scope, $http, socket){
 		$scope.music = [];
+		$scope.waiting = true;
 		lfm.geo.getTopTracks(params, handleData);
+		$scope.waiting = false;
 	});
 }

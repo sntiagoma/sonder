@@ -7,6 +7,11 @@ module.exports = function(app){
         url: '/books',
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
+      })
+      .state('music', {
+      	url: '/books',
+      	templateUrl: 'templates/music.html',
+      	controller: 'MusicCtrl'
       });
   });
 }
