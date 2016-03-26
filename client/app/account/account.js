@@ -18,6 +18,12 @@ module.exports = function(app){
         templateUrl: '/templates/settings.html',
         controller: 'SettingsCtrl',
         authenticate: true
+      })
+      .state('profile', {
+        url: "/profile",
+        templateUrl: "/templates/profile.html",
+        controller: "ProfileCtrl",
+        authenticate: true
       });
   });
 }

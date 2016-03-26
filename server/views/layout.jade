@@ -26,6 +26,8 @@ html(ng-app="Sonder")
         li(ng-show="Auth.isLoggedIn()")
           a(ui-sref="settings") Settings
         li(ng-show="Auth.isLoggedIn()")
+          a(ui-sref="profile") Profile
+        li(ng-show="Auth.isLoggedIn()")
           a(ng-click="logout()") Logout
         li.divider
         li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
