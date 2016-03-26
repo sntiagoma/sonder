@@ -88,5 +88,6 @@ require("../components/mongoose-error/mongoose-error.directive.js")(app);
 require("../components/shell/dialog/dialog.controller.js")(app);
 require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
-
+require("./media/books/book.controller.js")(app);
+require("./media/media.js")(app);
 module.exports = app;

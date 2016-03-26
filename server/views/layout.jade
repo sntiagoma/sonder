@@ -36,14 +36,25 @@ html(ng-app="Sonder")
           a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
           ul.right.hide-on-med-and-down
             li
-              a
-                i.material-icons search
+              a()
+                //-future ui-sref="movies"
+                i.material-icons movie
             li
-              a(ng-click="printUser()")
+              a()
+                //-future shows
+                i.material-icons video_library
+            li
+              a()
+                //-future music
+                i.material-icons library_music
+            li
+              a(ui-sref="books")
+                //-future books
+                i.material-icons library_books
+            li
+              a()
+                //-future places
                 i.material-icons person_pin
-            li
-              a(ui-sref="login")
-                i.material-icons open_in_browser
             li
               a.dropdown-button(href='#!', data-activates='dropdown1')
                 i.material-icons more_vert
