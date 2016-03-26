@@ -1,0 +1,23 @@
+<div ng-show="waiting">
+  <div class="progress margin-zero">
+      <div class="indeterminate"></div>
+  </div>  
+</div>
+<div class="container">
+  <div class="row">
+    <div class="col s6 m4 l3" ng-repeat="song in music">
+      <div class="card">
+        <div class="card-image">
+          <img ng-src='{{song.image[2]["#text"]}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{song.name}}</span>
+        </div>
+        <div class="card-content">
+          <p>Written by {{song.artist.name}}</p>
+        </div>
+        <div class="card-action">
+          <a href="{{song.url}}">In last.fm</a>
+        </div>
+      </div>
+    </div>
+  </div>      
+</div>

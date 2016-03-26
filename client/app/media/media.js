@@ -12,6 +12,11 @@ module.exports = function(app){
         url: '/places',
         templateUrl: 'templates/places.html',
         controller: 'PlacesCtrl'
+      })
+      .state('music', {
+      	url: '/music',
+      	templateUrl: 'templates/music.html',
+      	controller: 'MusicCtrl'
       });
   });
 }
