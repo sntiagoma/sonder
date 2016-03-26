@@ -37,23 +37,18 @@ html(ng-app="Sonder")
           ul.right.hide-on-med-and-down
             li
               a()
-                //-future ui-sref="movies"
                 i.material-icons movie
             li
               a()
-                //-future shows
                 i.material-icons video_library
             li
-              a()
-                //-future music
+              a(ui-sref="music")
                 i.material-icons library_music
             li
               a(ui-sref="books")
-                //-future books
                 i.material-icons library_books
             li
               a(ui-sref="places")
-                //-future places
                 i.material-icons person_pin
             li
               a.dropdown-button(href='#!', data-activates='dropdown1')
