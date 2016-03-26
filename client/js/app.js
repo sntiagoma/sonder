@@ -243,11 +243,12 @@ require("../components/mongoose-error/mongoose-error.directive.js")(app);
 require("../components/shell/dialog/dialog.controller.js")(app);
 require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
-require("./media/books/book.controller.js")(app);
+require("./media/books/books.controller.js")(app);
+require("./media/places/places.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":12,"../components/auth/user.service.js":13,"../components/mongoose-error/mongoose-error.directive.js":14,"../components/shell/dialog/dialog.controller.js":15,"../components/shell/shell.controller.js":16,"../components/socket/socket.service.js":17,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/settings/settings.controller.js":3,"./account/signup/signup.controller.js":4,"./admin/admin.controller.js":5,"./admin/admin.js":6,"./main/main.controller.js":8,"./main/main.js":9,"./media/books/book.controller.js":10,"./media/media.js":11}],8:[function(require,module,exports){
+},{"../components/auth/auth.service.js":13,"../components/auth/user.service.js":14,"../components/mongoose-error/mongoose-error.directive.js":15,"../components/shell/dialog/dialog.controller.js":16,"../components/shell/shell.controller.js":17,"../components/socket/socket.service.js":18,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/settings/settings.controller.js":3,"./account/signup/signup.controller.js":4,"./admin/admin.controller.js":5,"./admin/admin.js":6,"./main/main.controller.js":8,"./main/main.js":9,"./media/books/books.controller.js":10,"./media/media.js":11,"./media/places/places.controller.js":12}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -316,10 +317,49 @@ module.exports = function(app){
         url: '/books',
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
+      })
+      .state('places', {
+        url: '/places',
+        templateUrl: 'templates/places.html',
+        controller: 'PlacesCtrl'
       });
   });
 }
 },{}],12:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app){
+  app.controller('PlacesCtrl', function ($scope, $http, socket) {
+    $scope.places = [];
+    $scope.waiting = true;
+    $http.get("http://ipinfo.io/loc").then(
+      function(data){
+        var loc = data.data;
+        $http.get("/api/places?loc="+loc).then(
+          function(places){
+            $scope.places = places.data;
+            $scope.waiting = false;
+          },
+          function(err){
+            console.log(err);
+          }
+        );
+      },
+      function(err){
+        $http.get("/api/places").then(
+          function(places){
+            $scope.places = places.data;
+            $scope.waiting = false;
+          },
+          function(err){
+            console.log(err);
+          }
+        );
+      }
+    );
+  });
+}
+},{}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -467,7 +507,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -491,7 +531,7 @@ module.exports = function(app){
 	  });
   });
 }
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -507,7 +547,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -527,7 +567,7 @@ module.exports = function(app){
   };
 });
 }
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -590,7 +630,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 /* global io */
 'use strict';
 

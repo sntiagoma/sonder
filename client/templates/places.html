@@ -1,0 +1,24 @@
+{{loc}}
+<div ng-show="waiting">
+  <div class="progress margin-zero">
+      <div class="indeterminate"></div>
+  </div>
+</div>
+<div class="container">
+  <ul class="dynamic-grid" angular-grid="places" grid-width="192" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false">
+      <li data-ng-repeat="place in places" class="grid">
+          <div class="card">
+              <div class="card-image">
+                  <img ng-src="{{place.venue.categories[0].icon.prefix}}bg_512{{place.venue.categories[0].icon.suffix}}">
+                  <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.venue.categories[0].pluralName}}</span>
+              </div>
+              <div class="card-content">
+                  <p>{{place.venue.name}}</p>
+              </div>
+              <div class="card-action">
+                  <a ng-href="#">{{loc}}</a>
+              </div>
+          </div>
+      </li>
+  </ul>
+</div>
