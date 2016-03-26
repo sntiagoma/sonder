@@ -17,6 +17,12 @@ module.exports = function(app){
       	url: '/music',
       	templateUrl: 'templates/music.html',
       	controller: 'MusicCtrl'
-      });
+      })
+      .state('movies', {
+        url: '/movies',
+        templateUrl: 'templates/movies.html',
+        controller: 'MoviesCtrl'
+      })
+      ;
   });
 }

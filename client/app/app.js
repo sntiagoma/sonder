@@ -93,5 +93,6 @@ require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);
 require("./media/places/places.controller.js")(app);
 require("./media/music/music.controller.js")(app);
+require("./media/movies/movies.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;

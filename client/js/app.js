@@ -263,10 +263,11 @@ require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);
 require("./media/places/places.controller.js")(app);
 require("./media/music/music.controller.js")(app);
+require("./media/movies/movies.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":15,"../components/auth/user.service.js":16,"../components/mongoose-error/mongoose-error.directive.js":17,"../components/shell/dialog/dialog.controller.js":18,"../components/shell/shell.controller.js":19,"../components/socket/socket.service.js":20,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/music/music.controller.js":13,"./media/places/places.controller.js":14}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":16,"../components/auth/user.service.js":17,"../components/mongoose-error/mongoose-error.directive.js":18,"../components/shell/dialog/dialog.controller.js":19,"../components/shell/shell.controller.js":20,"../components/socket/socket.service.js":21,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -345,10 +346,35 @@ module.exports = function(app){
       	url: '/music',
       	templateUrl: 'templates/music.html',
       	controller: 'MusicCtrl'
-      });
+      })
+      .state('movies', {
+        url: '/movies',
+        templateUrl: 'templates/movies.html',
+        controller: 'MoviesCtrl'
+      })
+      ;
   });
 }
 },{}],13:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app){
+	app.controller('MoviesCtrl', function($scope, $http, socket){
+		$scope.movies = [];
+		$scope.waiting = true;
+		$http.get("/api/movies").then(
+			function(data){
+				$scope.movies = data.data;
+				$scope.waiting = false;
+			},
+			function(err){
+				console.log(err);
+				$scope.waiting = false;
+			}
+		);
+	});
+}
+},{}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -367,7 +393,7 @@ module.exports = function(app){
 		);
 	});
 }
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -401,7 +427,7 @@ module.exports = function(app){
     );
   });
 }
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -549,7 +575,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -573,7 +599,7 @@ module.exports = function(app){
 	  });
   });
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -589,7 +615,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -609,7 +635,7 @@ module.exports = function(app){
   };
 });
 }
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -672,7 +698,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 /* global io */
 'use strict';
 
