@@ -12,10 +12,6 @@ var lfm = new lastfmapi({
 	'api_secret': '19b0ee51f9ac7a5a71b73e03ec0f2f1d'
 });
 
-console.log("** Created object lfm: **");
-console.log(lfm);
-console.log("**************************");
-
 var params = {
 	'country': 'Colombia',
 	'limit': 10
@@ -26,14 +22,14 @@ function handleData(err, data){
 		console.log("### PANIC ###");
 		return console.log(err);
 	}
-	console.log("Successfully fetched top tracks in Colombia");
+	/*console.log("Successfully fetched top tracks in Colombia");
 	console.log(data);
 	console.log(data.track[0].image[1]["#text"]);
-	console.log(data.track[0].artist);
-	//$scope.music = data.track;
+	console.log(data.track[0].artist);*/
+	$scope.music = data.track;
 }
 //un-comment in DEV
-lfm.geo.getTopTracks(params, handleData);
+//lfm.geo.getTopTracks(params, handleData);
 
 
 module.exports = function(app){

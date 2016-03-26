@@ -9,7 +9,7 @@ module.exports = function(app){
         controller: 'BooksCtrl'
       })
       .state('music', {
-      	url: '/books',
+      	url: '/music',
       	templateUrl: 'templates/music.html',
       	controller: 'MusicCtrl'
       });
