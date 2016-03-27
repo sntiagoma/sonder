@@ -23,6 +23,11 @@ module.exports = function(app){
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
+      .state('shows', {
+        url: '/shows',
+        templateUrl: 'templates/shows.html',
+        controller: 'ShowsCtrl'
+      })
       ;
   });
 }

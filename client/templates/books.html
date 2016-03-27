@@ -1,22 +1,23 @@
 <div ng-show="waiting">
-  <div class="progress margin-zero">
-      <div class="indeterminate"></div>
-  </div>  
+    <div class="progress margin-zero">
+        <div class="indeterminate"></div>
+    </div>
 </div>
-
-<ul class="dynamic-grid" angular-grid="books" grid-width="256" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false" >
-     <li data-ng-repeat="book in books" class="grid">
-      <div class="card">
-        <div class="card-image">
-          <img ng-src="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg">
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
-        </div>
-        <div class="card-content">
-          <p>Written by {{book.authors[0].name}}</p>
-        </div>
-        <div class="card-action">
-          <a href="#">This is a link</a>
-        </div>
-      </div>
-     </li>
- </ul>
+<div class="container">
+    <ul class="dynamic-grid" angular-grid="books" grid-width="220" gutter-size="10" angular-grid-id="gallery" refresh-on-img-load="false">
+        <li data-ng-repeat="book in books" class="grid">
+            <div class="card">
+                <div class="card-image">
+                    <img ng-src="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg">
+                    <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
+                </div>
+                <div class="card-content">
+                    <p>Written by {{book.authors[0].name}}</p>
+                </div>
+                <div class="card-action">
+                    <a href="#">This is a link</a>
+                </div>
+            </div>
+        </li>
+    </ul>
+</div>

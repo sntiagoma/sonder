@@ -16,7 +16,7 @@ function asyncGetTopTracks(){
     lfm.geo.getTopTracks(
       {
         'country': 'Colombia',
-        'limit': 10
+        'limit': 20
       },
       function(err, data){
         if(err){
