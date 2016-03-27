@@ -1,5 +1,5 @@
 $mainColor: #1BB088;
-$background: #F4F4F4;
+$background: #455a64;
 
 body{
     background-color: $background;
@@ -11,6 +11,10 @@ body{
         font-style: normal;
         font-weight: 300;
     }
+    display: flex;
+    min-height: 100vh;
+    flex-direction: column;
+
 }
 
 .flat{
@@ -81,4 +85,8 @@ body{
 .grid-img.img-loaded{
     visibility: visible;
     opacity: 1;
+}
+
+main {
+    flex: 1 0 auto;
 }

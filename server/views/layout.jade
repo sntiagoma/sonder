@@ -33,7 +33,7 @@ html(ng-app="Sonder")
         li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
           a(ui-sref="admin") Admin
 
-      nav.background.flat(role='navigation')
+      nav.background.flat.blue-grey.darken-4(role='navigation')
         .nav-wrapper.container
           a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
           ul.right.hide-on-med-and-down
@@ -56,9 +56,38 @@ html(ng-app="Sonder")
               a.dropdown-button(href='#!', data-activates='dropdown1')
                 i.material-icons more_vert
 
-    div
+    main
       block content
+
+    footer.page-footer.blue-grey.darken-4(ng-controller="MainCtrl")
+      .container
+        .row
+          .col.l9.m8.s12
+            h5.white-text Sonder
+            p.grey-text.text-lighten-4  Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur saepe fuga iste facilis nihil minus fugiat magnam deserunt aliquam velit exercitationem, quo harum? Consectetur ducimus, illum sequi tenetur voluptas aperiam.
+          .col.l3.m4.s12
+            h5.white-text Special Thanks
+            .div(style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around")
+              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Trakt')
+                img(src="//trakt.tv/assets/logos/header@2x-4d604ad76f87e156c5ad2fa7358fcf17.png", alt="Trakt", height="48", width="48")
+              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Last.fm')
+                img(src="//cdn3.iconfinder.com/data/icons/flat-icons-web/40/LastFM-48.png", alt="Last.fm", height="48", width="48")
+              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Open Library')
+                img(src="//pbs.twimg.com/profile_images/497577090/ol.png", alt="Open Library", height="48", width="48")
+              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Foursquare')
+                img(src="//www.brandfit.ca/images/social-icons-48/foursquare-48.png", alt="Foursquare", height="40", width="40")
+
+      .footer-copyright
+        .container
+          |© {{date.getFullYear()}} Ampere Team
+          small(style="color:rgba(255,255,255,0.3)")
+            | - Made by Santiago Montoya Angarita, Santiago Su&aacute;rez P&eacute;rez,
+            | Daniel Ermilson Vel&aacute;squez Ocampo, Andres Mateo Ot&aacute;lvaro Berm&uacute;dez 
+          a.grey-text.text-lighten-4.right(href='#!') More Links
 
     script(src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
     script.
       $(".dropdown-button").dropdown();
+      $(document).ready(function(){
+        $('.tooltipped').tooltip({delay: 50});
+      });
