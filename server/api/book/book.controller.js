@@ -32,7 +32,7 @@ var subjects = [
 function getSubject (subject){
   return new Promise(
     (resolve, reject) => {
-      request.get(`http://openlibrary.org/subjects/${subject}.json?limit=3`,
+      request.get(`http://openlibrary.org/subjects/${subject}.json?limit=2`,
         (err, res, body) => {
           var works = JSON.parse(body).works;
           resolve(works);
