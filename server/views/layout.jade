@@ -55,7 +55,37 @@ html(ng-app="Sonder")
             li
               a.dropdown-button(href='#!', data-activates='dropdown1')
                 i.material-icons more_vert
-
+          ul#slide-out.side-nav
+            li
+              a(ui-sref="movies")
+                |Movies
+            li
+              a(ui-sref="shows")
+                |Shows
+            li
+              a(ui-sref="music")
+                |Music
+            li
+              a(ui-sref="books")
+                |Books
+            li
+              a(ui-sref="places")
+                |Places
+            li(ng-hide="Auth.isLoggedIn()")
+              a(ui-sref='login') Login
+            li(ng-hide="Auth.isLoggedIn()")
+              a(ui-sref='signup') Sign up
+            li(ng-show="Auth.isLoggedIn()")
+              a(ui-sref="settings") Settings
+            li(ng-show="Auth.isLoggedIn()")
+              a(ui-sref="profile") Profile
+            li(ng-show="Auth.isLoggedIn()")
+              a(ng-click="logout()") Logout
+            li.divider
+            li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
+              a(ui-sref="admin") Admin
+          a.button-collapse(href='#', data-activates='slide-out')
+            i.mdi-navigation-menu
     main
       block content
 
@@ -90,8 +120,6 @@ html(ng-app="Sonder")
       $(".dropdown-button").dropdown();
       $(document).ready(function(){
         $('.tooltipped').tooltip({delay: 50});
-      });
-
-      $(document).ready(function(){               
         $('.materialboxed').materialbox();
+        $(".button-collapse").sideNav();
       });
