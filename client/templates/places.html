@@ -5,14 +5,25 @@
 </div>
 <div class="container">
   <div class="row sndr-align-children">
-    <div class="col s6 m4 l3" ng-repeat="place in places">
+    <div class="col s12 m6 l4" ng-repeat="place in places">
       <div class="card">
         <div class="card-image">
-          <img ng-src="{{place.venue.categories[0].icon.prefix}}bg_512{{place.venue.categories[0].icon.suffix}}">
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.venue.categories[0].pluralName}}</span>
+          <image-cropper image-url="{{place.image.prefix}}width600{{place.image.suffix}}"
+              width="480"
+              height="640"
+              show-controls="false"
+              fit-on-init="false"
+              center-on-init="true"
+              api="getApiFunction"
+              crop-callback="myCallbackFunction"
+              check-cross-origin="false"
+              zoom-step="0.1"
+              action-labels="myButtonLabelsObject"
+            ></image-cropper>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.categories[0].pluralName}}</span>
         </div>
         <div class="card-content">
-          <p>{{place.venue.name}}</p>
+          <p>{{place.name}}</p>
         </div>
         <div class="card-action">
           <a href="#{{loc}}">Link</a>
