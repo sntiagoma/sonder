@@ -23,6 +23,11 @@ module.exports = function(app){
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
+      .state('movieInfo',{
+        url: '/movies/:traktSlug',
+        templateUrl: 'templates/movie.html',
+        controller: "MovieCtrl"
+      })
       .state('shows', {
         url: '/shows',
         templateUrl: 'templates/shows.html',
