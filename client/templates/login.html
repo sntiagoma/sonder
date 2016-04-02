@@ -37,21 +37,13 @@
         </div>
         <center>
         <div class="row">
-          <a href="" ng-click="loginOauth(&quot;facebook&quot;)" class="btn btn-facebook">
-            <i class="fa fa-facebook"></i> 
-              Connect with Facebook
-          </a>
-          <a href="" ng-click="loginOauth(&quot;google&quot;)" class="btn btn-google-plus">
-            <i class="fa fa-google-plus"></i> 
-              Connect with Google+
-          </a>
-          <a href="" ng-click="loginOauth(&quot;twitter&quot;)" class="btn btn-twitter">
-            <i class="fa fa-twitter"></i>
-             Connect with Twitter
-          </a>
+            <ul class="soc">
+              <li><a class="soc-twitter" href="#" ng-click="loginOauth(&quot;twitter&quot;)"></a></li>
+              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth(&quot;google&quot;)"></a></li>
+              <li><a class="soc-facebook" href="#" ng-click="loginOauth(&quot;facebook&quot;)"></a></li>
+            </ul>
         </div>
         </center>
       </form>
     </div>
   </div>
-</div>

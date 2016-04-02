@@ -34,6 +34,15 @@
             <p ng-show="form.password.$error.mongoose" class="help-block">{{ errors.password }}</p>
           </div>
         </div>
+        <div class="row margin">
+        <!--En caso de que vayamos a pedir fecha de nacimiento -->
+        <!--<div class="input-field col s12">
+          <i class="mdi-action-today prefix"></i>
+          <input id="date" class="datepicker" type="date" >
+          <label for="date" class="active">Date</label>
+        </div>
+        </div>-->
+        <!-- En caso de que vayamos a pedir confirmacion de la clave -->
         <!--<div class="row margin">
           <div class="input-field col s12">
             <i class="mdi-action-lock-outline prefix"></i>
@@ -46,9 +55,19 @@
             <a href="index.html" class="btn waves-effect waves-light col s12">Register Now</a>
           </div>
           <div class="input-field col s12">
+          <center>
+            <ul class="soc">
+              <li><a class="soc-twitter" href="#" ng-click="loginOauth(&quot;twitter&quot;)"></a></li>
+              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth(&quot;google&quot;)"></a></li>
+              <li><a class="soc-facebook" href="#" ng-click="loginOauth(&quot;facebook&quot;)"></a></li>
+            </ul>
+           
+          </div>
+          <div class="input-field col s12">
             <p class="margin center medium-small sign-up">Already have an account? <a href="/login">Login</a></p>
           </div>
         </div>
+      
       </form>
     </div>
   </div>
