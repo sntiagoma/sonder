@@ -7,7 +7,8 @@ var app = angular.module('Sonder', [
         'ngAnimate',
         'ngMessages',
         'btford.socket-io',
-        'ui.router'
+        'ui.router',
+        'imageCropper'
     ])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

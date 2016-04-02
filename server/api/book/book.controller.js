@@ -34,6 +34,9 @@ function getSubject (subject){
     (resolve, reject) => {
       request.get(`http://openlibrary.org/subjects/${subject}.json?limit=2`,
         (err, res, body) => {
+          if(err){
+            reject(err);
+          }
           var works = JSON.parse(body).works;
           resolve(works);
         }
