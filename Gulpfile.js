@@ -1,19 +1,25 @@
 "use strict";
-var gulp       = require("gulp");
-var sass       = require("gulp-sass");
-var uglify     = require("gulp-uglify");
-var server     = require("gulp-develop-server");
-var source     = require("vinyl-source-stream");
-var buffer     = require("vinyl-buffer");
-var browserify = require("browserify");
-var Log        = require("log"), log = new Log("info");
+var gulp       = require("gulp"),
+    sass       = require("gulp-sass"),
+    uglify     = require("gulp-uglify"),
+    server     = require("gulp-develop-server"),
+    source     = require("vinyl-source-stream"),
+    buffer     = require("vinyl-buffer"),
+    browserify = require("browserify"),
+    livereload = require('gulp-livereload'),
+    Log        = require("log"), log = new Log("info");
 
-
-var sassFolder    = "./client/sass/**/*.scss";
-var sassDest      = "./client/css/";
-var sassObjConfig = {outputStyle: 'compressed'};
-var frontAppPath  = "./client/app/app.js";
-var frontAppDest  = "./client/js";
+//Options
+var sassFolder    = "./client/sass/**/*.scss",
+    sassDest      = "./client/css/",
+    sassObjConfig = {outputStyle: 'compressed'},
+    frontAppPath  = "./client/app/app.js",
+    frontAppDest  = "./client/js",
+    serverFiles = [
+    './server/*.js',
+    './server/**/*.js',
+    './server/**/**/*.js'
+    ];
 
 gulp.task('styles',function(){
     gulp.src(sassFolder)
@@ -21,7 +27,7 @@ gulp.task('styles',function(){
         .pipe(gulp.dest(sassDest));
     });
 
-gulp.task('browserify', function() {  
+gulp.task('browserify', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
@@ -30,7 +36,7 @@ gulp.task('browserify', function() {
     .pipe(gulp.dest(frontAppDest));
 });
 
-gulp.task('browserify-pretty', function() {  
+gulp.task('browserify-pretty', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
@@ -45,7 +51,7 @@ gulp.task('watch', function() {
 });
 
 gulp.task('run', function() {
-    server.listen({path:'./server/app.js'});
+    server.listen({path:'./server/app.js'} , livereload.listen);
 });
 
 gulp.task('build', function() {
@@ -61,4 +67,14 @@ gulp.task('auto',function() {
 gulp.task('default',function() {
     gulp.start(['build','run']);
     return;
+});
+
+//Livereload Task
+gulp.task('live',['build','run'], function() {
+    function restart( file ) {
+        server.changed( function( error ) {
+            if(!error) livereload.changed( file.path );
+        });
+    }
+    gulp.watch( serverFiles ).on( 'change', restart );
 });
