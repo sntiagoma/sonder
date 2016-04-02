@@ -27,3 +27,15 @@ exports.index = function(req, res) {
     res.send(error);
   });
 };
+
+exports.search = function(req, res) {
+  var query = req.params.query;
+  trakt.searchAll(query)
+  .then((result)=>{
+    res.json(result);
+  })
+  .catch((error)=>{
+    log.error("On API /movies, ERROR: %s", error);
+    res.send(error);
+  });
+};
