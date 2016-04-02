@@ -39,3 +39,30 @@ exports.search = function(req, res) {
     res.send(error);
   });
 };
+
+exports.show = function(req, res){
+  var query = req.params.traktSlug;
+  trakt.show(query, {extended:"full,images"})
+  .then(
+    (show)=>{
+      trakt.showSeasons(query,{extended:"full,images"})
+      .then((seasons)=>{
+        trakt.showPeople(query, {extended:"full,images"}).
+        then((people)=>{
+          show.seasons = seasons;
+          show.people = people;
+          res.json(show);
+        })
+        .catch(
+          (err)=>{
+            throw "Error on People: "+err
+          });
+      })
+      .catch(
+        (err)=>{throw "Error on Seasons: "+err;}
+      );
+    })
+  .catch((err)=>{
+    res.status(404).json({error:err});
+  });
+};

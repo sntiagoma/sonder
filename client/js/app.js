@@ -351,6 +351,11 @@ module.exports = function(app){
         templateUrl: 'templates/shows.html',
         controller: 'ShowsCtrl'
       })
+      .state('showInfo',{
+        url: '/shows/:traktSlug',
+        templateUrl: 'templates/show.html',
+        controller: "ShowCtrl"
+      })
       ;
   });
 }
@@ -456,6 +461,19 @@ module.exports = function(app){
 				$scope.waiting = false;
 			}
 		);
+	});
+
+	app.controller('ShowCtrl', function($scope, $http, $stateParams, $state){
+		$scope.show = {};
+		$http.get("/api/shows/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.show = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		)
 	});
 }
 },{}],17:[function(require,module,exports){
