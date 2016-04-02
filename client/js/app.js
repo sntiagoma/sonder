@@ -292,7 +292,14 @@ module.exports = function(app){
         url: '/',
         templateUrl: 'templates/main.html',
         controller: 'MainCtrl'
-      });
+      }).state('pageNotFound',{
+        url: '/404',
+        templateUrl: 'templates/404.html',
+        controller: function($scope){
+
+        }
+      })
+      ;
   });
 }
 },{}],11:[function(require,module,exports){
@@ -334,6 +341,11 @@ module.exports = function(app){
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
+      .state('movieInfo',{
+        url: '/movies/:traktSlug',
+        templateUrl: 'templates/movie.html',
+        controller: "MovieCtrl"
+      })
       .state('shows', {
         url: '/shows',
         templateUrl: 'templates/shows.html',
@@ -359,6 +371,19 @@ module.exports = function(app){
 				$scope.waiting = false;
 			}
 		);
+	});
+
+	app.controller('MovieCtrl', function($scope, $http, $stateParams, $state){
+		$scope.movie = {};
+		$http.get("/api/movies/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.movie = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		)
 	});
 }
 },{}],14:[function(require,module,exports){

@@ -39,3 +39,12 @@ exports.search = function(req, res) {
     res.send(error);
   });
 };
+
+exports.movie = function(req, res){
+  var query = req.params.traktSlug;
+  trakt.movie(query, {extended:"full,images"})
+  .then((show)=>{res.json(show)})
+  .catch((err)=>{
+    res.status(404).json({error:err});
+  });
+}

@@ -7,6 +7,13 @@ module.exports = function(app){
         url: '/',
         templateUrl: 'templates/main.html',
         controller: 'MainCtrl'
-      });
+      }).state('pageNotFound',{
+        url: '/404',
+        templateUrl: 'templates/404.html',
+        controller: function($scope){
+
+        }
+      })
+      ;
   });
 }
