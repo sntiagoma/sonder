@@ -28,9 +28,36 @@ function asyncGetTopTracks(){
   });
 };
 
+function asyncSearchForTracks(query){
+  return new Promise(function(resolve,reject){
+    lfm.track.search(
+      {
+        'track': query
+      },
+      function(err, data){
+        if(err){
+          reject(err);
+        }
+        resolve(data.trackmatches.track);
+      }
+    );
+  });
+};
 
 exports.index = function(req, res) {
   asyncGetTopTracks()
+  .then((tracks)=>{
+    res.json(tracks);
+  })
+  .catch((err)=>{
+    log.error("On API /music, ERROR: %s",err);
+    res.send(error);
+  });
+};
+
+exports.search = function(req, res) {
+  var query = req.params.query;
+  asyncSearchForTracks(query)
   .then((tracks)=>{
     res.json(tracks);
   })

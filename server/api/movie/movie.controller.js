@@ -30,7 +30,7 @@ exports.index = function(req, res) {
 
 exports.search = function(req, res) {
   var query = req.params.query;
-  trakt.searchAll(query)
+  trakt.searchMovie(query)
   .then((result)=>{
     res.json(result);
   })
