@@ -5,7 +5,7 @@
       <h1>Sign up</h1>
     </div>
     <div class="col-sm-12">
-      <form name="form" ng-submit="register(form)" novalidate="" class="form">
+     <form name="form" ng-submit="register(form)" novalidate="" class="form">
         <div ng-class="{ 'has-success': form.name.$valid && submitted, 'has-error': form.name.$invalid && submitted }" class="form-group">
           <label>Name</label>
           <input type="text" name="name" ng-model="user.name" required="" class="form-control"/>
