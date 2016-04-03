@@ -9,25 +9,50 @@ var Promise = require("bluebird");
 function getFirstPlaceImage(placeid){
   return new Promise(
     (resolve,reject)=>{
-      var requesturi = "https://api.foursquare.com/v2/venues/"+placeid+"/photos"+
-        "?client_id="+process.env.FOURSQUARE_ID+
-        "&client_secret="+process.env.FOURSQUARE_SECRET+
-        "&v=20130815"+
-        "&limit=1"
       request.get(
-        requesturi,
-        (err, res, body) =>{
+        {
+          url: "https://api.foursquare.com/v2/venues/"+placeid+"/photos",
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815",
+            limit: 1
+          },
+          json: true
+        },
+        (err, res, body) =>
+          {
             if(err){
               reject(err);
             }
-            try{
-              var photo = JSON.parse(body).response.photos.items[0];              
-            }catch(e){
-              reject(e);
-            }
+            var photo = body.response.photos.items[0];              
             resolve(photo);
           }
         )
+    }
+  );
+}
+
+function getVenueInfo(venueid){
+  return new Promise(
+    (resolve, reject) => {
+      request.get(
+        {
+          url: "https://api.foursquare.com/v2/venues/"+venueid,
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815"
+          },
+          json: true
+        },
+        (err, res, venue) => {
+          if(err){
+            reject(err);
+          }
+          resolve(venue);
+        }
+      );
     }
   );
 }
@@ -77,3 +102,15 @@ exports.index = function(req, res) {
     res.status(404).send(err);
   });
 };
+
+exports.venue = function(req, res){
+  var venue = req.params.venueid;
+  getVenueInfo(venue)
+  .then((venue)=>{
+    res.json(venue);
+  })
+  .catch((err)=>{
+    log.error(err);
+    res.status(404).send(err);
+  });
+}

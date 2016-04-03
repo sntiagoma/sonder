@@ -314,6 +314,19 @@ module.exports = function(app){
       $scope.waiting = false;
     });
   });
+
+  app.controller('BookCtrl', function($scope, $http, $stateParams, $state){
+    $scope.book = {};
+    $http.get("/api/books/"+$stateParams.olid)
+    .then(
+      function(data){
+        $scope.book = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
 },{}],12:[function(require,module,exports){
 'use strict';
@@ -326,22 +339,27 @@ module.exports = function(app){
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
       })
+      .state('book', {
+        url: '/books/:olid',
+        templateUrl: 'templates/book.html',
+        controller: 'BookCtrl'
+      })
       .state('places', {
         url: '/places',
         templateUrl: 'templates/places.html',
         controller: 'PlacesCtrl'
       })
-      .state('music', {
-      	url: '/music',
-      	templateUrl: 'templates/music.html',
-      	controller: 'MusicCtrl'
+      .state('place', {
+        url: '/places/:venueid',
+        templateUrl: 'templates/place.html',
+        controller: 'PlaceCtrl'
       })
       .state('movies', {
         url: '/movies',
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
-      .state('movieInfo',{
+      .state('movie',{
         url: '/movies/:traktSlug',
         templateUrl: 'templates/movie.html',
         controller: "MovieCtrl"
@@ -351,10 +369,20 @@ module.exports = function(app){
         templateUrl: 'templates/shows.html',
         controller: 'ShowsCtrl'
       })
-      .state('showInfo',{
+      .state('show',{
         url: '/shows/:traktSlug',
         templateUrl: 'templates/show.html',
         controller: "ShowCtrl"
+      })
+      .state('music', {
+        url: '/music',
+        templateUrl: 'templates/music.html',
+        controller: 'MusicCtrl'
+      })
+      .state('track', {
+        url: '/music/:artist/tracks/:track',
+        templateUrl: 'templates/track.html',
+        controller: 'TrackCtrl'
       })
       ;
   });
@@ -409,6 +437,18 @@ module.exports = function(app){
 			}
 		);
 	});
+  app.controller('TrackCtrl', function($scope, $http, $stateParams, $state){
+    $scope.track = {};
+    $http.get("/api/music/"+$stateParams.artist+"/tracks/"+$stateParams.track)
+    .then(
+      function(data){
+        $scope.track = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
 },{}],15:[function(require,module,exports){
 'use strict';
@@ -442,6 +482,18 @@ module.exports = function(app){
         );
       }
     );
+  });
+  app.controller('PlaceCtrl', function($scope, $http, $stateParams, $state){
+    $scope.place = {};
+    $http.get("/api/places/"+$stateParams.venueid)
+    .then(
+      function(data){
+        $scope.place = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
   });
 }
 },{}],16:[function(require,module,exports){

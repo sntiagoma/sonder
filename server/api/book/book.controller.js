@@ -32,12 +32,17 @@ var subjects = [
 function getSubject (subject){
   return new Promise(
     (resolve, reject) => {
-      request.get(`http://openlibrary.org/subjects/${subject}.json?limit=2`,
-        (err, res, body) => {
+      request.get(
+        {
+          url: "http://openlibrary.org/subjects/"+subject+".json",
+          qs: {limit: 2},
+          json: true
+        },
+        (err, res, subject) => {
           if(err){
             reject(err);
           }
-          var works = JSON.parse(body).works;
+          var works = subject.works;
           resolve(works);
         }
       );
@@ -48,13 +53,42 @@ function getSubject (subject){
 function searchForTitle (query){
   return new Promise(
     (resolve, reject) => {
-      request.get(`http://openlibrary.org/search.json?q=`+query,
+      request.get(
+        {
+          url: "http://openlibrary.org/search.json",
+          qs: {q:query},
+          json: true
+        },
         (err, res, body) => {
           if(err){
             reject(err);
           }
-          var books = JSON.parse(body).docs;
+          var books = body.docs;
           resolve(books);
+        }
+      );
+    }
+  );
+}
+
+function getBookByOLID (olid){
+  return new Promise(
+    (resolve, reject) => {
+      request.get(
+        {
+          url: "https://openlibrary.org/api/books",
+          qs: {
+            bibkeys: "OLID:"+olid,
+            format: "json",
+            jscmd: "data"
+          },
+          json: true
+        },
+        (err, res, book) => {
+          if(err){
+            reject(err);
+          }
+          resolve(book["OLID:"+olid]);
         }
       );
     }
@@ -84,6 +118,14 @@ exports.search = function(req, res) {
     log.error("On API /books, ERROR: %s",error);
     res.send(error);
   });
-
-
 };
+
+exports.olid = function(req, res){
+  var olid = req.params.olid;
+  getBookByOLID(olid).then((book)=>{
+    res.json(book);
+  }).catch((err)=>{
+    log.error("On API /books/:olid, OLID:%s, ERROR:%s",olid, err);
+    res.status(400).send(err);
+  })
+}
