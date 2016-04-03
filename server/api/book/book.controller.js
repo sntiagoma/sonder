@@ -32,12 +32,17 @@ var subjects = [
 function getSubject (subject){
   return new Promise(
     (resolve, reject) => {
-      request.get(`http://openlibrary.org/subjects/${subject}.json?limit=2`,
-        (err, res, body) => {
+      request.get(
+        {
+          url: "http://openlibrary.org/subjects/"+subject+".json",
+          qs: {limit: 2},
+          json: true
+        },
+        (err, res, subject) => {
           if(err){
             reject(err);
           }
-          var works = JSON.parse(body).works;
+          var works = subject.works;
           resolve(works);
         }
       );
@@ -48,12 +53,17 @@ function getSubject (subject){
 function searchForTitle (query){
   return new Promise(
     (resolve, reject) => {
-      request.get(`http://openlibrary.org/search.json?q=`+query,
+      request.get(
+        {
+          url: "http://openlibrary.org/search.json",
+          qs: {q:query},
+          json: true
+        },
         (err, res, body) => {
           if(err){
             reject(err);
           }
-          var books = JSON.parse(body).docs;
+          var books = body.docs;
           resolve(books);
         }
       );

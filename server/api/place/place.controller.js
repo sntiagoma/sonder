@@ -9,22 +9,23 @@ var Promise = require("bluebird");
 function getFirstPlaceImage(placeid){
   return new Promise(
     (resolve,reject)=>{
-      var requesturi = "https://api.foursquare.com/v2/venues/"+placeid+"/photos"+
-        "?client_id="+process.env.FOURSQUARE_ID+
-        "&client_secret="+process.env.FOURSQUARE_SECRET+
-        "&v=20130815"+
-        "&limit=1"
       request.get(
-        requesturi,
-        (err, res, body) =>{
+        {
+          url: "https://api.foursquare.com/v2/venues/"+placeid+"/photos",
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815",
+            limit: 1
+          },
+          json: true
+        },
+        (err, res, body) =>
+          {
             if(err){
               reject(err);
             }
-            try{
-              var photo = JSON.parse(body).response.photos.items[0];              
-            }catch(e){
-              reject(e);
-            }
+            var photo = body.response.photos.items[0];              
             resolve(photo);
           }
         )
