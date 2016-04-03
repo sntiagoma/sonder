@@ -15,7 +15,7 @@
           <p>Written by {{song.artist.name}}</p>
         </div>
         <div class="card-action">
-          <a href="{{song.url}}">In last.fm</a>
+          <a ui-sref="track({artist:song.artist.name,track:song.name})">See more</a>
         </div>
       </div>
     </div>

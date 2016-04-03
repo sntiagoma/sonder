@@ -23,11 +23,6 @@ module.exports = function(app){
         templateUrl: 'templates/place.html',
         controller: 'PlaceCtrl'
       })
-      .state('music', {
-      	url: '/music',
-      	templateUrl: 'templates/music.html',
-      	controller: 'MusicCtrl'
-      })
       .state('movies', {
         url: '/movies',
         templateUrl: 'templates/movies.html',
@@ -47,6 +42,16 @@ module.exports = function(app){
         url: '/shows/:traktSlug',
         templateUrl: 'templates/show.html',
         controller: "ShowCtrl"
+      })
+      .state('music', {
+        url: '/music',
+        templateUrl: 'templates/music.html',
+        controller: 'MusicCtrl'
+      })
+      .state('track', {
+        url: '/music/:artist/tracks/:track',
+        templateUrl: 'templates/track.html',
+        controller: 'TrackCtrl'
       })
       ;
   });
