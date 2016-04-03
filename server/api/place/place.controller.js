@@ -33,6 +33,30 @@ function getFirstPlaceImage(placeid){
   );
 }
 
+function getVenueInfo(venueid){
+  return new Promise(
+    (resolve, reject) => {
+      request.get(
+        {
+          url: "https://api.foursquare.com/v2/venues/"+venueid,
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815"
+          },
+          json: true
+        },
+        (err, res, venue) => {
+          if(err){
+            reject(err);
+          }
+          resolve(venue);
+        }
+      );
+    }
+  );
+}
+
 exports.index = function(req, res) {
   var loc = req.query.loc;
   if(typeof loc == "undefined"){
@@ -78,3 +102,15 @@ exports.index = function(req, res) {
     res.status(404).send(err);
   });
 };
+
+exports.venue = function(req, res){
+  var venue = req.params.venueid;
+  getVenueInfo(venue)
+  .then((venue)=>{
+    res.json(venue);
+  })
+  .catch((err)=>{
+    log.error(err);
+    res.status(404).send(err);
+  });
+}

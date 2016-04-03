@@ -339,7 +339,7 @@ module.exports = function(app){
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
       })
-      .state('bookInfo', {
+      .state('book', {
         url: '/books/:olid',
         templateUrl: 'templates/book.html',
         controller: 'BookCtrl'
@@ -348,6 +348,11 @@ module.exports = function(app){
         url: '/places',
         templateUrl: 'templates/places.html',
         controller: 'PlacesCtrl'
+      })
+      .state('place', {
+        url: '/places/:venueid',
+        templateUrl: 'templates/place.html',
+        controller: 'PlaceCtrl'
       })
       .state('music', {
       	url: '/music',
@@ -359,7 +364,7 @@ module.exports = function(app){
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
-      .state('movieInfo',{
+      .state('movie',{
         url: '/movies/:traktSlug',
         templateUrl: 'templates/movie.html',
         controller: "MovieCtrl"
@@ -369,7 +374,7 @@ module.exports = function(app){
         templateUrl: 'templates/shows.html',
         controller: 'ShowsCtrl'
       })
-      .state('showInfo',{
+      .state('show',{
         url: '/shows/:traktSlug',
         templateUrl: 'templates/show.html',
         controller: "ShowCtrl"
@@ -460,6 +465,18 @@ module.exports = function(app){
         );
       }
     );
+  });
+  app.controller('PlaceCtrl', function($scope, $http, $stateParams, $state){
+    $scope.place = {};
+    $http.get("/api/places/"+$stateParams.venueid)
+    .then(
+      function(data){
+        $scope.place = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
   });
 }
 },{}],16:[function(require,module,exports){
