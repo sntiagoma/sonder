@@ -33,16 +33,16 @@ gulp.task('styles',function(){
         .pipe(gulp.dest(sassDest));
     });
 
-gulp.task('browserify', function() {
+/*gulp.task('browserify', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(frontAppDest));
-});
+});*/
 
-gulp.task('browserify-pretty', function() {
+gulp.task('browserify', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
@@ -52,7 +52,7 @@ gulp.task('browserify-pretty', function() {
 
 gulp.task('watch', function() {
     gulp.watch(sassFolder,['styles']);
-    gulp.watch('./client/app', ['browserify-pretty']);
+    gulp.watch('./client/app', ['browserify']);
     return;
 });
 
@@ -61,7 +61,7 @@ gulp.task('run', function() {
 });
 
 gulp.task('build', function() {
-    gulp.start(['browserify-pretty','styles']);
+    gulp.start(['browserify','styles']);
     return;
 });
 

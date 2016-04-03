@@ -71,6 +71,30 @@ function searchForTitle (query){
   );
 }
 
+function getBookByOLID (olid){
+  return new Promise(
+    (resolve, reject) => {
+      request.get(
+        {
+          url: "https://openlibrary.org/api/books",
+          qs: {
+            bibkeys: "OLID:"+olid,
+            format: "json",
+            jscmd: "data"
+          },
+          json: true
+        },
+        (err, res, book) => {
+          if(err){
+            reject(err);
+          }
+          resolve(book["OLID:"+olid]);
+        }
+      );
+    }
+  );
+}
+
 exports.index = function(req, res) {
   Promise.map(
     subjects,
@@ -94,6 +118,14 @@ exports.search = function(req, res) {
     log.error("On API /books, ERROR: %s",error);
     res.send(error);
   });
-
-
 };
+
+exports.olid = function(req, res){
+  var olid = req.params.olid;
+  getBookByOLID(olid).then((book)=>{
+    res.json(book);
+  }).catch((err)=>{
+    log.error("On API /books/:olid, OLID:%s, ERROR:%s",olid, err);
+    res.status(400).send(err);
+  })
+}

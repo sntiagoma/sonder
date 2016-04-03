@@ -8,6 +8,11 @@ module.exports = function(app){
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
       })
+      .state('bookInfo', {
+        url: '/books/:olid',
+        templateUrl: 'templates/book.html',
+        controller: 'BookCtrl'
+      })
       .state('places', {
         url: '/places',
         templateUrl: 'templates/places.html',

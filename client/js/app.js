@@ -314,6 +314,19 @@ module.exports = function(app){
       $scope.waiting = false;
     });
   });
+
+  app.controller('BookCtrl', function($scope, $http, $stateParams, $state){
+    $scope.book = {};
+    $http.get("/api/books/"+$stateParams.olid)
+    .then(
+      function(data){
+        $scope.book = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
 },{}],12:[function(require,module,exports){
 'use strict';
@@ -325,6 +338,11 @@ module.exports = function(app){
         url: '/books',
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
+      })
+      .state('bookInfo', {
+        url: '/books/:olid',
+        templateUrl: 'templates/book.html',
+        controller: 'BookCtrl'
       })
       .state('places', {
         url: '/places',
