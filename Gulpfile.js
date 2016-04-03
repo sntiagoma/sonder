@@ -16,9 +16,15 @@ var sassFolder    = "./client/sass/**/*.scss",
     frontAppPath  = "./client/app/app.js",
     frontAppDest  = "./client/js",
     serverFiles = [
-    './server/*.js',
-    './server/**/*.js',
-    './server/**/**/*.js'
+        './server/*.js',
+        './server/**/*.js',
+        './server/**/**/*.js'
+    ],
+    clientFiles = [
+        "./client/*.js",
+        "./client/**/*.js",
+        "./client/**/**/*.js", 
+        "./client/**/**/**/*.js", 
     ];
 
 gulp.task('styles',function(){
@@ -76,5 +82,7 @@ gulp.task('live',['build','run'], function() {
             if(!error) livereload.changed( file.path );
         });
     }
-    gulp.watch( serverFiles ).on( 'change', restart );
+    gulp.watch(serverFiles).on('change', restart);
+    gulp.watch(sassFolder, ["styles"]);
+    gulp.watch( clientFiles, ["browserify"]);
 });
