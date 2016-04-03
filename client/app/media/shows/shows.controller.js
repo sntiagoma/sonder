@@ -15,4 +15,17 @@ module.exports = function(app){
 			}
 		);
 	});
+
+	app.controller('ShowCtrl', function($scope, $http, $stateParams, $state){
+		$scope.show = {};
+		$http.get("/api/shows/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.show = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		)
+	});
 }

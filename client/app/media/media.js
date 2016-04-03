@@ -33,6 +33,11 @@ module.exports = function(app){
         templateUrl: 'templates/shows.html',
         controller: 'ShowsCtrl'
       })
+      .state('showInfo',{
+        url: '/shows/:traktSlug',
+        templateUrl: 'templates/show.html',
+        controller: "ShowCtrl"
+      })
       ;
   });
 }
