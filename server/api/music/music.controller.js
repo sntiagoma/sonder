@@ -57,6 +57,22 @@ function getTrack(artist, track){
         });
     }
   );
+};
+
+function getArtist(artist){
+  return new Promise(
+    function(resolve, reject){
+      lfm.artist.getInfo(
+        {artist: artist},
+        function(err, data){
+          if(err){
+            reject(err);
+          }
+          delete data.similar;
+          resolve(data);
+        });
+    }
+  );
 }
 
 exports.index = function(req, res) {
@@ -87,12 +103,35 @@ exports.track = function(req, res){
   var track = req.params.track;
   getTrack(artist, track)
   .then((track)=>{
-    res.json(track);
+    getArtist(artist)
+    .then(
+      (artist)=>{
+        track.artist = artist;
+        res.json(track);
+      }
+    )
+    .catch(
+      (err)=>{throw "Error on Artist, ERROR"+err;
+    });
   })
   .catch((err)=>{
     log.error("On API /music/:artist/tracks/:track, ARTIST:%s, TRACK:%s, ERROR:%s",
       artist,track,err);
     res.status(404).send({error:err,artist:artist,track:track});
+  })
+  ;
+};
+
+exports.artist = function(req, res){
+  var artist = req.params.artist;
+  getArtist(artist)
+  .then((artist)=>{
+    res.json(artist);
+  })
+  .catch((err)=>{
+    log.error("On API /music/:artist, ARTIST:%s, ERROR:%s",
+      artist,err);
+    res.status(404).send({error:err,track:track});
   })
   ;
 }
