@@ -223,8 +223,17 @@ var app = angular.module('Sonder', [
             }
         });
     });
-});
+})
 
+.constant('_', window._)
+
+.run(function($rootScope){
+    $rootScope._ = window._;
+})
+
+;
+
+require("../directives/directives.js")(app);
 require("./account/account.js")(app);
 require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
@@ -248,7 +257,7 @@ require("./media/shows/shows.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":17,"../components/auth/user.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../components/shell/dialog/dialog.controller.js":20,"../components/shell/shell.controller.js":21,"../components/socket/socket.service.js":22,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/shows/shows.controller.js":16}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":17,"../components/auth/user.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../components/shell/dialog/dialog.controller.js":20,"../components/shell/shell.controller.js":21,"../components/socket/socket.service.js":22,"../directives/directives.js":23,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/shows/shows.controller.js":16}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -363,7 +372,7 @@ module.exports = function(app){
         url: '/movies/:traktSlug',
         templateUrl: 'templates/movie.html',
         controller: "MovieCtrl"
-      })
+      })	
       .state('shows', {
         url: '/shows',
         templateUrl: 'templates/shows.html',
@@ -384,9 +393,14 @@ module.exports = function(app){
         templateUrl: 'templates/track.html',
         controller: 'TrackCtrl'
       })
-      ;
+			.state('search', {
+				url: '/search',
+				templateUrl: 'templates/search.html',
+				controller: 'SearchCtrl'
+			});
   });
 }
+
 },{}],13:[function(require,module,exports){
 'use strict';
 
@@ -416,7 +430,12 @@ module.exports = function(app){
 			function(error){
 				$state.go("pageNotFound");
 			}
-		)
+		);
+		$scope.filterDirector = function(movie){
+			return _.find(movie.people.crew.directing,function(sm){
+				return (sm.job=="Director");
+			});
+		}
 	});
 }
 },{}],14:[function(require,module,exports){
@@ -450,6 +469,7 @@ module.exports = function(app){
     )
   });
 }
+
 },{}],15:[function(require,module,exports){
 'use strict';
 
@@ -871,6 +891,24 @@ module.exports = function(app){
       unsyncUpdates: function (modelName) {
         socket.removeAllListeners(modelName + ':save');
         socket.removeAllListeners(modelName + ':remove');
+      }
+    };
+  });
+}
+},{}],23:[function(require,module,exports){
+"use strict";
+//E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
+module.exports = function(app){
+  app.directive("parallaxImg",function(){
+    return {
+      restrict: "E",
+      scope: {
+        image: "@pImg"
+      },
+      transclude: true,
+      templateUrl: "/templates/directives/parallax-img.html",
+      link: function(scope, element, attrs){
+        $('.parallax').parallax();
       }
     };
   });

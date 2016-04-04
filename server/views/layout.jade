@@ -38,7 +38,7 @@ html(ng-app="Sonder")
           a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
           form
             .input-field
-              input#search(type='search', required='')
+              input#search(type='search', required='', ng-model='searchTerm')
               label(for='search')
                 i.material-icons search
               i.material-icons close
