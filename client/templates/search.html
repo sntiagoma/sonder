@@ -24,13 +24,14 @@
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{song.name}}</span>
         </div>
         <div class="card-content">
-          <p>Written by {{song.artist.name}}</p>
+          <p>Written by {{song.artist}}</p>
         </div>
         <div class="card-action">
-          <a ui-sref="track({artist:song.artist.name,track:song.name})">See more</a>
+          <a ui-sref="track({artist:song.artist,track:song.name})">See more</a>
         </div>
       </div>
     </div>
+		<br> <br> <br>
     <hr>
     <h1> Book Results </h1>
     <div class="col s6 m4 l3" ng-repeat="book in bookResults">
@@ -51,48 +52,50 @@
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
         </div>
         <div class="card-content">
-          <p>Written by {{book.authors[0].name}}</p>
+          <p>Written by {{book.author_name[0]}}</p>
         </div>
         <div class="card-action">
           <a ui-sref="book({olid:book.cover_edition_key})">See more</a>
         </div>
       </div>
     </div>
+		<br> <br> <br>
     <hr>
     <h1> Movie Results </h1>
 
     <div class="col s6 m4 l3" ng-repeat="movie in movieResults">
       <div class="card">
         <div class="card-image">
-          <img ng-src='{{movie.images.poster.thumb}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{movie.title}}</span>
+          <img ng-src='{{movie.movie.images.poster.thumb}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{movie.movie.title}}</span>
         </div>
         <div class="card-content">
-          <p>Released in {{movie.year}}</p>
+          <p>Released in {{movie.movie.year}}</p>
         </div>
         <div class="card-action">
-          <a ui-sref="movie({traktSlug: movie.ids.slug})">See more</a>
+          <a ui-sref="movie({traktSlug: movie.movie.ids.slug})">See more</a>
         </div>
       </div>
     </div>
+		<br> <br> <br>
     <hr>
-    <h1> Show Results </h1>
+    <h1> Shows Results </h1>
 
     <div class="col s6 m4 l3" ng-repeat="show in showResults">
       <div class="card">
         <div class="card-image">
-          <img ng-src='{{show.images.poster.thumb}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.title}}</span>
+          <img ng-src='{{show.show.images.poster.thumb}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.show.title}}</span>
         </div>
         <div class="card-content">
-          <p>Released in {{show.year}}</p>
+          <p>Released in {{show.show.year}}</p>
         </div>
         <div class="card-action">
-          <a ui-sref="show({traktSlug: show.ids.slug})">See more</a>
+          <a ui-sref="show({traktSlug: show.show.ids.slug})">See more</a>
         </div>
       </div>
     </div>
-
+		<br> <br> <br>
     <hr>
     <h1> Place Results </h1>
 
