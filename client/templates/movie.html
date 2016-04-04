@@ -1,1 +1,69 @@
-{{movie}}
+<parallax-img p-img="{{movie.images.fanart.full}}"/>
+<div class="container" style="position: relative; top:-250px">
+  <h1 class="white-text" style="text-shadow: 2px 5px 4px rgba(0,0,0,0.5), -2px 5px 4px rgba(0,0,0,0.5);">
+    {{movie.title}} <small>: {{movie.year}}</small>
+  </h1>
+  <div class="row">
+    <div class="col s12">
+      <div class="card white">
+        <div class="card-content">
+          <div class="card-title" style="border-bottom: rgba(0,0,0,0.1) solid 1px;margin-bottom: 15px;text-align: center;font-style: italic;">
+            {{movie.tagline}}
+          </div>
+          <div class="row">
+            <div class="col s12 m4 l3">
+              <img class="responsive-img" ng-src="{{movie.images.poster.medium}}"></img>
+            </div>
+            <div class="col s12 m8 l9">
+              <table class="striped">
+                <thead>
+                  <tr>
+                      <th data-field="id">Item</th>
+                      <th data-field="name">Detail</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Director</td>
+                    <td>{{filterDirector(movie).person.name}}</td>
+                  </tr>
+                  <tr>
+                    <td>Released</td>
+                    <td>{{movie.released | date : "fullDate"}}</td>
+                  </tr>
+                  <tr>
+                    <td>Runtime</td>
+                    <td>{{movie.runtime}} mins</td>
+                  </tr>
+                  <tr>
+                    <td>Rating</td>
+                    <td>{{movie.rating}}</td>
+                  </tr>
+                  <tr>
+                    <td>Genres</td>
+                    <td>
+                      <div class="chip" ng-repeat="genre in movie.genres">
+                        {{genre}}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="flow-text">
+                <br>
+                <strong>Sinopsis</strong>
+                <br>
+                {{movie.overview}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

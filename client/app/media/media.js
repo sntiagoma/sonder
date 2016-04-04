@@ -32,7 +32,7 @@ module.exports = function(app){
         url: '/movies/:traktSlug',
         templateUrl: 'templates/movie.html',
         controller: "MovieCtrl"
-      })
+      })	
       .state('shows', {
         url: '/shows',
         templateUrl: 'templates/shows.html',
@@ -53,6 +53,10 @@ module.exports = function(app){
         templateUrl: 'templates/track.html',
         controller: 'TrackCtrl'
       })
-      ;
+			.state('search', {
+				url: '/search',
+				templateUrl: 'templates/search.html',
+				controller: 'SearchCtrl'
+			});
   });
 }

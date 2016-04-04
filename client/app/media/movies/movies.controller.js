@@ -26,6 +26,11 @@ module.exports = function(app){
 			function(error){
 				$state.go("pageNotFound");
 			}
-		)
+		);
+		$scope.filterDirector = function(movie){
+			return _.find(movie.people.crew.directing,function(sm){
+				return (sm.job=="Director");
+			});
+		}
 	});
 }
