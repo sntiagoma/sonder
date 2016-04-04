@@ -32,60 +32,60 @@ html(ng-app="Sonder")
         li.divider
         li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
           a(ui-sref="admin") Admin
-
-      nav.background.flat.blue-grey.darken-4(role='navigation')
-        .nav-wrapper.container
-          a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
-          ul.right.hide-on-med-and-down
-            li
-              a(ui-sref="movies")
-                i.material-icons movie
-            li
-              a(ui-sref="shows")
-                i.material-icons video_library
-            li
-              a(ui-sref="music")
-                i.material-icons library_music
-            li
-              a(ui-sref="books")
-                i.material-icons library_books
-            li
-              a(ui-sref="places")
-                i.material-icons person_pin
-            li
-              a.dropdown-button(href='#!', data-activates='dropdown1')
-                i.material-icons more_vert
-          ul#slide-out.side-nav
-            li
-              a(ui-sref="movies")
-                |Movies
-            li
-              a(ui-sref="shows")
-                |Shows
-            li
-              a(ui-sref="music")
-                |Music
-            li
-              a(ui-sref="books")
-                |Books
-            li
-              a(ui-sref="places")
-                |Places
-            li(ng-hide="Auth.isLoggedIn()")
-              a(ui-sref='login') Login
-            li(ng-hide="Auth.isLoggedIn()")
-              a(ui-sref='signup') Sign up
-            li(ng-show="Auth.isLoggedIn()")
-              a(ui-sref="settings") Settings
-            li(ng-show="Auth.isLoggedIn()")
-              a(ui-sref="profile") Profile
-            li(ng-show="Auth.isLoggedIn()")
-              a(ng-click="logout()") Logout
-            li.divider
-            li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
-              a(ui-sref="admin") Admin
-          a.button-collapse(href='#', data-activates='slide-out')
-            i.mdi-navigation-menu
+      .navbar-fixed
+        nav.background.flat.blue-grey.darken-4(role='navigation')
+          .nav-wrapper.container
+            a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
+            ul.right.hide-on-med-and-down
+              li
+                a(ui-sref="movies")
+                  i.material-icons movie
+              li
+                a(ui-sref="shows")
+                  i.material-icons video_library
+              li
+                a(ui-sref="music")
+                  i.material-icons library_music
+              li
+                a(ui-sref="books")
+                  i.material-icons library_books
+              li
+                a(ui-sref="places")
+                  i.material-icons person_pin
+              li
+                a.dropdown-button(href='#!', data-activates='dropdown1')
+                  i.material-icons more_vert
+            ul#slide-out.side-nav
+              li
+                a(ui-sref="movies")
+                  |Movies
+              li
+                a(ui-sref="shows")
+                  |Shows
+              li
+                a(ui-sref="music")
+                  |Music
+              li
+                a(ui-sref="books")
+                  |Books
+              li
+                a(ui-sref="places")
+                  |Places
+              li(ng-hide="Auth.isLoggedIn()")
+                a(ui-sref='login') Login
+              li(ng-hide="Auth.isLoggedIn()")
+                a(ui-sref='signup') Sign up
+              li(ng-show="Auth.isLoggedIn()")
+                a(ui-sref="settings") Settings
+              li(ng-show="Auth.isLoggedIn()")
+                a(ui-sref="profile") Profile
+              li(ng-show="Auth.isLoggedIn()")
+                a(ng-click="logout()") Logout
+              li.divider
+              li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
+                a(ui-sref="admin") Admin
+            a.button-collapse(href='#', data-activates='slide-out')
+              i.mdi-navigation-menu
     main
       block content
 

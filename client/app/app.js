@@ -53,8 +53,17 @@ var app = angular.module('Sonder', [
             }
         });
     });
-});
+})
 
+.constant('_', window._)
+
+.run(function($rootScope){
+    $rootScope._ = window._;
+})
+
+;
+
+require("../directives/directives.js")(app);
 require("./account/account.js")(app);
 require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
