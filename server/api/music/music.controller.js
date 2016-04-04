@@ -68,7 +68,11 @@ function getArtist(artist){
           if(err){
             reject(err);
           }
-          delete data.similar;
+          try{
+            delete data.similar;
+          }catch(err){
+            log.error(err);
+          }
           resolve(data);
         });
     }

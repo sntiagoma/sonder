@@ -3,6 +3,17 @@
       <div class="indeterminate"></div>
   </div>  
 </div>
+<nav>
+  <div class="nav-wrapper">
+    <form name="searchform" ng-submit="search(searchform)">
+      <div class="input-field">
+        <input id="search" type="search" required ng-model="searchTerm" name="q">
+        <label for="search"><i class="material-icons">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
+  </div>
+</nav>
 <div class="container">
   <div class="row">
     <h1> Music results </h1>
