@@ -36,6 +36,12 @@ html(ng-app="Sonder")
       nav.background.flat.blue-grey.darken-4(role='navigation')
         .nav-wrapper.container
           a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
+          form
+            .input-field
+              input#search(type='search', required='')
+              label(for='search')
+                i.material-icons search
+              i.material-icons close
           ul.right.hide-on-med-and-down
             li
               a(ui-sref="movies")
