@@ -140,7 +140,8 @@ return /******/ (function(modules) { // webpackBootstrap
 	    crop: this.cropImage.bind(this),
 	    fit: this.applyFit.bind(this),
 	    rotate: this.applyRotation.bind(this),
-	    zoom: this.applyZoom.bind(this),
+	    zoomIn: this.applyZoomIn.bind(this),
+	    zoomOut: this.applyZoomOut.bind(this),
 	    remove: this.remove.bind(this)
 	  };
 	
@@ -195,10 +196,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	    self.applyRotation(90);
 	  });
 	  this.elements.controls.zoomIn.addEventListener('click', function() {
-	    self.applyZoom(self.zoomInFactor);
+	    self.applyZoomIn(self.zoomInFactor);
 	  });
 	  this.elements.controls.zoomOut.addEventListener('click', function() {
-	    self.applyZoom(self.zoomOutFactor);
+	    self.applyZoomOut(self.zoomOutFactor);
 	  });
 	  this.elements.controls.fit.addEventListener('click', this.applyFit.bind(this));
 	  this.elements.controls.crop.addEventListener('click', this.cropImage.bind(this));
@@ -208,8 +209,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	  this.rotateImage(degree);
 	};
 	
-	Cropper.prototype.applyZoom = function(zoom) {
-	  this.zoomImage(zoom);
+	Cropper.prototype.applyZoomIn = function(zoom) {
+	  this.zoomImage(1 + parseFloat(zoom));
+	};
+	Cropper.prototype.applyZoomOut = function(zoom) {
+	  this.zoomImage(1 / ( 1 + parseFloat(zoom)));
 	};
 	
 	Cropper.prototype.applyFit = function() {
@@ -290,7 +294,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	Cropper.prototype.remove = function() {
 	  var elements = this.elements;
 	  elements.target.removeChild(elements.wrapper);
-	  elements.target.removeChild(elements.controls.wrapper);
+	  if (this.options.showControls) elements.target.removeChild(elements.controls.wrapper);
 	};
 	
 	Cropper.prototype.loadImage = function() {
@@ -358,7 +362,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * Set dimensions.
 	 */
 	Cropper.prototype.setDimensions = function() {
-	  this.zoomInFactor = 1 + this.options.zoomStep;
+	  this.zoomInFactor = 1 + parseFloat(this.options.zoomStep);
 	  this.zoomOutFactor = 1 / this.zoomInFactor;
 	
 	  this.imageRatio = this.options.height / this.options.width;
