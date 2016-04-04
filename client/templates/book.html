@@ -1,1 +1,69 @@
-{{book}}
+<parallax-img p-img="{{book.cover.large}}"/>
+<div class="container" style="position: relative; top:-250px">
+  <h1 class="white-text" style="text-shadow: 2px 5px 4px rgba(0,0,0,0.5), -2px 5px 4px rgba(0,0,0,0.5);">
+    {{book.title}}
+  </h1>
+  <div class="row">
+    <div class="col s12">
+      <div class="card white">
+        <div class="card-content">
+          <div class="card-title" style="border-bottom: rgba(0,0,0,0.1) solid 1px;margin-bottom: 15px;text-align: center;font-style: italic;">
+            {{book.tagline}}
+          </div>
+          <div class="row">
+            <div class="col s12 m4 l3">
+              <img class="responsive-img" ng-src="{{book.cover.large}}"></img>
+            </div>
+            <div class="col s12 m8 l9">
+              <table class="striped">
+                <thead>
+                  <tr>
+                      <th data-field="id">Item</th>
+                      <th data-field="name">Detail</th>
+                  </tr>
+                </thead>
+
+                <tbody>
+                  <tr>
+                    <td>Authors</td>
+                    <td>
+                      <span ng-repeat="author in book.authors">
+                        {{author.name}}
+                      </span>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Publish Date</td>
+                    <td>{{book.publish_date| date : "fullDate"}}</td>
+                  </tr>
+                  <tr>
+                    <td>Pages</td>
+                    <td>{{book.number_of_pages}} pages</td>
+                  </tr>
+                  <tr>
+                    <td>Subjects</td>
+                    <td>
+                      <div class="chip" ng-repeat="subject in book.subjects">
+                        {{subject.name}}
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+              <p class="flow-text">
+                <br>
+                <strong>Overview</strong>
+                <br>
+                {{book.overview}}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div class="card-action">
+          <a href="#">This is a link</a>
+          <a href="#">This is a link</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

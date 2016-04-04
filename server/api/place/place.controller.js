@@ -107,7 +107,7 @@ exports.venue = function(req, res){
   var venue = req.params.venueid;
   getVenueInfo(venue)
   .then((venue)=>{
-    res.json(venue);
+    res.json(venue.response.venue);
   })
   .catch((err)=>{
     log.error(err);
