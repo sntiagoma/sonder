@@ -21,12 +21,35 @@ function getFirstPlaceImage(placeid){
               reject(err);
             }
             try{
-              var photo = JSON.parse(body).response.photos.items[0];              
+              var photo = JSON.parse(body).response.photos.items[0];
             }catch(e){
               reject(e);
             }
             resolve(photo);
           }
+        )
+    }
+  );
+}
+
+function searchPlace(query){
+  return new Promise(
+    (resolve,reject)=>{
+      var requesturi = "https://api.foursquare.com/v2/venues/search"+
+        "?client_id="+process.env.FOURSQUARE_ID+
+        "&client_secret="+process.env.FOURSQUARE_SECRET+
+        "&v=20130815"+
+        "&ll=6.244747,-75.574828"
+        "&query="+query;
+      request.get(
+        requesturi,
+        (err, res, body) => {
+          if(err){
+            reject(err);
+          }
+          var places = body;
+          resolve(places);
+        }
         )
     }
   );
@@ -75,5 +98,16 @@ exports.index = function(req, res) {
   .catch(function (err) {
     log.error(err);
     res.status(404).send(err);
+  });
+};
+
+exports.search = function(req, res) {
+  var query = req.params.query;
+  searchPlace(query)
+  .then((places)=>{
+    res.json(places);
+  }).catch((error) => {
+    log.error("On API /books, ERROR: %s",error);
+    res.send(error);
   });
 };
