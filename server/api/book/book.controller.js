@@ -56,7 +56,7 @@ function searchForTitle (query){
       request.get(
         {
           url: "http://openlibrary.org/search.json",
-          qs: {q:query},
+          qs: {q:query, limit:10},
           json: true
         },
         (err, res, body) => {

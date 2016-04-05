@@ -32,7 +32,8 @@ function asyncSearchForTracks(query){
   return new Promise(function(resolve,reject){
     lfm.track.search(
       {
-        'track': query
+        'track': query,
+        'limit': 10
       },
       function(err, data){
         if(err){
