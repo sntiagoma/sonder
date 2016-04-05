@@ -53,8 +53,18 @@ var app = angular.module('Sonder', [
             }
         });
     });
-});
+})
 
+.constant('_', window._)
+
+.run(function($rootScope){
+    $rootScope._ = window._;
+})
+
+;
+
+require("../directives/directives.js")(app);
+require("../filters/filters.js")(app);
 require("./account/account.js")(app);
 require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
@@ -75,5 +85,6 @@ require("./media/places/places.controller.js")(app);
 require("./media/music/music.controller.js")(app);
 require("./media/movies/movies.controller.js")(app);
 require("./media/shows/shows.controller.js")(app);
+require("./media/search/search.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;

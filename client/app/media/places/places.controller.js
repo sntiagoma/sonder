@@ -30,4 +30,16 @@ module.exports = function(app){
       }
     );
   });
+  app.controller('PlaceCtrl', function($scope, $http, $stateParams, $state){
+    $scope.place = {};
+    $http.get("/api/places/"+$stateParams.venueid)
+    .then(
+      function(data){
+        $scope.place = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }

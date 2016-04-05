@@ -1,0 +1,130 @@
+<div ng-show="waiting">
+  <div class="progress margin-zero">
+      <div class="indeterminate"></div>
+  </div>  
+</div>
+<nav>
+  <div class="nav-wrapper">
+    <form name="searchform" ng-submit="search(searchform)">
+      <div class="input-field">
+        <input id="search" type="search" required ng-model="searchTerm" name="q">
+        <label for="search"><i class="material-icons">search</i></label>
+        <i class="material-icons">close</i>
+      </div>
+    </form>
+  </div>
+</nav>
+<div class="container">
+  <div class="row">
+    <h1> Music results </h1>
+    <div class="col s6 m4 l3" ng-repeat="song in musicResults">
+      <div class="card">
+        <div class="card-image">
+          <img ng-src='{{song.image[2]["#text"]}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{song.name}}</span>
+        </div>
+        <div class="card-content">
+          <p>Written by {{song.artist}}</p>
+        </div>
+        <div class="card-action">
+          <a ui-sref="track({artist:song.artist,track:song.name})">See more</a>
+        </div>
+      </div>
+    </div>
+		<br> <br> <br>
+    <hr>
+    <h1> Book Results </h1>
+    <div class="col s6 m4 l3" ng-repeat="book in bookResults">
+      <div class="card">
+        <div class="card-image">
+          <image-cropper image-url="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg"
+              width="480"
+              height="640"
+              show-controls="false"
+              fit-on-init="false"
+              center-on-init="true"
+              api="getApiFunction"
+              crop-callback="myCallbackFunction"
+              check-cross-origin="false"
+              zoom-step="0.1"
+              action-labels="myButtonLabelsObject"
+            ></image-cropper>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
+        </div>
+        <div class="card-content">
+          <p>Written by {{book.author_name[0]}}</p>
+        </div>
+        <div class="card-action">
+          <a ui-sref="book({olid:book.cover_edition_key})">See more</a>
+        </div>
+      </div>
+    </div>
+		<br> <br> <br>
+    <hr>
+    <h1> Movie Results </h1>
+
+    <div class="col s6 m4 l3" ng-repeat="movie in movieResults">
+      <div class="card">
+        <div class="card-image">
+          <img ng-src='{{movie.movie.images.poster.thumb}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{movie.movie.title}}</span>
+        </div>
+        <div class="card-content">
+          <p>Released in {{movie.movie.year}}</p>
+        </div>
+        <div class="card-action">
+          <a ui-sref="movie({traktSlug: movie.movie.ids.slug})">See more</a>
+        </div>
+      </div>
+    </div>
+		<br> <br> <br>
+    <hr>
+    <h1> Shows Results </h1>
+
+    <div class="col s6 m4 l3" ng-repeat="show in showResults">
+      <div class="card">
+        <div class="card-image">
+          <img ng-src='{{show.show.images.poster.thumb}}'>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.show.title}}</span>
+        </div>
+        <div class="card-content">
+          <p>Released in {{show.show.year}}</p>
+        </div>
+        <div class="card-action">
+          <a ui-sref="show({traktSlug: show.show.ids.slug})">See more</a>
+        </div>
+      </div>
+    </div>
+		<br> <br> <br>
+    <hr>
+    <h1> Place Results </h1>
+
+    <div class="col s12 m6 l4" ng-repeat="place in placeResults">
+      <div class="card">
+        <div class="card-image">
+          <image-cropper image-url="{{place.image.prefix}}width600{{place.image.suffix}}"
+              width="480"
+              height="640"
+              show-controls="false"
+              fit-on-init="false"
+              center-on-init="true"
+              api="getApiFunction"
+              crop-callback="myCallbackFunction"
+              check-cross-origin="false"
+              zoom-step="0.1"
+              action-labels="myButtonLabelsObject"
+            ></image-cropper>
+          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.categories[0].pluralName}}</span>
+        </div>
+        <div class="card-content">
+          <p>{{place.name}}</p>
+        </div>
+        <div class="card-action">.
+          <a ui-sref="place({venueid:place.id})">See more</a>
+        </div>
+      </div>
+    </div>
+
+
+  </div>      
+</div>

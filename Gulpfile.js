@@ -16,9 +16,15 @@ var sassFolder    = "./client/sass/**/*.scss",
     frontAppPath  = "./client/app/app.js",
     frontAppDest  = "./client/js",
     serverFiles = [
-    './server/*.js',
-    './server/**/*.js',
-    './server/**/**/*.js'
+        './server/*.js',
+        './server/**/*.js',
+        './server/**/**/*.js'
+    ],
+    clientFiles = [
+        "./client/*.js",
+        "./client/**/*.js",
+        "./client/**/**/*.js", 
+        "./client/**/**/**/*.js", 
     ];
 
 gulp.task('styles',function(){
@@ -27,16 +33,16 @@ gulp.task('styles',function(){
         .pipe(gulp.dest(sassDest));
     });
 
-gulp.task('browserify', function() {
+/*gulp.task('browserify', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
     .pipe(buffer())
     .pipe(uglify())
     .pipe(gulp.dest(frontAppDest));
-});
+});*/
 
-gulp.task('browserify-pretty', function() {
+gulp.task('browserify', function() {
   return browserify(frontAppPath)
     .bundle()
     .pipe(source('app.js'))
@@ -46,7 +52,7 @@ gulp.task('browserify-pretty', function() {
 
 gulp.task('watch', function() {
     gulp.watch(sassFolder,['styles']);
-    gulp.watch('./client/app', ['browserify-pretty']);
+    gulp.watch('./client/app', ['browserify']);
     return;
 });
 
@@ -55,7 +61,7 @@ gulp.task('run', function() {
 });
 
 gulp.task('build', function() {
-    gulp.start(['browserify-pretty','styles']);
+    gulp.start(['browserify','styles']);
     return;
 });
 
@@ -76,5 +82,7 @@ gulp.task('live',['build','run'], function() {
             if(!error) livereload.changed( file.path );
         });
     }
-    gulp.watch( serverFiles ).on( 'change', restart );
+    gulp.watch(serverFiles).on('change', restart);
+    gulp.watch(sassFolder, ["styles"]);
+    gulp.watch( clientFiles, ["browserify"]);
 });

@@ -1,9 +1,13 @@
+<div ng-include="'components/navbar/navbar.html'"></div>
+<div class="container">
 <div id="login-page" class="row">
-    <div class="col s12  card-panel">
+    <div class="col s12 m8 offset-m2 l6 offset-l3 card-panel">
       <form class="login-form" name="form" ng-submit="login(form)" novalidate="" >
         <div class="row">
           <div class="input-field col s12 center">
-            <p class="center login-form-text">Login</p>
+            <p class="center login-form-text">
+              <h2 class="body-content">Login</h2>
+            </p>
           </div>
         </div>
         <div class="row margin">
@@ -28,23 +32,16 @@
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <a href="index.html" class="btn waves-effect waves-light col s12">Login</a>
+            <a href="#" class="btn waves-effect waves-light col s12">Login</a>
           </div>
         </div>
         <center>
         <div class="row">
-          <a href="" ng-click="loginOauth(&quot;facebook&quot;)" class="btn btn-facebook">
-            <i class="fa fa-facebook"></i> 
-              Connect with Facebook
-          </a>
-          <a href="" ng-click="loginOauth(&quot;google&quot;)" class="btn btn-google-plus">
-            <i class="fa fa-google-plus"></i> 
-              Connect with Google+
-          </a>
-          <a href="" ng-click="loginOauth(&quot;twitter&quot;)" class="btn btn-twitter">
-            <i class="fa fa-twitter"></i>
-             Connect with Twitter
-          </a>
+            <ul class="soc">
+              <li><a class="soc-twitter" href="#" ng-click="loginOauth(&quot;twitter&quot;)"></a></li>
+              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth(&quot;google&quot;)"></a></li>
+              <li><a class="soc-facebook" href="#" ng-click="loginOauth(&quot;facebook&quot;)"></a></li>
+            </ul>
         </div>
         </center>
       </form>

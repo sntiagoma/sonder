@@ -15,4 +15,22 @@ module.exports = function(app){
 			}
 		);
 	});
+
+	app.controller('MovieCtrl', function($scope, $http, $stateParams, $state){
+		$scope.movie = {};
+		$http.get("/api/movies/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.movie = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		);
+		$scope.filterDirector = function(movie){
+			return _.find(movie.people.crew.directing,function(sm){
+				return (sm.job=="Director");
+			});
+		}
+	});
 }

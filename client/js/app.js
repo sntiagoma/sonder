@@ -223,8 +223,18 @@ var app = angular.module('Sonder', [
             }
         });
     });
-});
+})
 
+.constant('_', window._)
+
+.run(function($rootScope){
+    $rootScope._ = window._;
+})
+
+;
+
+require("../directives/directives.js")(app);
+require("../filters/filters.js")(app);
 require("./account/account.js")(app);
 require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
@@ -245,10 +255,11 @@ require("./media/places/places.controller.js")(app);
 require("./media/music/music.controller.js")(app);
 require("./media/movies/movies.controller.js")(app);
 require("./media/shows/shows.controller.js")(app);
+require("./media/search/search.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":17,"../components/auth/user.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../components/shell/dialog/dialog.controller.js":20,"../components/shell/shell.controller.js":21,"../components/socket/socket.service.js":22,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/shows/shows.controller.js":16}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":18,"../components/auth/user.service.js":19,"../components/mongoose-error/mongoose-error.directive.js":20,"../components/shell/dialog/dialog.controller.js":21,"../components/shell/shell.controller.js":22,"../components/socket/socket.service.js":23,"../directives/directives.js":24,"../filters/filters.js":25,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -292,7 +303,14 @@ module.exports = function(app){
         url: '/',
         templateUrl: 'templates/main.html',
         controller: 'MainCtrl'
-      });
+      }).state('pageNotFound',{
+        url: '/404',
+        templateUrl: 'templates/404.html',
+        controller: function($scope){
+
+        }
+      })
+      ;
   });
 }
 },{}],11:[function(require,module,exports){
@@ -307,6 +325,19 @@ module.exports = function(app){
       $scope.waiting = false;
     });
   });
+
+  app.controller('BookCtrl', function($scope, $http, $stateParams, $state){
+    $scope.book = {};
+    $http.get("/api/books/"+$stateParams.olid)
+    .then(
+      function(data){
+        $scope.book = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
 },{}],12:[function(require,module,exports){
 'use strict';
@@ -319,29 +350,59 @@ module.exports = function(app){
         templateUrl: 'templates/books.html',
         controller: 'BooksCtrl'
       })
+      .state('book', {
+        url: '/books/:olid',
+        templateUrl: 'templates/book.html',
+        controller: 'BookCtrl'
+      })
       .state('places', {
         url: '/places',
         templateUrl: 'templates/places.html',
         controller: 'PlacesCtrl'
       })
-      .state('music', {
-      	url: '/music',
-      	templateUrl: 'templates/music.html',
-      	controller: 'MusicCtrl'
+      .state('place', {
+        url: '/places/:venueid',
+        templateUrl: 'templates/place.html',
+        controller: 'PlaceCtrl'
       })
       .state('movies', {
         url: '/movies',
         templateUrl: 'templates/movies.html',
         controller: 'MoviesCtrl'
       })
+      .state('movie',{
+        url: '/movies/:traktSlug',
+        templateUrl: 'templates/movie.html',
+        controller: "MovieCtrl"
+      })	
       .state('shows', {
         url: '/shows',
         templateUrl: 'templates/shows.html',
         controller: 'ShowsCtrl'
       })
-      ;
+      .state('show',{
+        url: '/shows/:traktSlug',
+        templateUrl: 'templates/show.html',
+        controller: "ShowCtrl"
+      })
+      .state('music', {
+        url: '/music',
+        templateUrl: 'templates/music.html',
+        controller: 'MusicCtrl'
+      })
+      .state('track', {
+        url: '/music/:artist/tracks/:track',
+        templateUrl: 'templates/track.html',
+        controller: 'TrackCtrl'
+      })
+			.state('search', {
+				url: '/search',
+				templateUrl: 'templates/search.html',
+				controller: 'SearchCtrl'
+			});
   });
 }
+
 },{}],13:[function(require,module,exports){
 'use strict';
 
@@ -359,6 +420,24 @@ module.exports = function(app){
 				$scope.waiting = false;
 			}
 		);
+	});
+
+	app.controller('MovieCtrl', function($scope, $http, $stateParams, $state){
+		$scope.movie = {};
+		$http.get("/api/movies/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.movie = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		);
+		$scope.filterDirector = function(movie){
+			return _.find(movie.people.crew.directing,function(sm){
+				return (sm.job=="Director");
+			});
+		}
 	});
 }
 },{}],14:[function(require,module,exports){
@@ -379,7 +458,20 @@ module.exports = function(app){
 			}
 		);
 	});
+  app.controller('TrackCtrl', function($scope, $http, $stateParams, $state){
+    $scope.track = {};
+    $http.get("/api/music/"+$stateParams.artist+"/tracks/"+$stateParams.track)
+    .then(
+      function(data){
+        $scope.track = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
+
 },{}],15:[function(require,module,exports){
 'use strict';
 
@@ -413,8 +505,84 @@ module.exports = function(app){
       }
     );
   });
+  app.controller('PlaceCtrl', function($scope, $http, $stateParams, $state){
+    $scope.place = {};
+    $http.get("/api/places/"+$stateParams.venueid)
+    .then(
+      function(data){
+        $scope.place = data.data;
+      },
+      function(error){
+        $state.go("pageNotFound");
+      }
+    )
+  });
 }
 },{}],16:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app) {
+    app.controller('SearchCtrl', function($scope, $http) {
+        $scope.musicResults = [];
+        $scope.bookResults = [];
+        $scope.movieResults = [];
+        $scope.showResults = [];
+        $scope.placeResults = [];
+        $scope.waiting = false;
+        $scope.searchTerm = "";
+        $scope.search = function(form) {
+        		$scope.waiting = true;
+            $http.get("/api/music/search/" + $scope.searchTerm).then(
+                function(data) { //success
+                    $scope.musicResults = data.data;
+                },
+                function(data) {
+                    console.log(err);
+                    $scope.waiting = false;
+                }
+            );
+            $http.get("/api/books/search/" + $scope.searchTerm).then(
+                function(data) {
+                    $scope.bookResults = data.data;
+                },
+                function(error) {
+                    console.log(error);
+                    $scope.waiting = false;
+                }
+            );
+            $http.get("/api/movies/search/" + $scope.searchTerm).then(
+                function(data) {
+                    $scope.movieResults = data.data;
+                },
+                function(error) {
+                    $scope.waiting = false;
+                    console.log(error);
+                }
+            );
+            $http.get("/api/shows/search/" + $scope.searchTerm).then(
+                function(data) {
+                    $scope.showResults = data.data;
+                },
+                function(error) {
+                    console.log(error);
+                    $scope.waiting = false;
+                }
+            );
+            $http.get("/api/places/search/" + $scope.searchTerm).then(
+                function(data) {
+                    $scope.placeResults = data.data;
+                    $scope.waiting = false;
+                },
+                function(error) {
+                    console.log(error);
+                    $scope.waiting = false;
+                }
+            );
+        }
+    });
+}
+
+},{}],17:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -432,8 +600,21 @@ module.exports = function(app){
 			}
 		);
 	});
+
+	app.controller('ShowCtrl', function($scope, $http, $stateParams, $state){
+		$scope.show = {};
+		$http.get("/api/shows/"+$stateParams.traktSlug)
+		.then(
+			function(data){
+				$scope.show = data.data;
+			},
+			function(error){
+				$state.go("pageNotFound");
+			}
+		)
+	});
 }
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -581,7 +762,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -605,7 +786,7 @@ module.exports = function(app){
 	  });
   });
 }
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -621,7 +802,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -641,7 +822,7 @@ module.exports = function(app){
   };
 });
 }
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -704,7 +885,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 /* global io */
 'use strict';
 
@@ -779,5 +960,48 @@ module.exports = function(app){
       }
     };
   });
+}
+},{}],24:[function(require,module,exports){
+"use strict";
+//E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
+module.exports = function(app){
+  app.directive("parallaxImg",function(){
+    return {
+      restrict: "E",
+      scope: {
+        image: "@pImg"
+      },
+      transclude: true,
+      templateUrl: "/templates/directives/parallax-img.html",
+      link: function(scope, element, attrs){
+        $('.parallax').parallax();
+      }
+    };
+  });
+}
+},{}],25:[function(require,module,exports){
+"use strict";
+module.exports = function(app){
+app.filter('msToMin', function() {
+    return function(milliseconds, withHour) {
+        var seconds = parseInt((milliseconds / 1000) % 60);
+        var minutes = parseInt((milliseconds / (100060)) % 60);
+        var hours = parseInt((milliseconds / (100060 * 60)) % 24);
+        var out = "";
+        if (withHour) {
+            hours = (hours < 10) ? "0" + hours : hours;
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+            out = hours + ":" + minutes + ":" + seconds;
+        } else {
+            minutes = (parseInt(minutes) + (60 * parseInt(hours)));
+            minutes = (minutes < 10) ? "0" + minutes : minutes;
+            seconds = (seconds < 10) ? "0" + seconds : seconds;
+            out = minutes + ":" + seconds;
+        }
+        return out;
+    };
+});
+
 }
 },{}]},{},[8]);

@@ -9,22 +9,23 @@ var Promise = require("bluebird");
 function getFirstPlaceImage(placeid){
   return new Promise(
     (resolve,reject)=>{
-      var requesturi = "https://api.foursquare.com/v2/venues/"+placeid+"/photos"+
-        "?client_id="+process.env.FOURSQUARE_ID+
-        "&client_secret="+process.env.FOURSQUARE_SECRET+
-        "&v=20130815"+
-        "&limit=1"
       request.get(
-        requesturi,
-        (err, res, body) =>{
+        {
+          url: "https://api.foursquare.com/v2/venues/"+placeid+"/photos",
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815",
+            limit: 1
+          },
+          json: true
+        },
+        (err, res, body) =>
+          {
             if(err){
               reject(err);
             }
-            try{
-              var photo = JSON.parse(body).response.photos.items[0];
-            }catch(e){
-              reject(e);
-            }
+            var photo = body.response.photos.items[0];
             resolve(photo);
           }
         )
@@ -35,22 +36,52 @@ function getFirstPlaceImage(placeid){
 function searchPlace(query){
   return new Promise(
     (resolve,reject)=>{
-      var requesturi = "https://api.foursquare.com/v2/venues/search"+
-        "?client_id="+process.env.FOURSQUARE_ID+
-        "&client_secret="+process.env.FOURSQUARE_SECRET+
-        "&v=20130815"+
-        "&ll=6.244747,-75.574828"
-        "&query="+query;
       request.get(
-        requesturi,
-        (err, res, body) => {
+        {
+          url: "https://api.foursquare.com/v2/venues/search",
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815",
+            ll: "6.244747,-75.574828",
+            query: query,
+            limit: 10
+          },
+          json: true
+        },
+        (err, res, body) =>
+          {
+            if(err){
+              reject(err);
+            }
+            resolve(body.response.venues);
+          }
+        )
+    }
+  );
+}
+
+
+function getVenueInfo(venueid){
+  return new Promise(
+    (resolve, reject) => {
+      request.get(
+        {
+          url: "https://api.foursquare.com/v2/venues/"+venueid,
+          qs: {
+            client_id: process.env.FOURSQUARE_ID,
+            client_secret: process.env.FOURSQUARE_SECRET,
+            v: "20130815"
+          },
+          json: true
+        },
+        (err, res, venue) => {
           if(err){
             reject(err);
           }
-          var places = body;
-          resolve(places);
+          resolve(venue);
         }
-        )
+      );
     }
   );
 }
@@ -105,9 +136,32 @@ exports.search = function(req, res) {
   var query = req.params.query;
   searchPlace(query)
   .then((places)=>{
-    res.json(places);
-  }).catch((error) => {
-    log.error("On API /books, ERROR: %s",error);
-    res.send(error);
+    var ids = _.map(places, (item)=>{return item.id});
+    Promise.map(
+      ids,
+      (id)=>{
+        return getFirstPlaceImage(id);
+      }
+      )
+    .then((data)=>{
+      for(let i = 0; i<data.length; i++){
+        places[i].image = data[i];
+      }
+      res.send(places);
+    })
+    .catch((error)=>{
+      throw error;
+    });
   });
 };
+exports.venue = function(req, res){
+  var venue = req.params.venueid;
+  getVenueInfo(venue)
+  .then((venue)=>{
+    res.json(venue.response.venue);
+  })
+  .catch((err)=>{
+    log.error(err);
+    res.status(404).send(err);
+  });
+}

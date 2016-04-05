@@ -1,23 +1,34 @@
 <div ng-show="waiting">
   <div class="progress margin-zero">
       <div class="indeterminate"></div>
-  </div>  
+  </div>
 </div>
 <div class="container">
   <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="book in books">
       <div class="card">
         <div class="card-image">
-          <img ng-src="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg">
+          <image-cropper image-url="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg"
+              width="480"
+              height="640"
+              show-controls="false"
+              fit-on-init="false"
+              center-on-init="true"
+              api="getApiFunction"
+              crop-callback="myCallbackFunction"
+              check-cross-origin="false"
+              zoom-step="0.1"
+              action-labels="myButtonLabelsObject"
+            ></image-cropper>
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
         </div>
         <div class="card-content">
           <p>Written by {{book.authors[0].name}}</p>
         </div>
         <div class="card-action">
-          <a href="#">Link</a>
+          <a ui-sref="book({olid:book.cover_edition_key})">See more</a>
         </div>
       </div>
     </div>
-  </div>      
+  </div>
 </div>

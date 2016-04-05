@@ -39,3 +39,21 @@ exports.search = function(req, res) {
     res.send(error);
   });
 };
+
+exports.movie = function(req, res){
+  var query = req.params.traktSlug;
+  trakt.movie(query, {extended:"full,images"})
+  .then((show)=>{
+    trakt.moviePeople(query, {extended:"full,images"})
+    .then((people)=>{
+      show.people = people;
+      res.json(show);
+    })
+    .catch((error)=>{
+      throw "Error on People: "+error;
+    });
+  })
+  .catch((err)=>{
+    res.status(404).json({error:err});
+  });
+}
