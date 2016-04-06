@@ -16,11 +16,11 @@
 </nav>
 <div class="container">
   <div class="row">
-    <h1> Music results </h1>
+    <h1 ngIf="musicResults.length != 0"> Music results </h1>
     <div class="col s6 m4 l3" ng-repeat="song in musicResults">
       <div class="card">
         <div class="card-image">
-          <img ng-src='{{song.image[2]["#text"]}}'>
+          <img ng-src='{{song.image[2]["#text"].length != 0 ? song.image[2]["#text"] : "https://cdn1.iconfinder.com/data/icons/audio-2/512/musicfile-256.png"}}'>
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{song.name}}</span>
         </div>
         <div class="card-content">
@@ -34,8 +34,8 @@
   </div>
   <div class='row'>
 		<br> <br> <br>
-    <hr>
-    <h1> Book Results </h1>
+    <hr ngIf="bookResults.length != 0">
+    <h1 bookResults.length != 0> Book Results </h1>
     <div class="col s6 m4 l3" ng-repeat="book in bookResults">
       <div class="card">
         <div class="card-image">
@@ -65,8 +65,8 @@
   </div>
   <div class='row'>
 		<br> <br> <br>
-    <hr>
-    <h1> Movie Results </h1>
+    <hr ngIf="movieResults.length!=0">
+    <h1 ngIf="movieResults.length!=0"> Movie Results </h1>
 
     <div class="col s6 m4 l3" ng-repeat="movie in movieResults">
       <div class="card">
@@ -85,8 +85,8 @@
   </div>
   <div class='row'>
 		<br> <br> <br>
-    <hr>
-    <h1> Shows Results </h1>
+    <hr ngIf="showResults.length != 0">
+    <h1 ngIf="showResults.length != 0"> Shows Results </h1>
 
     <div class="col s6 m4 l3" ng-repeat="show in showResults">
       <div class="card">
@@ -105,8 +105,8 @@
   </div>
   <div class='row'>
 		<br> <br> <br>
-    <hr>
-    <h1> Place Results </h1>
+    <hr ngIf="placeResults.lenght != 0">
+    <h1 ngIf="placeResutts.length != 0"> Place Results </h1>
 
     <div class="col s12 m6 l4" ng-repeat="place in placeResults">
       <div class="card">
