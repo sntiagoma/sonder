@@ -3,7 +3,7 @@
       <div class="indeterminate"></div>
   </div>  
 </div>
-<nav>
+<nav class="background flat blue-grey darken-4">
   <div class="nav-wrapper">
     <form name="searchform" ng-submit="search(searchform)">
       <div class="input-field">
@@ -31,13 +31,16 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class='row'>
 		<br> <br> <br>
     <hr>
     <h1> Book Results </h1>
     <div class="col s6 m4 l3" ng-repeat="book in bookResults">
       <div class="card">
         <div class="card-image">
-          <image-cropper image-url="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg"
+          <!--<image-cropper image-url="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg"-->
+          <image-cropper image-url="{{book.cover_id != undefined ? 'http://covers.openlibrary.org/b/ID/'+book.cover_id+'-M.jpg' : 'http://i.imgur.com/JjWkyon.png' }}"
               width="480"
               height="640"
               show-controls="false"
@@ -59,6 +62,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class='row'>
 		<br> <br> <br>
     <hr>
     <h1> Movie Results </h1>
@@ -66,7 +71,7 @@
     <div class="col s6 m4 l3" ng-repeat="movie in movieResults">
       <div class="card">
         <div class="card-image">
-          <img ng-src='{{movie.movie.images.poster.thumb}}'>
+          <img ng-src='{{movie.movie.images.poster.thumb != undefined ? movie.movie.images.poster.thumb : "http://i.imgur.com/NqeSgkR.png"}}'>
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{movie.movie.title}}</span>
         </div>
         <div class="card-content">
@@ -77,6 +82,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class='row'>
 		<br> <br> <br>
     <hr>
     <h1> Shows Results </h1>
@@ -84,7 +91,7 @@
     <div class="col s6 m4 l3" ng-repeat="show in showResults">
       <div class="card">
         <div class="card-image">
-          <img ng-src='{{show.show.images.poster.thumb}}'>
+          <img ng-src='{{show.show.images.poster.thumb != undefined ? show.show.images.poster.thumb : "http://i.imgur.com/fQW4GO3.png"}}'>
           <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.show.title}}</span>
         </div>
         <div class="card-content">
@@ -95,6 +102,8 @@
         </div>
       </div>
     </div>
+  </div>
+  <div class='row'>
 		<br> <br> <br>
     <hr>
     <h1> Place Results </h1>
@@ -102,7 +111,7 @@
     <div class="col s12 m6 l4" ng-repeat="place in placeResults">
       <div class="card">
         <div class="card-image">
-          <image-cropper image-url="{{place.image.prefix}}width600{{place.image.suffix}}"
+          <image-cropper image-url="{{(place.image.prefix != undefined && place.image.suffix != undefined ) ? place.image.prefix + 'width600' + place.image.suffix : 'https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/location-256.png'}}"
               width="480"
               height="640"
               show-controls="false"
