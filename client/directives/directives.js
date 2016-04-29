@@ -14,4 +14,21 @@ module.exports = function(app){
       }
     };
   });
+  app.directive("poster",function($compile){
+    return {
+      restrict: "E",
+      templateUrl: "/templates/directives/poster.html",
+      link: function(scope, element, attrs){
+        scope.href = $compile(attrs.href);
+      },
+      scope: {
+        image: "@image",
+        width: "@width",
+        height: "@height",
+        title: "@title",
+        description: "@description",
+        type: "@type"
+      }
+    };
+  });
 }

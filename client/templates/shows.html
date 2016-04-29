@@ -6,18 +6,7 @@
 <div class="container">
   <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="show in shows">
-      <div class="card">
-        <div class="card-image">
-          <img ng-src='{{show.images.poster.thumb}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.title}}</span>
-        </div>
-        <div class="card-content">
-          <p>Released in {{show.year}}</p>
-        </div>
-        <div class="card-action">
-          <a ui-sref="show({traktSlug: show.ids.slug})">See more</a>
-        </div>
-      </div>
+      <poster image="{{show.images.poster.thumb}}" width="300" height="450" title="{{show.title}}" description="Released in {{show.year}}" type="show" ui-sref="show({traktSlug: show.ids.slug})"></poster>
     </div>
   </div>      
 </div>

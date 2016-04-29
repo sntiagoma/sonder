@@ -1,0 +1,23 @@
+<div class="card">
+  <div class="card-image">
+    <image-cropper image-url="{{image}}"
+        width="{{width}}"
+        height="{{height}}"
+        show-controls="false"
+        fit-on-init="false"
+        center-on-init="true"
+        api="getApiFunction"
+        crop-callback="myCallbackFunction"
+        check-cross-origin="false"
+        zoom-step="0.1"
+        action-labels="myButtonLabelsObject"
+      ></image-cropper>
+    <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{title}}</span>
+  </div>
+  <div class="card-content">
+    <p>{{description}}</p>
+  </div>
+  <div class="card-action">
+    btn1 - btn2 - btn3
+  </div>
+</div>

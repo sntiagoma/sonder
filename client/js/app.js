@@ -293,6 +293,7 @@ module.exports = function(app){
     });
   });
 }
+
 },{}],10:[function(require,module,exports){
 'use strict';
 
@@ -975,6 +976,23 @@ module.exports = function(app){
       templateUrl: "/templates/directives/parallax-img.html",
       link: function(scope, element, attrs){
         $('.parallax').parallax();
+      }
+    };
+  });
+  app.directive("poster",function($compile){
+    return {
+      restrict: "E",
+      templateUrl: "/templates/directives/poster.html",
+      link: function(scope, element, attrs){
+        scope.href = $compile(attrs.href);
+      },
+      scope: {
+        image: "@image",
+        width: "@width",
+        height: "@height",
+        title: "@title",
+        description: "@description",
+        type: "@type"
       }
     };
   });

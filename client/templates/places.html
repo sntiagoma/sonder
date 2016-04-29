@@ -5,28 +5,10 @@
 </div>
 <div class="container">
   <div class="row sndr-align-children">
-    <div class="col s12 m6 l4" ng-repeat="place in places">
+    <div class="col s6 m4 l3" ng-repeat="place in places">
       <div class="card">
         <div class="card-image">
-          <image-cropper image-url="{{place.image.prefix}}width600{{place.image.suffix}}"
-              width="480"
-              height="640"
-              show-controls="false"
-              fit-on-init="false"
-              center-on-init="true"
-              api="getApiFunction"
-              crop-callback="myCallbackFunction"
-              check-cross-origin="false"
-              zoom-step="0.1"
-              action-labels="myButtonLabelsObject"
-            ></image-cropper>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.categories[0].pluralName}}</span>
-        </div>
-        <div class="card-content">
-          <p>{{place.name}}</p>
-        </div>
-        <div class="card-action">.
-          <a ui-sref="place({venueid:place.id})">See more</a>
+          <poster image="{{place.image.prefix}}width600{{place.image.suffix}}" width="480" height="640" title="{{place.name}}" description="Listed in {{place.categories[0].pluralName}}" type="place" ui-sref="place({venueid:place.id})"></poster>
         </div>
       </div>
     </div>
