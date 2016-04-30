@@ -32,7 +32,7 @@ exports.search = function(req, res) {
   var query = req.params.query;
   trakt.searchShow(query)
   .then((result)=>{
-    res.json(result);
+    res.json(_.map(result,(item)=>{return item.show;}));
   })
   .catch((error)=>{
     log.error("On API /movies, ERROR: %s", error);

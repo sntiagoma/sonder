@@ -31,4 +31,18 @@ module.exports = function(app){
       }
     };
   });
+  app.directive("esearchbox",function($state){
+    return {
+      restrict: "E",
+      templateUrl: "/templates/directives/esearchbox.html",
+      link: function(scope, element, attrs){
+        $(element).find("form").css("display","flex");
+        $(element).find("input[type=\"text\"]").addClass("esearchbox-input");
+        $(element).find("input[type=\"submit\"]").addClass("esearchbox-btn");
+        scope.search = function(term){
+          $state.go("search-result",{term:term});
+        }
+      }
+    }
+  });
 }

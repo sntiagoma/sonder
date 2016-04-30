@@ -4,6 +4,7 @@ module.exports = function(app){
   app.controller('MainCtrl', function ($scope, $http, socket, Auth) {
     $scope.Auth = Auth;
     $scope.date = new Date();
+    $scope.search = true;
     $scope.logout = function(){
       Auth.logout();
     }

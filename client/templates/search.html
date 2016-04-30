@@ -3,137 +3,41 @@
       <div class="indeterminate"></div>
   </div>  
 </div>
-<nav class="background flat blue-grey darken-4">
-  <div class="nav-wrapper">
-    <form name="searchform" ng-submit="search(searchform)">
-      <div class="input-field">
-        <input id="search" type="search" required ng-model="searchTerm" name="q">
-        <label for="search"><i class="material-icons">search</i></label>
-        <i class="material-icons">close</i>
-      </div>
-    </form>
-  </div>
-</nav>
 <div class="container">
   <div class="row">
-    <h1 ngIf="musicResults.length != 0"> Music results </h1>
-    <div class="col s6 m4 l3" ng-repeat="song in musicResults">
-      <div class="card">
-        <div class="card-image">
-          <img ng-src='{{song.image[2]["#text"].length != 0 ? song.image[2]["#text"] : "https://cdn1.iconfinder.com/data/icons/audio-2/512/musicfile-256.png"}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{song.name}}</span>
-        </div>
-        <div class="card-content">
-          <p>Written by {{song.artist}}</p>
-        </div>
-        <div class="card-action">
-          <a ui-sref="track({artist:song.artist,track:song.name})">See more</a>
-        </div>
-      </div>
+    <esearchbox></esearchbox>
+  </div>
+  <div ng-show="show">
+  <div class="row">
+    <h1>Music results </h1>
+    <div class="col s6 m4 l3" ng-repeat="song in songs">
+      <poster image="{{song.image[2]['#text']?song.image[2]['#text']:'/images/poster.png'}}" width="304" height="304" title="{{song.name}}" description="Written by {{song.artist.name}}" type="song" ui-sref="track({artist:song.artist.name,track:song.name})"></poster>
     </div>
   </div>
   <div class='row'>
-		<br> <br> <br>
-    <hr ngIf="bookResults.length != 0">
-    <h1 bookResults.length != 0> Book Results </h1>
-    <div class="col s6 m4 l3" ng-repeat="book in bookResults">
-      <div class="card">
-        <div class="card-image">
-          <!--<image-cropper image-url="http://covers.openlibrary.org/b/ID/{{book.cover_id}}-M.jpg"-->
-          <image-cropper image-url="{{book.cover_id != undefined ? 'http://covers.openlibrary.org/b/ID/'+book.cover_id+'-M.jpg' : 'http://i.imgur.com/JjWkyon.png' }}"
-              width="480"
-              height="640"
-              show-controls="false"
-              fit-on-init="false"
-              center-on-init="true"
-              api="getApiFunction"
-              crop-callback="myCallbackFunction"
-              check-cross-origin="false"
-              zoom-step="0.1"
-              action-labels="myButtonLabelsObject"
-            ></image-cropper>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{book.title}}</span>
-        </div>
-        <div class="card-content">
-          <p>Written by {{book.author_name[0]}}</p>
-        </div>
-        <div class="card-action">
-          <a ui-sref="book({olid:book.cover_edition_key})">See more</a>
-        </div>
-      </div>
+    <h1>Book Results</h1>
+    <div class="col s6 m4 l3" ng-repeat="book in books">
+      <poster image="{{book.cover_i?'http://covers.openlibrary.org/b/ID/'+book.cover_i+'-M.jpg':'/images/poster.png'}}" width="180" height="270" title="{{book.title}}" description="Written by {{book.authors[0].name}}" type="book" ui-sref="book({olid:book.cover_edition_key})"></poster>
     </div>
   </div>
   <div class='row'>
-		<br> <br> <br>
-    <hr ngIf="movieResults.length!=0">
-    <h1 ngIf="movieResults.length!=0"> Movie Results </h1>
-
-    <div class="col s6 m4 l3" ng-repeat="movie in movieResults">
-      <div class="card">
-        <div class="card-image">
-          <img ng-src='{{movie.movie.images.poster.thumb != undefined ? movie.movie.images.poster.thumb : "http://i.imgur.com/NqeSgkR.png"}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{movie.movie.title}}</span>
-        </div>
-        <div class="card-content">
-          <p>Released in {{movie.movie.year}}</p>
-        </div>
-        <div class="card-action">
-          <a ui-sref="movie({traktSlug: movie.movie.ids.slug})">See more</a>
-        </div>
-      </div>
+    <h1>Movie Results</h1>
+    <div class="col s6 m4 l3" ng-repeat="movie in movies">
+      <poster image="{{movie.images.poster.thumb?movie.images.poster.thumb:'/images/poster.png'}}" width="300" height="450" title="{{movie.title}}" description="Released in {{movie.year}}" ui-sref="movie({traktSlug: movie.ids.slug})" type="movie"></poster>
     </div>
   </div>
   <div class='row'>
-		<br> <br> <br>
-    <hr ngIf="showResults.length != 0">
-    <h1 ngIf="showResults.length != 0"> Shows Results </h1>
-
-    <div class="col s6 m4 l3" ng-repeat="show in showResults">
-      <div class="card">
-        <div class="card-image">
-          <img ng-src='{{show.show.images.poster.thumb != undefined ? show.show.images.poster.thumb : "http://i.imgur.com/fQW4GO3.png"}}'>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{show.show.title}}</span>
-        </div>
-        <div class="card-content">
-          <p>Released in {{show.show.year}}</p>
-        </div>
-        <div class="card-action">
-          <a ui-sref="show({traktSlug: show.show.ids.slug})">See more</a>
-        </div>
-      </div>
+    <h1>Shows Results </h1>
+    <div class="col s6 m4 l3" ng-repeat="show in shows">
+      <poster image="{{show.images.poster.thumb?show.images.poster.thumb:'/images/poster.png'}}" width="300" height="450" title="{{show.title}}" description="Released in {{show.year}}" type="show" ui-sref="show({traktSlug: show.ids.slug})"></poster>
     </div>
   </div>
   <div class='row'>
-		<br> <br> <br>
-    <hr ngIf="placeResults.lenght != 0">
-    <h1 ngIf="placeResutts.length != 0"> Place Results </h1>
-
-    <div class="col s12 m6 l4" ng-repeat="place in placeResults">
-      <div class="card">
-        <div class="card-image">
-          <image-cropper image-url="{{(place.image.prefix != undefined && place.image.suffix != undefined ) ? place.image.prefix + 'width600' + place.image.suffix : 'https://cdn3.iconfinder.com/data/icons/unicons-vector-icons-pack/32/location-256.png'}}"
-              width="480"
-              height="640"
-              show-controls="false"
-              fit-on-init="false"
-              center-on-init="true"
-              api="getApiFunction"
-              crop-callback="myCallbackFunction"
-              check-cross-origin="false"
-              zoom-step="0.1"
-              action-labels="myButtonLabelsObject"
-            ></image-cropper>
-          <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{place.categories[0].pluralName}}</span>
-        </div>
-        <div class="card-content">
-          <p>{{place.name}}</p>
-        </div>
-        <div class="card-action">.
-          <a ui-sref="place({venueid:place.id})">See more</a>
-        </div>
-      </div>
+    <h1>Place Results </h1>
+    <div class="col s6 m4 l3" ng-repeat="place in places">
+      <poster image="{{(place.image.prefix&&place.image.suffix)?place.image.prefix+'width600'+place.image.suffix:'/images/poster.png'}}" width="480" height="640" title="{{place.name}}" description="Listed in {{place.categories[0].pluralName}}" type="place" ui-sref="place({venueid:place.id})"></poster>
     </div>
-
-
   </div>      
 </div>
+</div>
+

@@ -4,13 +4,12 @@ module.exports = function(app){
 	app.factory('Search', function($search, $http, $scope){
 		return {
 			search: function (text){
-				//must do several requests, 1 per service (music, books, etc.)
+				//books
 				$http.get("/api/books/search/"+text)
-					.then(function(response){ // 4 success
+					.then(function(response){
+
 						$scope.booksSearch = response;
-					}, function(error){
-						//Aparently we must handle the error (?)
-					}
+					}, function(error){}
 				);
 				//music
 				$http.get("/api/music/search/"+text)

@@ -6,11 +6,7 @@
 <div class="container">
   <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="place in places">
-      <div class="card">
-        <div class="card-image">
-          <poster image="{{place.image.prefix}}width600{{place.image.suffix}}" width="480" height="640" title="{{place.name}}" description="Listed in {{place.categories[0].pluralName}}" type="place" ui-sref="place({venueid:place.id})"></poster>
-        </div>
-      </div>
+      <poster image="{{place.image.prefix}}width600{{place.image.suffix}}" width="480" height="640" title="{{place.name}}" description="Listed in {{place.categories[0].pluralName}}" type="place" ui-sref="place({venueid:place.id})"></poster>
     </div>
   </div>
 </div>

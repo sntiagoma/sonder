@@ -65,11 +65,6 @@ gulp.task('build', function() {
     return;
 });
 
-gulp.task('auto',function() {
-    gulp.start(['build', 'watch', 'run']);
-    return;
-});
-
 gulp.task('default',function() {
     gulp.start(['build','run']);
     return;

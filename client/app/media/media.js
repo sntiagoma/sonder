@@ -57,6 +57,12 @@ module.exports = function(app){
 				url: '/search',
 				templateUrl: 'templates/search.html',
 				controller: 'SearchCtrl'
-			});
+			})
+      .state('search-result',{
+        url: '/search/:term',
+        templateUrl: 'templates/search.html',
+        controller: 'SearchCtrl'
+      })
+      ;
   });
 }

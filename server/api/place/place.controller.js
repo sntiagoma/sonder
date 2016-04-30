@@ -54,7 +54,11 @@ function searchPlace(query){
             if(err){
               reject(err);
             }
-            resolve(body.response.venues);
+            try{
+              resolve(body.response.venues);
+            }catch(e){
+              reject(e);
+            }
           }
         )
     }
