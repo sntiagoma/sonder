@@ -73,7 +73,7 @@ exports.movie = function(req, res){
               }
             });
           }else{
-            log.info("Movie %s already existis",show.getId());
+            log.info("Movie %s already exists",show.getId());
           }
         }
       }

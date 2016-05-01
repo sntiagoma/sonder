@@ -8,7 +8,7 @@ var ShowSchema = new Schema({
 
 ShowSchema.methods = {
   getId : function () {
-    return this.id;
+    return this.slug;
   }
 };
 

@@ -76,7 +76,7 @@ exports.show = function(req, res){
                 }
               });
             }else{
-              log.info("Show %s already existis",show.getId());
+              log.info("Show %s already exists",show.getId());
             }
           }
         }
