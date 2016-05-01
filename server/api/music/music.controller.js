@@ -247,7 +247,8 @@ function checkTrack(apiTrack, artistName) {
                             }
                           );
                         } else {
-                          reject(track);
+                          log.info("Track %s of %s already exists",track.slug.track,track.slug.artist);
+                          resolve(track);
                         }
                       }
                     }
