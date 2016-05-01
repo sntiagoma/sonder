@@ -77,8 +77,6 @@ require("./main/main.js")(app);
 require("../components/auth/auth.service.js")(app);
 require("../components/auth/user.service.js")(app);
 require("../components/mongoose-error/mongoose-error.directive.js")(app);
-require("../components/shell/dialog/dialog.controller.js")(app);
-require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);
 require("./media/places/places.controller.js")(app);

@@ -15,13 +15,11 @@ module.exports = function(app){
           password: $scope.user.password
         })
         .then( function() {
-          // Account created, redirect to home
           $location.path('/');
         })
         .catch( function(err) {
           err = err.data;
           $scope.errors = {};
-
           // Update validity of form fields that match the mongoose errors
           angular.forEach(err.errors, function(error, field) {
             form[field].$setValidity('mongoose', false);

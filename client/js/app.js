@@ -112,13 +112,11 @@ module.exports = function(app){
           password: $scope.user.password
         })
         .then( function() {
-          // Account created, redirect to home
           $location.path('/');
         })
         .catch( function(err) {
           err = err.data;
           $scope.errors = {};
-
           // Update validity of form fields that match the mongoose errors
           angular.forEach(err.errors, function(error, field) {
             form[field].$setValidity('mongoose', false);
@@ -247,8 +245,6 @@ require("./main/main.js")(app);
 require("../components/auth/auth.service.js")(app);
 require("../components/auth/user.service.js")(app);
 require("../components/mongoose-error/mongoose-error.directive.js")(app);
-require("../components/shell/dialog/dialog.controller.js")(app);
-require("../components/shell/shell.controller.js")(app);
 require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);
 require("./media/places/places.controller.js")(app);
@@ -259,7 +255,7 @@ require("./media/search/search.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":18,"../components/auth/user.service.js":19,"../components/mongoose-error/mongoose-error.directive.js":20,"../components/shell/dialog/dialog.controller.js":21,"../components/shell/shell.controller.js":22,"../components/socket/socket.service.js":23,"../directives/directives.js":24,"../filters/filters.js":25,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":18,"../components/auth/user.service.js":19,"../components/mongoose-error/mongoose-error.directive.js":20,"../components/socket/socket.service.js":21,"../directives/directives.js":22,"../filters/filters.js":23,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -817,89 +813,6 @@ module.exports = function(app){
   });
 }
 },{}],21:[function(require,module,exports){
-'use strict';
-
-module.exports = function(app){
-  app.controller('DialogController', function ($scope, $mdDialog, $http) {
-  $scope.closeDialog = function() {
-    $mdDialog.hide();
-  };
-
-  
-  $scope.addThing = function() {
-    if($scope.newThing === '') {
-      return;
-    }
-    $http.post('/api/things', { name: $scope.newThing });
-    $scope.newThing = '';
-    $mdDialog.hide();
-  };
-});
-}
-},{}],22:[function(require,module,exports){
-'use strict';
-
-module.exports = function(app){
-  app.controller('ShellCtrl', function ($mdSidenav, $mdDialog, $scope, $location, Auth) {
-
-    
-    $scope.isLoggedIn = Auth.isLoggedIn;
-    $scope.isAdmin = Auth.isAdmin;
-    $scope.getCurrentUser = Auth.getCurrentUser;
-
-    $scope.logout = function() {
-      Auth.logout();
-      $location.path('/login');
-    };
-
-    $scope.isActive = function(route) {
-      return route === $location.path();
-    };
-
-    $scope.toggleLeft = function() {
-      $mdSidenav('left').toggle();
-    };
-
-    var originatorEv;
-    $scope.openMenu = function($mdOpenMenu, ev) {
-      originatorEv = ev;
-      $mdOpenMenu(ev);
-    };
-
-    $scope.notificationsEnabled = true;
-    $scope.toggleNotifications = function() {
-      $scope.notificationsEnabled = !$scope.notificationsEnabled;
-    };
-
-    $scope.redial = function() {
-      $mdDialog.show(
-        $mdDialog.alert()
-          .targetEvent(originatorEv)
-          .clickOutsideToClose(true)
-          .parent('body')
-          .title('Suddenly, a redial')
-          .content('You just called a friend; who told you the most amazing story. Have a cookie!')
-          .ok('That was easy')
-        );
-      originatorEv = null;
-    };
-
-    $scope.checkVoicemail = function() {
-      // This never happens.
-    };
-
-    $scope.showAddDialog = function($event) {
-      var parentEl = angular.element(document.body);
-      $mdDialog.show({
-        parent: parentEl,
-        targetEvent: $event,
-        templateUrl: 'templates/dialog.html',
-        controller: 'DialogController'
-      });
-    };
-  });
-}
-},{}],23:[function(require,module,exports){
 /* global io */
 'use strict';
 
@@ -975,7 +888,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],24:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 //E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
 module.exports = function(app){
@@ -1024,7 +937,7 @@ module.exports = function(app){
     }
   });
 }
-},{}],25:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 module.exports = function(app){
 app.filter('msToMin', function() {
