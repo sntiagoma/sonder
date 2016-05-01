@@ -64,6 +64,7 @@ var app = angular.module('Sonder', [
 ;
 
 require("../directives/directives.js")(app);
+require("../components/auth/auth.service.js")(app);
 require("../filters/filters.js")(app);
 require("./account/account.js")(app);
 require("./account/login/login.controller.js")(app);
@@ -74,8 +75,6 @@ require("./admin/admin.controller.js")(app);
 require("./admin/admin.js")(app);
 require("./main/main.controller.js")(app);
 require("./main/main.js")(app);
-require("../components/auth/auth.service.js")(app);
-require("../components/auth/user.service.js")(app);
 require("../components/mongoose-error/mongoose-error.directive.js")(app);
 require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);

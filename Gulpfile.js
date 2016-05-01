@@ -23,8 +23,8 @@ var sassFolder    = "./client/sass/**/*.scss",
     clientFiles = [
         "./client/*.js",
         "./client/**/*.js",
-        "./client/**/**/*.js", 
-        "./client/**/**/**/*.js", 
+        "./client/**/**/*.js",
+        "./client/**/**/**/*.js",
     ];
 
 gulp.task('styles',function(){
@@ -32,15 +32,6 @@ gulp.task('styles',function(){
         .pipe(sass(sassObjConfig).on('error',log.error))
         .pipe(gulp.dest(sassDest));
     });
-
-/*gulp.task('browserify', function() {
-  return browserify(frontAppPath)
-    .bundle()
-    .pipe(source('app.js'))
-    .pipe(buffer())
-    .pipe(uglify())
-    .pipe(gulp.dest(frontAppDest));
-});*/
 
 gulp.task('browserify', function() {
   return browserify(frontAppPath)
@@ -53,7 +44,6 @@ gulp.task('browserify', function() {
 gulp.task('watch', function() {
     gulp.watch(sassFolder,['styles']);
     gulp.watch('./client/app', ['browserify']);
-    return;
 });
 
 gulp.task('run', function() {
@@ -62,15 +52,12 @@ gulp.task('run', function() {
 
 gulp.task('build', function() {
     gulp.start(['browserify','styles']);
-    return;
 });
 
 gulp.task('default',function() {
     gulp.start(['build','run']);
-    return;
 });
 
-//Livereload Task
 gulp.task('live',['build','run'], function() {
     function restart( file ) {
         server.changed( function( error ) {

@@ -1,8 +1,8 @@
 'use strict';
 
 module.exports = function(app){
-  app.controller('ProfileCtrl', function ($scope, User, Auth) {
-    $scope.user = User.get();
+  app.controller('ProfileCtrl', function ($scope, Auth) {
+    $scope.user = Auth.getCurrentUser();
     $scope.current = Auth.getCurrentUser();
   });
-}
+};

@@ -1,7 +1,7 @@
 <div class="container">
- <div id="signup-page" class="row">
+  <div id="signup-page" class="row">
     <div class="col s12 m8 offset-m2 l6 offset-l3 card-panel">
-      <form class="login-form" name="form" ng-submit="register(form)" novalidate="">
+      <form class="login-form" name="form" ng-submit="register()">
         <div class="row">
           <div class="input-field col s12 center">
             <h4>Register</h4>
@@ -10,14 +10,21 @@
         <div class="row margin">
           <div class="input-field col s12">
             <i class="mdi-social-person-outline prefix"></i>
-            <input id="username" type="text">
+            <input id="name" type="text" ng-model="user.name">
+            <label for="name" class="center-align">Name</label>
+          </div>
+        </div>
+        <div class="row margin">
+          <div class="input-field col s12">
+            <i class="mdi-social-person-outline prefix"></i>
+            <input id="username" type="text" ng-model="user.username">
             <label for="username" class="center-align">Username</label>
           </div>
         </div>
         <div class="row margin">
-          <div class="input-field col s12" ng-class="{ 'has-success': form.email.$valid && submitted,'has-error': form.email.$invalid && submitted }" class="form-group"> 
+          <div class="input-field col s12" class="form-group">
             <i class="mdi-communication-email prefix"></i>
-            <input id="email" type="email">
+            <input id="email" type="email" ng-model="user.email">
             <label for="email" class="center-align">Email</label>
             <p ng-show="form.email.$error.email && submitted" class="help-block">Doesn't look like a valid email.</p>
             <p ng-show="form.email.$error.required && submitted" class="help-block">What's your email address?</p>
@@ -25,49 +32,32 @@
           </div>
         </div>
         <div class="row margin">
-          <div class="input-field col s12" ng-class="{ 'has-success': form.password.$valid && submitted,'has-error': form.password.$invalid && submitted }" class="form-group">
+          <div class="input-field col s12" class="form-group">
             <i class="mdi-action-lock-outline prefix"></i>
-            <input id="password" type="password">
+            <input id="password" type="password" ng-model="user.password">
             <label for="password">Password</label>
             <p ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted" class="help-block">Password must be at least 3 characters.</p>
             <p ng-show="form.password.$error.mongoose" class="help-block">{{ errors.password }}</p>
           </div>
         </div>
         <div class="row margin">
-        <!--En caso de que vayamos a pedir fecha de nacimiento -->
-        <!--<div class="input-field col s12">
-          <i class="mdi-action-today prefix"></i>
-          <input id="date" class="datepicker" type="date" >
-          <label for="date" class="active">Date</label>
-        </div>
-        </div>-->
-        <!-- En caso de que vayamos a pedir confirmacion de la clave -->
-        <!--<div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input id="password-again" type="password">
-            <label for="password-again">Password again</label>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="submit" class="btn waves-effect waves-light col s12" value="Register Now"/>
+            </div>
+            <div class="input-field col s12">
+              <ul class="soc">
+                <li><a class="soc-twitter" href="#" ng-click="loginOauth('twitter')"></a></li>
+                <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth('google')"></a></li>
+                <li><a class="soc-facebook" href="#" ng-click="loginOauth('facebook')"></a></li>
+              </ul>
+            </div>
+            <div class="input-field col s12">
+              <p class="margin center medium-small sign-up">Already have an account? <a href="/login">Login</a></p>
+            </div>
           </div>
-        </div>-->
-        <div class="row">
-          <div class="input-field col s12">
-            <a href="index.html" class="btn waves-effect waves-light col s12">Register Now</a>
-          </div>
-          <div class="input-field col s12">
-          <center>
-            <ul class="soc">
-              <li><a class="soc-twitter" href="#" ng-click="loginOauth(&quot;twitter&quot;)"></a></li>
-              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth(&quot;google&quot;)"></a></li>
-              <li><a class="soc-facebook" href="#" ng-click="loginOauth(&quot;facebook&quot;)"></a></li>
-            </ul>
 
-          </div>
-          <div class="input-field col s12">
-            <p class="margin center medium-small sign-up">Already have an account? <a href="/login">Login</a></p>
-          </div>
-        </div>
-      
       </form>
     </div>
   </div>
-  </div>
+</div>

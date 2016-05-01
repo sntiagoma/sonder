@@ -1,14 +1,53 @@
 'use strict';
 
 module.exports = function(app){
-  app.factory('Auth', function Auth($location, $rootScope, $http, User, $cookieStore, $q) {
+  app.factory('Auth', function Auth($location, $rootScope, $http, $cookieStore, $q) {
     var currentUser = {};
+    var getUser = function () {
+      var deferred = $q.defer();
+      $http({
+        method: "GET",
+        url: "/api/users/me",
+        params: {
+          access_token: $cookieStore.get('token')
+        }
+      })
+        .success(function (data) {
+          currentUser = data;
+          deferred.resolve(data);
+        })
+        .error(function (msg, code) {
+          deferred.reject(msg);
+          console.log(msg,code);
+        });
+      return deferred.promise;
+    };
+    var changePassword = function (oldPassword,newPassword) {
+      var deferred = $q.defer();
+      $http({
+        method: "PUT",
+        url: "/api/users/"+currentUser._id+"/password",
+        params: {
+          access_token: $cookieStore.get('token')
+        },
+        data: {
+          oldPassword: oldPassword,
+          newPassword: newPassword
+        }
+      })
+        .success(function (data) {
+          deferred.resolve(data);
+        })
+        .error(function (msg, code) {
+          deferred.reject(msg);
+          console.log(msg,code);
+        });
+      return deferred.promise;
+    };
     if($cookieStore.get('token')) {
-      currentUser = User.get();
+      currentUser = getUser();
     }
-
     return {
-
       /**
        * Authenticate user and save token
        *
@@ -16,33 +55,26 @@ module.exports = function(app){
        * @param  {Function} callback - optional
        * @return {Promise}
        */
-      login: function(user, callback) {
-        var cb = callback || angular.noop;
+      login: function(user) {
         var deferred = $q.defer();
-
         $http.post('/auth/local', {
           email: user.email,
           password: user.password
         }).
         success(function(data) {
           $cookieStore.put('token', data.token);
-          currentUser = User.get();
+          currentUser = getUser();
           deferred.resolve(data);
-          return cb();
         }).
         error(function(err) {
           this.logout();
           deferred.reject(err);
-          return cb(err);
-        }.bind(this));
-
+        });
         return deferred.promise;
       },
 
       /**
        * Delete access token and user info
-       *
-       * @param  {Function}
        */
       logout: function() {
         $cookieStore.remove('token');
@@ -53,22 +85,26 @@ module.exports = function(app){
        * Create a new user
        *
        * @param  {Object}   user     - user info
-       * @param  {Function} callback - optional
        * @return {Promise}
        */
-      createUser: function(user, callback) {
-        var cb = callback || angular.noop;
-
-        return User.save(user,
-          function(data) {
-            $cookieStore.put('token', data.token);
-            currentUser = User.get();
-            return cb(user);
-          },
-          function(err) {
-            this.logout();
-            return cb(err);
-          }.bind(this)).$promise;
+      createUser: function(user) {
+        var createPOST = function (user) {
+          var deferred = $q.defer();
+          $http.post("/api/users/",user)
+            .success(function (data) {
+              $cookieStore.put('token', data.token);
+              currentUser = getUser().then(function (user) {
+                return user;
+              });
+              deferred.resolve(data);
+            })
+            .error(function (msg, code) {
+              deferred.reject(msg);
+              console.log(msg,code);
+            });
+          return deferred.promise;
+        };
+        return createPOST(user);
       },
 
       /**
@@ -76,20 +112,10 @@ module.exports = function(app){
        *
        * @param  {String}   oldPassword
        * @param  {String}   newPassword
-       * @param  {Function} callback    - optional
        * @return {Promise}
        */
-      changePassword: function(oldPassword, newPassword, callback) {
-        var cb = callback || angular.noop;
-
-        return User.changePassword({ id: currentUser._id }, {
-          oldPassword: oldPassword,
-          newPassword: newPassword
-        }, function(user) {
-          return cb(user);
-        }, function(err) {
-          return cb(err);
-        }).$promise;
+      changePassword: function(oldPassword, newPassword) {
+        return changePassword(oldPassword,newPassword);
       },
 
       /**

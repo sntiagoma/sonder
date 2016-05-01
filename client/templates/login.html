@@ -1,48 +1,47 @@
-<div class="container">
-<div id="login-page" class="row">
+<div class="container" xmlns="http://www.w3.org/1999/html">
+  <div id="login-page" class="row">
     <div class="col s12 m8 offset-m2 l6 offset-l3 card-panel">
-      <form class="login-form" name="form" ng-submit="login(form)" novalidate="">
-        <div class="row">
-          <div class="input-field col s12 center">
-            <p class="center login-form-text">
-              <h2 class="body-content">Login</h2>
-            </p>
+      <div class="row">
+        <form class="login-form" ng-submit="login()">
+          <div class="row">
+            <div class="input-field col s12 center">
+              <h2 class="body-content"> Login</h2>
+            </div>
           </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-social-person-outline prefix"></i>
-            <input id="email" type="text" ng-model="user.email" class="form-control">
-            <label for="email" class="center-align">Email</label>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-social-person-outline prefix"></i>
+              <input id="email" type="text" ng-model="user.email" class="form-control">
+              <label for="email" class="center-align">Email</label>
+            </div>
           </div>
-        </div>
-        <div class="row margin">
-          <div class="input-field col s12">
-            <i class="mdi-action-lock-outline prefix"></i>
-            <input id="password" type="password"  name="password" ng-model="user.password" class="form-control">
-            <label for="password">Password</label>
+          <div class="row margin">
+            <div class="input-field col s12">
+              <i class="mdi-action-lock-outline prefix"></i>
+              <input id="password" type="password"  name="password" ng-model="user.password" class="form-control">
+              <label for="password">Password</label>
+            </div>
           </div>
-        </div>
-        <div class="row">          
-          <div class="input-field col s12 m12 l12  login-text">
-              <input type="checkbox" id="remember-me" />
+          <div class="row">
+            <div class="input-field col s12 m12 l12  login-text">
+              <input type="checkbox" id="remember-me"/>
               <label for="remember-me">Remember me</label>
+            </div>
           </div>
-        </div>
-        <div class="row">
-          <div class="input-field col s12">
-            <a href="#" class="btn waves-effect waves-light col s12">Login</a>
+          <div class="row">
+            <div class="input-field col s12">
+              <input type="submit" class="btn waves-effect waves-light col s12" value="Login"/>
+            </div>
           </div>
-        </div>
-        <center>
-        <div class="row">
-            <ul class="soc">
-              <li><a class="soc-twitter" href="#" ng-click="loginOauth('twitter')"></a></li>
-              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth('google')"></a></li>
-              <li><a class="soc-facebook" href="#" ng-click="loginOauth('facebook')"></a></li>
-            </ul>
-        </div>
-        </center>
-      </form>
+        </form>
+      </div>
+      <div class="row">
+        <ul class="soc">
+          <li><a class="soc-twitter" href="#" ng-click="loginOauth('twitter')"></a></li>
+          <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth('google')"></a></li>
+          <li><a class="soc-facebook" href="#" ng-click="loginOauth('facebook')"></a></li>
+        </ul>
+      </div>
     </div>
   </div>
+</div>
