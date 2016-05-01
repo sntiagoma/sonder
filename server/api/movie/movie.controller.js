@@ -5,7 +5,7 @@ var Promise = require("bluebird");
 var request = require("request");
 var Log = require('log'), log = new Log('info');
 var Trakt = require("trakt-api"), trakt = Trakt(process.env.TRAKT_ID);
-
+var Movie = require("./movie.model");
 exports.index = function(req, res) {
   trakt.movieTrending({extended:"images"})
   .then((trendMovies)=>{
@@ -43,11 +43,45 @@ exports.search = function(req, res) {
 exports.movie = function(req, res){
   var query = req.params.traktSlug;
   trakt.movie(query, {extended:"full,images"})
-  .then((show)=>{
+  .then((movie)=>{
+    Movie.findOne(
+      {
+        slug:query
+      },
+      function(err,show){
+        if(err){
+          let newMovie = new Movie({
+            slug: query
+          });
+          newMovie.save((err,show)=>{
+            if(err){
+              log.error(err);
+            }else{
+              log.info("Movie %s have been added to the DB",show.getId());
+            }
+          });
+        }else{
+          if(show == null){
+            let newMovie = new Movie({
+              slug: query
+            });
+            newMovie.save((err,show)=>{
+              if(err){
+                log.error(err);
+              }else{
+                log.info("Movie %s added to the DB",show.getId());
+              }
+            });
+          }else{
+            log.info("Movie %s already existis",show.getId());
+          }
+        }
+      }
+    );
     trakt.moviePeople(query, {extended:"full,images"})
     .then((people)=>{
-      show.people = people;
-      res.json(show);
+      movie.people = people;
+      res.json(movie);
     })
     .catch((error)=>{
       throw "Error on People: "+error;
