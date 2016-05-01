@@ -19,7 +19,8 @@ var UserSchema = new Schema({
   facebook: {},
   twitter: {},
   google: {},
-  github: {}
+  github: {},
+  shows: [{type:Schema.ObjectId, ref: "Show"}]
 });
 
 /**

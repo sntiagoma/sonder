@@ -5,6 +5,7 @@ var Promise = require("bluebird");
 var request = require("request");
 var Log = require('log'), log = new Log('info');
 var Trakt = require("trakt-api"), trakt = Trakt(process.env.TRAKT_ID);
+var Show = require("./show.model");
 
 exports.index = function(req, res) {
   trakt.showTrending({extended:"images"})
@@ -45,6 +46,42 @@ exports.show = function(req, res){
   trakt.show(query, {extended:"full,images"})
   .then(
     (show)=>{
+      //Saving to DB
+      Show.findOne(
+        {
+          slug:query
+        },
+        function(err,show){
+          if(err){
+            let newShow = new Show({
+              slug: query
+            });
+            newShow.save((err,show)=>{
+              if(err){
+                log.error(err);
+              }else{
+                log.info("Show %s have been added to the DB",show.getId());
+              }
+            });
+          }else{
+            if(show == null){
+              let newShow = new Show({
+                slug: query
+              });
+              newShow.save((err,show)=>{
+                if(err){
+                  log.error(err);
+                }else{
+                  log.info("Show %s added to the DB",show.getId());
+                }
+              });
+            }else{
+              log.info("Show %s already existis",show.getId());
+            }
+          }
+        }
+      );
+      //Adding Extra-Info
       trakt.showSeasons(query,{extended:"full,images"})
       .then((seasons)=>{
         trakt.showPeople(query, {extended:"full,images"}).
