@@ -4,6 +4,7 @@ var _  = require('lodash');
 var Promise = require("bluebird");
 var request = require("request");
 var Log = require('log'), log = new Log('info');
+var Book = require("./book.model");
 
 var subjects = [
   "fiction",
@@ -95,6 +96,79 @@ function getBookByOLID (olid){
   );
 }
 
+/**
+ * Add Book to the DB
+ * @param {Object} apiBook - OpenLibrary API Object {@link getBookByOLID}
+ * @return {Promise<Book,Error>} -
+ */
+function addBookToDB(apiBook) {
+  return new Promise(
+    function (resolve, reject) {
+      let newBook = new Book({
+        slug: apiBook.identifiers.openlibrary[0],
+        title: apiBook.title
+      });
+      newBook.save((err, book)=> {
+        if (err) {
+          log.error(err);
+          reject(err);
+        }else {
+          log.info("Book %s have been added to the DB", book.title);
+          resolve(book);
+        }
+      });
+      resolve(newBook);
+    }
+  );
+}
+
+/**
+ * Method to get an Book and make it if it hadn't made it before.
+ * @param {Object} apiBook - Book object returned from OpenLibrary API
+ * @return {Promise<Book,Error>}
+ */
+function checkBook(apiBook) {
+  return new Promise(
+    function (resolve, reject) {
+      Book.findOne({slug: apiBook.identifiers.openlibrary[0]},
+        function (err, book) {
+          if (err) {
+            addBookToDB(apiBook)
+              .then(
+                (book)=> {
+                  resolve(book);
+                  return null;
+                }
+              )
+              .catch(
+                (err)=> {
+                  reject(err);
+                }
+              );
+          } else {
+            if (book == null) {
+              addBookToDB(apiBook)
+                .then(
+                  (book)=> {
+                    resolve(book);
+                    return null;
+                  }
+                ).catch(
+                (err)=> {
+                  reject(err);
+                }
+              );
+            } else {
+              log.info("Book %s already exists",book.title);
+              resolve(book);
+            }
+          }
+        }
+      );
+    }
+  );
+}
+
 exports.index = function(req, res) {
   Promise.map(
     subjects,
@@ -122,8 +196,13 @@ exports.search = function(req, res) {
 
 exports.olid = function(req, res){
   var olid = req.params.olid;
-  getBookByOLID(olid).then((book)=>{
-    res.json(book);
+  getBookByOLID(olid).then((apiBook)=>{
+    checkBook(apiBook)
+      .then((dbBook)=>{
+        res.json(apiBook);
+        return null;
+      });
+    return null;
   }).catch((err)=>{
     log.error("On API /books/:olid, OLID:%s, ERROR:%s",olid, err);
     res.status(400).send(err);

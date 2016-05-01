@@ -71,10 +71,6 @@ function checkShow(apiShow) {
   );
 }
 
-
-
-
-
 exports.index = function(req, res) {
   trakt.showTrending({extended:"images"})
   .then((trendShows)=>{
