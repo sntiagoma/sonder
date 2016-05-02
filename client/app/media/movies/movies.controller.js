@@ -24,7 +24,7 @@ module.exports = function(app){
 				$scope.movie = data.data;
 			},
 			function(error){
-				$state.go("pageNotFound");
+				$state.go("notFound");
 			}
 		);
 		$scope.filterDirector = function(movie){

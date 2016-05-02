@@ -25,9 +25,16 @@ module.exports = function(app){
         templateUrl: "/templates/profile.html",
         controller: "ProfileCtrl",
         authenticate: true
-      });
+      })
+      .state('user',{
+        url: "/users/:username",
+        templateUrl: "/templates/profile.html",
+        controller: "UsersCtrl"
+      })
+    ;
   });
 }
+
 },{}],2:[function(require,module,exports){
 'use strict';
 
@@ -116,6 +123,27 @@ module.exports = function(app){
 'use strict';
 
 module.exports = function(app){
+  app.controller('UsersCtrl', function ($scope,$http, $stateParams, $state, Auth) {
+    $scope.user = {};
+    $http({
+      method: "GET",
+      url: "/api/users/"+$stateParams.username
+    }).then(
+      function (data) {
+        $scope.user = data.data;
+      },
+      function (err) {
+        console.error("Not Found, ERROR: %s",err);
+        $state.go("notFound");
+      }
+    );
+  });
+};
+
+},{}],7:[function(require,module,exports){
+'use strict';
+
+module.exports = function(app){
   app.controller('AdminCtrl', function ($scope, $http, Auth, User) {
 
     // Use the User $resource to fetch all users
@@ -132,7 +160,7 @@ module.exports = function(app){
   });
 }
 
-},{}],7:[function(require,module,exports){
+},{}],8:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -145,7 +173,7 @@ module.exports = function(app){
       });
   });
 }
-},{}],8:[function(require,module,exports){
+},{}],9:[function(require,module,exports){
 'use strict';
 
 var app = angular.module('Sonder', [
@@ -219,6 +247,7 @@ require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
 require("./account/signup/signup.controller.js")(app);
 require("./account/profile/profile.controller.js")(app);
+require("./account/users/users.controller")(app);
 require("./admin/admin.controller.js")(app);
 require("./admin/admin.js")(app);
 require("./main/main.controller.js")(app);
@@ -234,7 +263,7 @@ require("./media/search/search.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../directives/directives.js":20,"../filters/filters.js":21,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":19,"../components/mongoose-error/mongoose-error.directive.js":20,"../directives/directives.js":21,"../filters/filters.js":22,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./account/users/users.controller":6,"./admin/admin.controller.js":7,"./admin/admin.js":8,"./main/main.controller.js":10,"./main/main.js":11,"./media/books/books.controller.js":12,"./media/media.js":13,"./media/movies/movies.controller.js":14,"./media/music/music.controller.js":15,"./media/places/places.controller.js":16,"./media/search/search.controller.js":17,"./media/shows/shows.controller.js":18}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -271,7 +300,7 @@ module.exports = function(app){
   });
 }
 
-},{}],10:[function(require,module,exports){
+},{}],11:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -281,7 +310,7 @@ module.exports = function(app){
         url: '/',
         templateUrl: 'templates/main.html',
         controller: 'MainCtrl'
-      }).state('pageNotFound',{
+      }).state('notFound',{
         url: '/404',
         templateUrl: 'templates/404.html',
         controller: function($scope){
@@ -291,7 +320,8 @@ module.exports = function(app){
       ;
   });
 }
-},{}],11:[function(require,module,exports){
+
+},{}],12:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -312,13 +342,13 @@ module.exports = function(app){
         $scope.book = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });
 }
 
-},{}],12:[function(require,module,exports){
+},{}],13:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -388,7 +418,7 @@ module.exports = function(app){
   });
 }
 
-},{}],13:[function(require,module,exports){
+},{}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -415,7 +445,7 @@ module.exports = function(app){
 				$scope.movie = data.data;
 			},
 			function(error){
-				$state.go("pageNotFound");
+				$state.go("notFound");
 			}
 		);
 		$scope.filterDirector = function(movie){
@@ -426,7 +456,7 @@ module.exports = function(app){
 	});
 }
 
-},{}],14:[function(require,module,exports){
+},{}],15:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -452,13 +482,13 @@ module.exports = function(app){
         $scope.track = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });
 }
 
-},{}],15:[function(require,module,exports){
+},{}],16:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -499,84 +529,82 @@ module.exports = function(app){
         $scope.place = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });
 }
 
-},{}],16:[function(require,module,exports){
+},{}],17:[function(require,module,exports){
 'use strict';
 
-module.exports = function(app) {
-    app.controller('SearchCtrl', function($scope, $http, $stateParams, $state) {
-        $scope.songs = [];
-        $scope.books = [];
-        $scope.movies = [];
-        $scope.shows = [];
-        $scope.places = [];
-        $scope.waiting = false;
-        $scope.show = false;
-        var search = function(form) {
-            $scope.waiting = true;
-            $http.get("/api/music/search/" + form).then(
-                function(data) { //success
-                    $scope.songs = data.data;
-                },
-                function(data) {
-                    console.log(err);
-                    $scope.waiting = false;
-                }
-                );
-            $http.get("/api/books/search/" + form).then(
-                function(data) {
-                    $scope.books = data.data;
-                },
-                function(error) {
-                    console.log(error);
-                    $scope.waiting = false;
-                }
-                );
-            $http.get("/api/movies/search/" + form).then(
-                function(data) {
-                    $scope.movies = data.data;
-                },
-                function(error) {
-                    $scope.waiting = false;
-                    console.log(error);
-                }
-                );
-            $http.get("/api/shows/search/" + form).then(
-                function(data) {
-                    $scope.shows = data.data;
-                },
-                function(error) {
-                    console.log(error);
-                    $scope.waiting = false;
-                }
-                );
-            $http.get("/api/places/search/" + form).then(
-                function(data) {
-                    $scope.places = data.data;
-                    window.debugPlaces = data;
-                    $scope.waiting = false;
-                },
-                function(error) {
-                    console.log(error);
-                    $scope.waiting = false;
-                }
-                );
+module.exports = function (app) {
+  app.controller('SearchCtrl', function ($scope, $http, $stateParams, $state) {
+    $scope.songs = [];
+    $scope.books = [];
+    $scope.movies = [];
+    $scope.shows = [];
+    $scope.places = [];
+    $scope.waiting = false;
+    $scope.show = false;
+    var search = function (form) {
+      $scope.waiting = true;
+      $http.get("/api/music/search/" + form).then(
+        function (data) {
+          $scope.songs = data.data;
+        },
+        function (err) {
+          console.log(err);
+          $scope.waiting = false;
         }
-        if($stateParams.term == null){
-            $scope.show = false;
-        }else{
-            $scope.show = true;
-            search($stateParams.term);
+      );
+      $http.get("/api/books/search/" + form).then(
+        function (data) {
+          $scope.books = data.data;
+        },
+        function (error) {
+          console.log(error);
+          $scope.waiting = false;
         }
-    });
+      );
+      $http.get("/api/movies/search/" + form).then(
+        function (data) {
+          $scope.movies = data.data;
+        },
+        function (error) {
+          $scope.waiting = false;
+          console.log(error);
+        }
+      );
+      $http.get("/api/shows/search/" + form).then(
+        function (data) {
+          $scope.shows = data.data;
+        },
+        function (error) {
+          console.log(error);
+          $scope.waiting = false;
+        }
+      );
+      $http.get("/api/places/search/" + form).then(
+        function (data) {
+          $scope.places = data.data;
+        },
+        function (error) {
+          console.log(error);
+          $scope.waiting = false;
+        }
+      );
+    };
+    if ($stateParams.term == null) {
+      $scope.show = false;
+    } else {
+      $scope.show = true;
+      search($stateParams.term);
+    }
+  });
 }
 
-},{}],17:[function(require,module,exports){
+},{}],18:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -603,13 +631,13 @@ module.exports = function(app){
 				$scope.show = data.data;
 			},
 			function(error){
-				$state.go("pageNotFound");
+				$state.go("notFound");
 			}
 		)
 	});
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -784,7 +812,7 @@ module.exports = function(app){
   });
 }
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -800,7 +828,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 //E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
 module.exports = function(app){
@@ -849,7 +877,7 @@ module.exports = function(app){
     }
   });
 }
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 module.exports = function(app){
 app.filter('msToMin', function() {
@@ -874,4 +902,4 @@ app.filter('msToMin', function() {
 });
 
 }
-},{}]},{},[8]);
+},{}]},{},[9]);

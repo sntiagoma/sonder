@@ -35,7 +35,7 @@ exports.create = function (req, res, next) {
 };
 
 /**
- * Get a single user
+ * Get a single user by id
  */
 exports.show = function (req, res, next) {
   var userId = req.params.id;
@@ -45,6 +45,24 @@ exports.show = function (req, res, next) {
     if (!user) return res.status(401).send('Unauthorized');
     res.json(user.profile);
   });
+};
+
+/**
+ * Get a single user by username
+ */
+exports.showUser = function (req, res, next) {
+  var username = req.params.username;
+  User.findOne(
+    {
+      username: username
+    },
+    function (err,user) {
+      if(err) return next(err);
+      if(user==null) return res.status(404).send("Not found");
+      res.json(user.profile);
+    }
+  );
+
 };
 
 /**

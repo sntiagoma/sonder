@@ -24,6 +24,12 @@ module.exports = function(app){
         templateUrl: "/templates/profile.html",
         controller: "ProfileCtrl",
         authenticate: true
-      });
+      })
+      .state('user',{
+        url: "/users/:username",
+        templateUrl: "/templates/profile.html",
+        controller: "UsersCtrl"
+      })
+    ;
   });
 }

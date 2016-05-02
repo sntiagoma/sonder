@@ -18,7 +18,7 @@ module.exports = function(app){
         $scope.book = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });

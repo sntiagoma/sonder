@@ -38,7 +38,7 @@ module.exports = function(app){
         $scope.place = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });

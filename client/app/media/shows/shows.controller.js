@@ -24,7 +24,7 @@ module.exports = function(app){
 				$scope.show = data.data;
 			},
 			function(error){
-				$state.go("pageNotFound");
+				$state.go("notFound");
 			}
 		)
 	});

@@ -23,7 +23,7 @@ module.exports = function(app){
         $scope.track = data.data;
       },
       function(error){
-        $state.go("pageNotFound");
+        $state.go("notFound");
       }
     )
   });

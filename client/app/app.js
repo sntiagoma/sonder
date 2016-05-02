@@ -71,6 +71,7 @@ require("./account/login/login.controller.js")(app);
 require("./account/settings/settings.controller.js")(app);
 require("./account/signup/signup.controller.js")(app);
 require("./account/profile/profile.controller.js")(app);
+require("./account/users/users.controller")(app);
 require("./admin/admin.controller.js")(app);
 require("./admin/admin.js")(app);
 require("./main/main.controller.js")(app);
