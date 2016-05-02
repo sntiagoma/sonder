@@ -7,21 +7,21 @@
             <h4>Register</h4>
           </div>
         </div>
-        <div class="row margin">
+        <div class="row">
           <div class="input-field col s12">
             <i class="mdi-social-person-outline prefix"></i>
             <input id="name" type="text" ng-model="user.name">
             <label for="name" class="center-align">Name</label>
           </div>
         </div>
-        <div class="row margin">
+        <div class="row">
           <div class="input-field col s12">
             <i class="mdi-social-person-outline prefix"></i>
             <input id="username" type="text" ng-model="user.username">
             <label for="username" class="center-align">Username</label>
           </div>
         </div>
-        <div class="row margin">
+        <div class="row">
           <div class="input-field col s12" class="form-group">
             <i class="mdi-communication-email prefix"></i>
             <input id="email" type="email" ng-model="user.email">
@@ -31,32 +31,29 @@
             <p ng-show="form.email.$error.mongoose" class="help-block">{{ errors.email }}</p>
           </div>
         </div>
-        <div class="row margin">
+        <div class="row">
           <div class="input-field col s12" class="form-group">
             <i class="mdi-action-lock-outline prefix"></i>
             <input id="password" type="password" ng-model="user.password">
             <label for="password">Password</label>
-            <p ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted" class="help-block">Password must be at least 3 characters.</p>
+            <p ng-show="(form.password.$error.minlength || form.password.$error.required) && submitted"
+               class="help-block">Password must be at least 3 characters.</p>
             <p ng-show="form.password.$error.mongoose" class="help-block">{{ errors.password }}</p>
           </div>
         </div>
-        <div class="row margin">
-          <div class="row">
-            <div class="input-field col s12">
-              <input type="submit" class="btn waves-effect waves-light col s12" value="Register Now"/>
-            </div>
-            <div class="input-field col s12">
-              <ul class="soc">
-                <li><a class="soc-twitter" href="#" ng-click="loginOauth('twitter')"></a></li>
-                <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth('google')"></a></li>
-                <li><a class="soc-facebook" href="#" ng-click="loginOauth('facebook')"></a></li>
-              </ul>
-            </div>
-            <div class="input-field col s12">
-              <p class="margin center medium-small sign-up">Already have an account? <a href="/login">Login</a></p>
-            </div>
+        <div class="row">
+          <input type="submit" class="btn waves-effect waves-light col s12" value="Register Now"/>
+          <div class="input-field col s12">
+            <ul class="soc">
+              <li><a class="soc-twitter" href="#" ng-click="loginOauth('twitter')"></a></li>
+              <li><a class="soc-google soc-icon-last" href="#" ng-click="loginOauth('google')"></a></li>
+              <li><a class="soc-facebook" href="#" ng-click="loginOauth('facebook')"></a></li>
+            </ul>
           </div>
-
+          <div class="input-field col s12">
+            <p class="center medium-small sign-up">Already have an account? <a href="/login">Login</a></p>
+          </div>
+        </div>
       </form>
     </div>
   </div>

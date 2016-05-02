@@ -7,6 +7,11 @@ var rp = require("request-promise");
 var Promise = require("bluebird");
 var Place = require("./place.model");
 
+/**
+ * Get first image of a place, used to show on search
+ * @param {String} placeid - Venue Id of a Foursquare place
+ * @return {Promise<String,Error>}
+ */
 function getFirstPlaceImage(placeid){
   return new Promise(
     (resolve,reject)=>{
@@ -34,6 +39,11 @@ function getFirstPlaceImage(placeid){
   );
 }
 
+/**
+ * Search places on Foursuare API
+ * @param {String} query - Query word to find the place
+ * @return {Promise<Object,Error>}
+ */
 function searchPlace(query){
   return new Promise(
     (resolve,reject)=>{
@@ -66,6 +76,11 @@ function searchPlace(query){
   );
 }
 
+/**
+ * Get a Venue from Foursquare API
+ * @param {String} venueid - Venue Id of a Foursquare Place
+ * @return {Promise<Object,Error>}
+ */
 function getVenueInfo(venueid){
   return new Promise(
     (resolve, reject) => {

@@ -20,7 +20,11 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  shows: [{type:Schema.ObjectId, ref: "Show"}]
+  movies: [{type:Schema.ObjectId, ref: "Movie"}],
+  shows: [{type:Schema.ObjectId, ref: "Show"}],
+  tracks: [{type:Schema.ObjectId, ref: "Track"}],
+  books: [{type:Schema.ObjectId, ref: "Book"}],
+  places: [{type:Schema.ObjectId, ref: "Place"}]
 });
 
 /**
