@@ -5,6 +5,7 @@ var Log = require('log'), log = new Log('info');
 var request = require("request");
 var rp = require("request-promise");
 var Promise = require("bluebird");
+var Place = require("./place.model");
 
 function getFirstPlaceImage(placeid){
   return new Promise(
@@ -65,7 +66,6 @@ function searchPlace(query){
   );
 }
 
-
 function getVenueInfo(venueid){
   return new Promise(
     (resolve, reject) => {
@@ -83,7 +83,80 @@ function getVenueInfo(venueid){
           if(err){
             reject(err);
           }
-          resolve(venue);
+          resolve(venue.response.venue);
+        }
+      );
+    }
+  );
+}
+
+/**
+ * Add Place to the DB
+ * @param {Object} apiPlace - Foursquare API Object {@link getVenueInfo}
+ * @return {Promise<Place,Error>} -
+ */
+function addPlaceToDB(apiPlace) {
+  return new Promise(
+    function (resolve, reject) {
+      let newPlace = new Place({
+        slug: apiPlace.id,
+        name: apiPlace.name
+      });
+      newPlace.save((err, place)=> {
+        if (err) {
+          log.error(err);
+          reject(err);
+        }else {
+          log.info("Place %s have been added to the DB", place.name);
+          resolve(place);
+        }
+      });
+      resolve(newPlace);
+    }
+  );
+}
+
+/**
+ * Method to get an Place and make it if it hadn't made it before.
+ * @param {Object} apiPlace - Place object returned from Foursquare API
+ * @return {Promise<Place,Error>}
+ */
+function checkPlace(apiPlace) {
+  return new Promise(
+    function (resolve, reject) {
+      Place.findOne({slug: apiPlace.id},
+        function (err, place) {
+          if (err) {
+            addPlaceToDB(apiPlace)
+              .then(
+                (place)=> {
+                  resolve(place);
+                  return null;
+                }
+              )
+              .catch(
+                (err)=> {
+                  reject(err);
+                }
+              );
+          } else {
+            if (place == null) {
+              addPlaceToDB(apiPlace)
+                .then(
+                  (place)=> {
+                    resolve(place);
+                    return null;
+                  }
+                ).catch(
+                (err)=> {
+                  reject(err);
+                }
+              );
+            } else {
+              log.info("Place %s already exists",place.name);
+              resolve(place);
+            }
+          }
         }
       );
     }
@@ -158,14 +231,20 @@ exports.search = function(req, res) {
     });
   });
 };
-exports.venue = function(req, res){
-  var venue = req.params.venueid;
-  getVenueInfo(venue)
-  .then((venue)=>{
-    res.json(venue.response.venue);
-  })
-  .catch((err)=>{
-    log.error(err);
-    res.status(404).send(err);
-  });
-}
+
+exports.venue = function (req, res) {
+  var venueId = req.params.venueid;
+  getVenueInfo(venueId)
+    .then((apiVenue)=> {
+      checkPlace(apiVenue)
+        .then((dbPlace)=> {
+          res.json(apiVenue);
+          return null;
+        });
+      return null;
+    })
+    .catch((err)=> {
+      log.error(err);
+      res.status(404).send(err);
+    });
+};
