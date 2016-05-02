@@ -1,7 +1,8 @@
 'use strict';
 
 module.exports = function(app){
-  app.controller('MainCtrl', function ($scope, $http, socket, Auth) {
+  app.controller('MainCtrl', function ($scope, $http, //socket
+    Auth) {
     $scope.Auth = Auth;
     $scope.date = new Date();
     $scope.search = true;
@@ -12,7 +13,7 @@ module.exports = function(app){
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+      //socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
     $scope.getSpan = function($index) {
@@ -27,8 +28,8 @@ module.exports = function(app){
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.$on('$destroy', function () {
+    /*$scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
-    });
+    });*/
   });
 }

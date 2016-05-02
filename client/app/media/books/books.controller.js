@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app){
-  app.controller('BooksCtrl', function ($scope, $http, socket) {
+  app.controller('BooksCtrl', function ($scope, $http) {
     $scope.books = [];
     $scope.waiting = true;
     $http.get("/api/books").success(function(books){

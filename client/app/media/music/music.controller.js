@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app){
-	app.controller('MusicCtrl', function($scope, $http, socket){
+	app.controller('MusicCtrl', function($scope, $http){
 		$scope.music = [];
 		$scope.waiting = true;
 		$http.get("/api/music").then(

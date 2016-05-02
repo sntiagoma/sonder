@@ -224,7 +224,7 @@ require("./admin/admin.js")(app);
 require("./main/main.controller.js")(app);
 require("./main/main.js")(app);
 require("../components/mongoose-error/mongoose-error.directive.js")(app);
-require("../components/socket/socket.service.js")(app);
+//require("../components/socket/socket.service.js")(app);
 require("./media/books/books.controller.js")(app);
 require("./media/places/places.controller.js")(app);
 require("./media/music/music.controller.js")(app);
@@ -234,11 +234,12 @@ require("./media/search/search.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../components/socket/socket.service.js":20,"../directives/directives.js":21,"../filters/filters.js":22,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
+},{"../components/auth/auth.service.js":18,"../components/mongoose-error/mongoose-error.directive.js":19,"../directives/directives.js":20,"../filters/filters.js":21,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./admin/admin.controller.js":6,"./admin/admin.js":7,"./main/main.controller.js":9,"./main/main.js":10,"./media/books/books.controller.js":11,"./media/media.js":12,"./media/movies/movies.controller.js":13,"./media/music/music.controller.js":14,"./media/places/places.controller.js":15,"./media/search/search.controller.js":16,"./media/shows/shows.controller.js":17}],9:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
-  app.controller('MainCtrl', function ($scope, $http, socket, Auth) {
+  app.controller('MainCtrl', function ($scope, $http, //socket
+    Auth) {
     $scope.Auth = Auth;
     $scope.date = new Date();
     $scope.search = true;
@@ -249,7 +250,7 @@ module.exports = function(app){
 
     $http.get('/api/things').success(function(awesomeThings) {
       $scope.awesomeThings = awesomeThings;
-      socket.syncUpdates('thing', $scope.awesomeThings);
+      //socket.syncUpdates('thing', $scope.awesomeThings);
     });
 
     $scope.getSpan = function($index) {
@@ -264,9 +265,9 @@ module.exports = function(app){
       $http.delete('/api/things/' + thing._id);
     };
 
-    $scope.$on('$destroy', function () {
+    /*$scope.$on('$destroy', function () {
       socket.unsyncUpdates('thing');
-    });
+    });*/
   });
 }
 
@@ -294,7 +295,7 @@ module.exports = function(app){
 'use strict';
 
 module.exports = function(app){
-  app.controller('BooksCtrl', function ($scope, $http, socket) {
+  app.controller('BooksCtrl', function ($scope, $http) {
     $scope.books = [];
     $scope.waiting = true;
     $http.get("/api/books").success(function(books){
@@ -316,6 +317,7 @@ module.exports = function(app){
     )
   });
 }
+
 },{}],12:[function(require,module,exports){
 'use strict';
 
@@ -390,7 +392,7 @@ module.exports = function(app){
 'use strict';
 
 module.exports = function(app){
-	app.controller('MoviesCtrl', function($scope, $http, socket){
+	app.controller('MoviesCtrl', function($scope, $http){
 		$scope.movies = [];
 		$scope.waiting = true;
 		$http.get("/api/movies").then(
@@ -423,11 +425,12 @@ module.exports = function(app){
 		}
 	});
 }
+
 },{}],14:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
-	app.controller('MusicCtrl', function($scope, $http, socket){
+	app.controller('MusicCtrl', function($scope, $http){
 		$scope.music = [];
 		$scope.waiting = true;
 		$http.get("/api/music").then(
@@ -459,7 +462,7 @@ module.exports = function(app){
 'use strict';
 
 module.exports = function(app){
-  app.controller('PlacesCtrl', function ($scope, $http, socket) {
+  app.controller('PlacesCtrl', function ($scope, $http) {
     $scope.places = [];
     $scope.waiting = true;
     $http.get("http://ipinfo.io/loc").then(
@@ -501,6 +504,7 @@ module.exports = function(app){
     )
   });
 }
+
 },{}],16:[function(require,module,exports){
 'use strict';
 
@@ -554,6 +558,7 @@ module.exports = function(app) {
             $http.get("/api/places/search/" + form).then(
                 function(data) {
                     $scope.places = data.data;
+                    window.debugPlaces = data;
                     $scope.waiting = false;
                 },
                 function(error) {
@@ -575,7 +580,7 @@ module.exports = function(app) {
 'use strict';
 
 module.exports = function(app){
-	app.controller('ShowsCtrl', function($scope, $http, socket){
+	app.controller('ShowsCtrl', function($scope, $http){
 		$scope.shows = [];
 		$scope.waiting = true;
 		$http.get("/api/shows").then(
@@ -603,6 +608,7 @@ module.exports = function(app){
 		)
 	});
 }
+
 },{}],18:[function(require,module,exports){
 'use strict';
 
@@ -795,82 +801,6 @@ module.exports = function(app){
   });
 }
 },{}],20:[function(require,module,exports){
-/* global io */
-'use strict';
-
-module.exports = function(app){
-  app.factory('socket', function(socketFactory) {
-
-    // socket.io now auto-configures its connection when we ommit a connection url
-    var ioSocket = io('', {
-      // Send auth token on connection, you will need to DI the Auth service above
-      // 'query': 'token=' + Auth.getToken()
-      path: '/socket.io-client'
-    });
-
-    var socket = socketFactory({
-      ioSocket: ioSocket
-    });
-
-    return {
-      socket: socket,
-
-      /**
-       * Register listeners to sync an array with updates on a model
-       *
-       * Takes the array we want to sync, the model name that socket updates are sent from,
-       * and an optional callback function after new items are updated.
-       *
-       * @param {String} modelName
-       * @param {Array} array
-       * @param {Function} cb
-       */
-      syncUpdates: function (modelName, array, cb) {
-        cb = cb || angular.noop;
-
-        /**
-         * Syncs item creation/updates on 'model:save'
-         */
-        socket.on(modelName + ':save', function (item) {
-          var oldItem = _.find(array, {_id: item._id});
-          var index = array.indexOf(oldItem);
-          var event = 'created';
-
-          // replace oldItem if it exists
-          // otherwise just add item to the collection
-          if (oldItem) {
-            array.splice(index, 1, item);
-            event = 'updated';
-          } else {
-            array.push(item);
-          }
-
-          cb(event, item, array);
-        });
-
-        /**
-         * Syncs removed items on 'model:remove'
-         */
-        socket.on(modelName + ':remove', function (item) {
-          var event = 'deleted';
-          _.remove(array, {_id: item._id});
-          cb(event, item, array);
-        });
-      },
-
-      /**
-       * Removes listeners for a models updates on the socket
-       *
-       * @param modelName
-       */
-      unsyncUpdates: function (modelName) {
-        socket.removeAllListeners(modelName + ':save');
-        socket.removeAllListeners(modelName + ':remove');
-      }
-    };
-  });
-}
-},{}],21:[function(require,module,exports){
 "use strict";
 //E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
 module.exports = function(app){
@@ -919,7 +849,7 @@ module.exports = function(app){
     }
   });
 }
-},{}],22:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 "use strict";
 module.exports = function(app){
 app.filter('msToMin', function() {

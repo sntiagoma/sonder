@@ -1,7 +1,7 @@
 'use strict';
 
 module.exports = function(app){
-  app.controller('PlacesCtrl', function ($scope, $http, socket) {
+  app.controller('PlacesCtrl', function ($scope, $http) {
     $scope.places = [];
     $scope.waiting = true;
     $http.get("http://ipinfo.io/loc").then(
