@@ -1,5 +1,5 @@
 "use strict";
-//E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias 
+//E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias
 module.exports = function(app){
   app.directive("parallaxImg",function(){
     return {
@@ -14,12 +14,15 @@ module.exports = function(app){
       }
     };
   });
-  app.directive("poster",function($compile){
+  app.directive("poster",function($compile, Auth){
     return {
       restrict: "E",
       templateUrl: "/templates/directives/poster.html",
-      link: function(scope, element, attrs){
-        scope.href = $compile(attrs.href);
+      link: function(scope, element, attrs, controller){
+        scope.logged = Auth.isLoggedIn();
+        $(element).find(".card-content").css("background-color","#1A2327");
+        $(element).find(".card-content").css("color","white");
+        $(element).find(".card-content").css("border-radius","0");
       },
       scope: {
         image: "@image",
@@ -41,8 +44,8 @@ module.exports = function(app){
         $(element).find("input[type=\"submit\"]").addClass("esearchbox-btn");
         scope.search = function(term){
           $state.go("search-result",{term:term});
-        }
+        };
       }
     }
   });
-}
+};

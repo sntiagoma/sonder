@@ -2,13 +2,14 @@
 
 module.exports = function(app){
   app.controller('MainCtrl', function ($scope, $http, //socket
-    Auth) {
+    Auth, $state) {
     $scope.Auth = Auth;
     $scope.date = new Date();
     $scope.search = true;
     $scope.logout = function(){
       Auth.logout();
-    }
+      $state.go("main");
+    };
     $scope.awesomeThings = [];
 
     $http.get('/api/things').success(function(awesomeThings) {

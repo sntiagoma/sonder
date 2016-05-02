@@ -56,6 +56,7 @@ module.exports = function (app) {
           $scope.waiting = false;
         }
       );
+      $scope.waiting = false;
     };
     if ($stateParams.term == null) {
       $scope.show = false;

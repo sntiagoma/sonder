@@ -276,3 +276,11 @@ main {
     padding-left: 1em !important;
     padding-right: 1em !important;
 }
+
+.rate{
+  text-align: center;
+  padding: 0.5em 0;
+  i{
+    cursor: pointer; cursor: hand;
+  }
+}
