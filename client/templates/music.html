@@ -1,12 +1,15 @@
 <div ng-show="waiting">
   <div class="progress margin-zero">
       <div class="indeterminate"></div>
-  </div>  
+  </div>
 </div>
 <div class="container">
   <div class="row">
     <div class="col s6 m4 l3" ng-repeat="song in music">
-      <poster image="{{song.image[2]['#text']}}" width="304" height="304" title="{{song.name}}" description="Written by {{song.artist.name}}" type="song" ui-sref="track({artist:song.artist.name,track:song.name})"></poster>
+      <poster image="{{song.image[2]['#text']}}" width="304" height="304" title="{{song.name}}"
+              description="Written by {{song.artist.name}}"
+              type="track" state='{"artist": "{{song.artist.name}}","track": "{{song.name}}"}'
+              ></poster>
     </div>
-  </div>      
+  </div>
 </div>

@@ -847,15 +847,26 @@ module.exports = function(app){
       }
     };
   });
-  app.directive("poster",function($compile, Auth){
+  app.directive("poster",function($compile, Auth, $state){
     return {
       restrict: "E",
       templateUrl: "/templates/directives/poster.html",
       link: function(scope, element, attrs, controller){
+        var obj = JSON.parse(scope.state);
+        scope.go = function () {
+          $state.go(scope.type,obj);
+        };
+        scope.like = function () {
+          alert("Done");
+          window.debugType = scope.type;
+          window.debugState = scope.state;
+          //$state.go("movie",{traktSlug:"deadpool-2016"});
+        };
         scope.logged = Auth.isLoggedIn();
         $(element).find(".card-content").css("background-color","#1A2327");
         $(element).find(".card-content").css("color","white");
         $(element).find(".card-content").css("border-radius","0");
+
       },
       scope: {
         image: "@image",
@@ -863,7 +874,8 @@ module.exports = function(app){
         height: "@height",
         title: "@title",
         description: "@description",
-        type: "@type"
+        type: "@type",
+        state: "@state"
       }
     };
   });

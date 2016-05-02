@@ -1,12 +1,14 @@
 <div ng-show="waiting">
   <div class="progress margin-zero">
       <div class="indeterminate"></div>
-  </div>  
+  </div>
 </div>
 <div class="container">
   <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="show in shows">
-      <poster image="{{show.images.poster.thumb}}" width="300" height="450" title="{{show.title}}" description="Released in {{show.year}}" type="show" ui-sref="show({traktSlug: show.ids.slug})"></poster>
+      <poster image="{{show.images.poster.thumb}}" width="300" height="450"
+              title="{{show.title}}" description="Released in {{show.year}}"
+              type="show" state='{"traktSlug": "{{show.ids.slug}}"}'></poster>
     </div>
-  </div>      
+  </div>
 </div>

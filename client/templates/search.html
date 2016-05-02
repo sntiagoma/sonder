@@ -11,47 +11,46 @@
     <h1>Music results <small>{{songs.length}}</small></h1>
     <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="song in songs">
-      <poster image="{{song.image[2]['#text']?song.image[2]['#text']:'/images/poster.png'}}"
-              width="304" height="304" title="{{song.name}}"
-              description="Written by {{song.artist}}" type="song"
-              ui-sref="track({artist:song.artist,track:song.name})">
-      </poster>
+      <poster image="{{song.image[2]['#text']}}" width="304" height="304" title="{{song.name}}"
+              description="Written by {{song.artist.name}}"
+              type="track" state='{"artist": "{{song.artist}}","track": "{{song.name}}"}'
+      ></poster>
     </div>
   </div>
     <h1>Book Results <small>{{books.length}}</small></h1>
     <div class='row sndr-align-children'>
     <div class="col s6 m4 l3" ng-repeat="book in books">
       <poster image="{{book.cover_i?'http://covers.openlibrary.org/b/ID/'+book.cover_i+'-M.jpg':'/images/poster.png'}}"
-              width="180" height="270" title="{{book.title}}" description="Written by {{book.authors[0].name}}"
-              type="book" ui-sref="book({olid:book.cover_edition_key})">
-      </poster>
+              width="180" height="270" title="{{book.title}}"
+              description="Written by {{book.authors[0].name}}"
+              type="book"
+              state='{"olid": "{{book.cover_edition_key}}"}'></poster>
     </div>
   </div>
     <h1>Movie Results <small>{{movies.length}}</small></h1>
     <div class='row sndr-align-children'>
     <div class="col s6 m4 l3" ng-repeat="movie in movies">
-      <poster image="{{movie.images.poster.thumb?movie.images.poster.thumb:'/images/poster.png'}}"
-              width="300" height="450" title="{{movie.title}}" description="Released in {{movie.year}}"
-              ui-sref="movie({traktSlug: movie.ids.slug})" type="movie">
-      </poster>
+      <poster image="{{movie.images.poster.thumb?movie.images.poster.thumb:'/images/poster.png'}}" width="300"
+              height="450" title="{{movie.title}}" description="Released in {{movie.year}}"
+              state='{"traktSlug": "{{movie.ids.slug}}"}' type="movie"></poster>
     </div>
   </div>
     <h1>Shows Results <small>{{shows.length}}</small></h1>
     <div class='row sndr-align-children'>
     <div class="col s6 m4 l3" ng-repeat="show in shows">
-      <poster image="{{show.images.poster.thumb?show.images.poster.thumb:'/images/poster.png'}}"
-              width="300" height="450" title="{{show.title}}" description="Released in {{show.year}}"
-              type="show" ui-sref="show({traktSlug: show.ids.slug})">
-      </poster>
+      <poster image="{{show.images.poster.thumb?show.images.poster.thumb:'/images/poster.png'}}" width="300"
+              height="450" title="{{show.title}}" description="Released in {{show.year}}"
+              type="show" state='{"traktSlug": "{{show.ids.slug}}"}'></poster>
     </div>
   </div>
     <h1>Place Results <small>{{places.length}}</small></h1>
     <div class='row sndr-align-children'>
     <div class="col s6 m4 l3" ng-repeat="place in places">
       <poster image="{{(place.image.prefix&&place.image.suffix)?place.image.prefix+'width600'
-      +place.image.suffix:'/images/poster.png'}}" width="480" height="640" title="{{place.name}}"
-      description="Listed in {{place.categories[0].pluralName}}" type="place" ui-sref="place({venueid:place.id})">
-      </poster>
+              +place.image.suffix:'/images/poster.png'}}" width="480"
+              height="640" title="{{place.name}}"
+              description="Listed in {{place.categories[0].pluralName}}"
+              type="place" state='{"venueid": "{{place.id}}"}'></poster>
     </div>
   </div>
 </div>

@@ -1,12 +1,14 @@
 <div ng-show="waiting">
   <div class="progress margin-zero">
       <div class="indeterminate"></div>
-  </div>  
+  </div>
 </div>
 <div class="container">
   <div class="row sndr-align-children">
     <div class="col s6 m4 l3" ng-repeat="movie in movies">
-      <poster image="{{movie.images.poster.thumb}}" width="300" height="450" title="{{movie.title}}" description="Released in {{movie.year}}" ui-sref="movie({traktSlug: movie.ids.slug})" type="movie"></poster>
+      <poster image="{{movie.images.poster.thumb}}" width="300" height="450"
+              title="{{movie.title}}" description="Released in {{movie.year}}"
+              state='{"traktSlug": "{{movie.ids.slug}}"}' type="movie"></poster>
     </div>
-  </div>      
+  </div>
 </div>
