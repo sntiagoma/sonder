@@ -20,11 +20,31 @@ var UserSchema = new Schema({
   twitter: {},
   google: {},
   github: {},
-  movies: [{type:Schema.ObjectId, ref: "Movie"}],
-  shows: [{type:Schema.ObjectId, ref: "Show"}],
-  tracks: [{type:Schema.ObjectId, ref: "Track"}],
-  books: [{type:Schema.ObjectId, ref: "Book"}],
-  places: [{type:Schema.ObjectId, ref: "Place"}]
+  movies: {
+    liked: [{type:Schema.ObjectId, ref: "Movie"}],
+    disliked: [{type:Schema.ObjectId, ref: "Movie"}],
+    later: [{type:Schema.ObjectId, ref: "Movie"}]
+  },
+  shows: {
+    liked: [{type:Schema.ObjectId, ref: "Show"}],
+    disliked: [{type:Schema.ObjectId, ref: "Show"}],
+    later: [{type:Schema.ObjectId, ref: "Show"}]
+  },
+  tracks: {
+    liked: [{type:Schema.ObjectId, ref: "Track"}],
+    disliked: [{type:Schema.ObjectId, ref: "Track"}],
+    later: [{type:Schema.ObjectId, ref: "Track"}]
+  },
+  books: {
+    liked: [{type:Schema.ObjectId, ref: "Book"}],
+    disliked: [{type:Schema.ObjectId, ref: "Book"}],
+    later: [{type:Schema.ObjectId, ref: "Book"}]
+  },
+  places: {
+    liked: [{type:Schema.ObjectId, ref: "Place"}],
+    disliked: [{type:Schema.ObjectId, ref: "Place"}],
+    later: [{type:Schema.ObjectId, ref: "Place"}]
+  }
 });
 
 /**
