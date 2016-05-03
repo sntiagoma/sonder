@@ -1,15 +1,7 @@
-/**
- * Main application routes
- */
-
 'use strict';
-
 var errors = require('./components/errors');
 var path = require('path');
-
 module.exports = function(app) {
-
-  // Insert routes below
   app.use('/api/things', require('./api/thing'));
   app.use('/api/users', require('./api/user'));
   app.use('/auth', require('./auth'));
@@ -18,7 +10,7 @@ module.exports = function(app) {
   app.use("/api/music", require("./api/music"));
   app.use("/api/movies", require("./api/movie"));
   app.use("/api/shows", require("./api/show"));
-  // All undefined asset or api routes should return a 404
+  app.use("/api/lists", require("./api/lists"));
   app.route('/:url(api|auth|components|app|bower_components|assets)/*')
    .get(errors[404]);
   app.route('/*')

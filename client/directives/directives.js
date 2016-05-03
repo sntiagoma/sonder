@@ -35,7 +35,7 @@ module.exports = function(app){
       }
     };
   });
-  app.directive("poster",function($compile, Auth, $state){
+  app.directive("poster",function($compile, Auth, $state, $http){
     return {
       restrict: "E",
       templateUrl: "/templates/directives/poster.html",
@@ -51,10 +51,23 @@ module.exports = function(app){
             case "show":
             case "book":
             case "place":
-              alert(Auth.getCurrentUser().username + " likes " + id);
+              //alert("/api/lists/"+scope.type+"/like/"+Auth
+              //    .getCurrentUser().username+"/"+id);
+              $http.put("/api/lists/"+scope.type+"/like/"+Auth
+                  .getCurrentUser().username+"/"+id)
+                .then(function (data) {},function (err) {
+                  console.error(err);
+                });
+              //alert(Auth.getCurrentUser().username + " likes " + id);
               break;
             case "track":
-              alert(Auth.getCurrentUser().username + " likes " + id.artist + " of " + id.track);
+              $http.put("/api/lists/"+scope.type+"/like/"+Auth
+                  .getCurrentUser().username+"/"+id.artist+"/"+id.track)
+                .then(function (data) {},function (err) {
+                  console.error(err);
+                });
+              //alert("/api/lists/"+scope.type+"/like/"+Auth
+              //.getCurrentUser().username+"/"+id.artist+"/"+id.track);
               break;
           }
         };
