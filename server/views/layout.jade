@@ -3,19 +3,14 @@ html(ng-app="Sonder")
   head
     base(href='/')
     title= title
-
     meta(name="viewport", content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0")
     meta(charset='utf-8')
     meta(http-equiv='X-UA-Compatible', content='IE=edge')
-    meta(name='description', content='') 
-
-    link(rel='stylesheet', href='//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/css/materialize.min.css')
-    link(href='//fonts.googleapis.com/icon?family=Material+Icons', rel='stylesheet')
-    link(rel='stylesheet', href='https://fonts.googleapis.com/css?family=RobotoDraft:300,400,500,700,400italic')
+    meta(name='description', content='')
+    link(rel='stylesheet', href='/css/materialize.min.css')
+    link(rel='stylesheet', href='/css/MaterialIcons-Regular.css')
     link(rel='stylesheet', href='/css/style.css')
-    
-    script(src="//cdn.jsdelivr.net/prefixfree/1.0.7/prefixfree.min.js", type="text/javascript")
-
+    script(type="text/javascript", src="/js/prefixfree.min.js")
   body
     div(ng-controller="MainCtrl")
       ul#dropdown1.dropdown-content
@@ -105,20 +100,20 @@ html(ng-app="Sonder")
             h5.white-text Special Thanks
             .div(style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Trakt')
-                img(src="//trakt.tv/assets/logos/header@2x-4d604ad76f87e156c5ad2fa7358fcf17.png", alt="Trakt", height="48", width="48")
+                img(src="/images/trakt-logo.png", alt="Trakt", height="48", width="48")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Last.fm')
-                img(src="//cdn3.iconfinder.com/data/icons/flat-icons-web/40/LastFM-48.png", alt="Last.fm", height="48", width="48")
+                img(src="/images/lastfm-logo.png", alt="Last.fm", height="48", width="48")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Open Library')
-                img(src="//pbs.twimg.com/profile_images/497577090/ol.png", alt="Open Library", height="48", width="48")
+                img(src="/images/openlibrary-logo.png", alt="Open Library", height="48", width="48")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Foursquare')
-                img(src="//www.brandfit.ca/images/social-icons-48/foursquare-48.png", alt="Foursquare", height="40", width="40")
+                img(src="/images/foursquare-logo.png", alt="Foursquare", height="40", width="40")
 
       .footer-copyright
         .container
           |© {{date.getFullYear()}} Ampere Team
           a.grey-text.text-lighten-4.right(href='#!') More Links
 
-    script(src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
+    script(src="/js/materialize.min.js")
     script.
       $(".dropdown-button").dropdown();
       $(document).ready(function(){

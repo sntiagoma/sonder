@@ -1,4 +1,25 @@
 "use strict";
+var getId = function (obj,type) {
+  var retObj = null;
+  switch (type){
+    case "movie":
+          retObj = obj.traktSlug;
+          break;
+    case "show":
+          retObj = obj.traktSlug;
+          break;
+    case "track":
+          retObj = {artist:obj.artist,track:obj.track};
+          break;
+    case "book":
+          retObj = obj.olid;
+          break;
+    case "place":
+          retObj = obj.venueid;
+          break;
+  }
+  return retObj;
+};
 //E->Elementos, A->Atributo (def), C->Class, M->Comments, AEC-> Varias
 module.exports = function(app){
   app.directive("parallaxImg",function(){
@@ -24,6 +45,18 @@ module.exports = function(app){
           $state.go(scope.type,obj);
         };
         scope.like = function () {
+          var id = getId(obj,scope.type);
+          switch (scope.type){
+            case "movie":
+            case "show":
+            case "book":
+            case "place":
+              alert(Auth.getCurrentUser().username + " likes " + id);
+              break;
+            case "track":
+              alert(Auth.getCurrentUser().username + " likes " + id.artist + " of " + id.track);
+              break;
+          }
           alert("Done");
           window.debugType = scope.type;
           window.debugState = scope.state;
