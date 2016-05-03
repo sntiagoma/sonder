@@ -328,10 +328,8 @@ module.exports = function(app){
 module.exports = function(app){
   app.controller('BooksCtrl', function ($scope, $http) {
     $scope.books = [];
-    $scope.waiting = true;
     $http.get("/api/books").success(function(books){
       $scope.books = books.sort(function() {return Math.random() - 0.5});
-      $scope.waiting = false;
     });
   });
 
@@ -425,15 +423,12 @@ module.exports = function(app){
 module.exports = function(app){
 	app.controller('MoviesCtrl', function($scope, $http){
 		$scope.movies = [];
-		$scope.waiting = true;
 		$http.get("/api/movies").then(
 			function(data){
 				$scope.movies = data.data;
-				$scope.waiting = false;
 			},
 			function(err){
 				console.log(err);
-				$scope.waiting = false;
 			}
 		);
 	});
@@ -463,15 +458,12 @@ module.exports = function(app){
 module.exports = function(app){
 	app.controller('MusicCtrl', function($scope, $http){
 		$scope.music = [];
-		$scope.waiting = true;
 		$http.get("/api/music").then(
 			function(data){
 				$scope.music = data.data;
-				$scope.waiting = false;
 			},
 			function(err){
 				console.log(err);
-				$scope.waiting = false;
 			}
 		);
 	});
@@ -495,14 +487,12 @@ module.exports = function(app){
 module.exports = function(app){
   app.controller('PlacesCtrl', function ($scope, $http) {
     $scope.places = [];
-    $scope.waiting = true;
     $http.get("http://ipinfo.io/loc").then(
       function(data){
         var loc = data.data;
         $http.get("/api/places?loc="+loc).then(
           function(places){
             $scope.places = places.data;
-            $scope.waiting = false;
           },
           function(err){
             console.log(err);
@@ -513,7 +503,6 @@ module.exports = function(app){
         $http.get("/api/places").then(
           function(places){
             $scope.places = places.data;
-            $scope.waiting = false;
           },
           function(err){
             console.log(err);
@@ -546,17 +535,14 @@ module.exports = function (app) {
     $scope.movies = [];
     $scope.shows = [];
     $scope.places = [];
-    $scope.waiting = false;
     $scope.show = false;
     var search = function (form) {
-      $scope.waiting = true;
       $http.get("/api/music/search/" + form).then(
         function (data) {
           $scope.songs = data.data;
         },
         function (err) {
           console.log(err);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/books/search/" + form).then(
@@ -565,7 +551,6 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/movies/search/" + form).then(
@@ -573,7 +558,6 @@ module.exports = function (app) {
           $scope.movies = data.data;
         },
         function (error) {
-          $scope.waiting = false;
           console.log(error);
         }
       );
@@ -583,7 +567,6 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/places/search/" + form).then(
@@ -592,10 +575,8 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
-      $scope.waiting = false;
     };
     if ($stateParams.term == null) {
       $scope.show = false;
@@ -612,15 +593,12 @@ module.exports = function (app) {
 module.exports = function(app){
 	app.controller('ShowsCtrl', function($scope, $http){
 		$scope.shows = [];
-		$scope.waiting = true;
 		$http.get("/api/shows").then(
 			function(data){
 				$scope.shows = data.data;
-				$scope.waiting = false;
 			},
 			function(err){
 				console.log(err);
-				$scope.waiting = false;
 			}
 		);
 	});

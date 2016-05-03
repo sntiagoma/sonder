@@ -7,17 +7,14 @@ module.exports = function (app) {
     $scope.movies = [];
     $scope.shows = [];
     $scope.places = [];
-    $scope.waiting = false;
     $scope.show = false;
     var search = function (form) {
-      $scope.waiting = true;
       $http.get("/api/music/search/" + form).then(
         function (data) {
           $scope.songs = data.data;
         },
         function (err) {
           console.log(err);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/books/search/" + form).then(
@@ -26,7 +23,6 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/movies/search/" + form).then(
@@ -34,7 +30,6 @@ module.exports = function (app) {
           $scope.movies = data.data;
         },
         function (error) {
-          $scope.waiting = false;
           console.log(error);
         }
       );
@@ -44,7 +39,6 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
       $http.get("/api/places/search/" + form).then(
@@ -53,10 +47,8 @@ module.exports = function (app) {
         },
         function (error) {
           console.log(error);
-          $scope.waiting = false;
         }
       );
-      $scope.waiting = false;
     };
     if ($stateParams.term == null) {
       $scope.show = false;

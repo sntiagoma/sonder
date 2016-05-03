@@ -27,7 +27,6 @@ html(ng-app="Sonder")
         li.divider
         li(ng-show="Auth.isLoggedIn() && Auth.isAdmin()")
           a(ui-sref="admin") Admin
-
       nav.background.flat.blue-grey.darken-4(role='navigation')
         .nav-wrapper.container
           a#logo.brand-logo.text-darken-2(ui-sref='main') Sonder
@@ -106,14 +105,14 @@ html(ng-app="Sonder")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Open Library')
                 img(src="/images/openlibrary-logo.png", alt="Open Library", height="48", width="48")
               a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Foursquare')
-                img(src="/images/foursquare-logo.png", alt="Foursquare", height="40", width="40")
+                img(src="//www.brandfit.ca/images/social-icons-48/foursquare-48.png", alt="Foursquare", height="40", width="40")
 
       .footer-copyright
         .container
           |© {{date.getFullYear()}} Ampere Team
           a.grey-text.text-lighten-4.right(href='#!') More Links
 
-    script(src="/js/materialize.min.js")
+    script(src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
     script.
       $(".dropdown-button").dropdown();
       $(document).ready(function(){
