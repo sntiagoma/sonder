@@ -851,9 +851,59 @@ module.exports = function(app){
       restrict: "E",
       templateUrl: "/templates/directives/poster.html",
       link: function(scope, element, attrs, controller){
+        var colors = {
+          indigo: "#536dfe",
+          green: "#A5D6A7",
+          red: "#EF5350",
+          bg: "#1A2327"
+        };
         var obj = JSON.parse(scope.state);
+        scope.states = {
+          like: false,
+          later: false,
+          dislike: false
+        };
         scope.go = function () {
           $state.go(scope.type,obj);
+        };
+        scope.checkColors = function () {
+          if(scope.states.like){
+            $(element).find(".rate.like").css("background-color",colors.indigo);
+            $(element).find(".rate.like").css("color",colors.bg);
+          }else{
+            $(element).find(".rate.like").css("background-color",colors.bg);
+            $(element).find(".rate.like").css("color",colors.indigo);
+          }if(scope.states.later){
+            $(element).find(".rate.later").css("background-color",colors.green);
+            $(element).find(".rate.later").css("color",colors.bg);
+          }else{
+            $(element).find(".rate.later").css("background-color",colors.bg);
+            $(element).find(".rate.later").css("color",colors.green);
+          }if(scope.states.dislike){
+            $(element).find(".rate.dislike").css("background-color",colors.red);
+            $(element).find(".rate.dislike").css("color",colors.bg);
+          }else{
+            $(element).find(".rate.dislike").css("background-color",colors.bg);
+            $(element).find(".rate.dislike").css("color",colors.red);
+          }
+        };
+        scope.resetColors = function () {
+          let link;
+          if(scope.type=="track"){
+            let id = getId(obj,scope.type);
+            link = "/api/lists/check/"+scope.type+"/"+Auth.getCurrentUser().username+"/"+id.artist+"/"+id.track;
+          }else{
+            link = "/api/lists/check/"+scope.type+"/"+Auth.getCurrentUser().username+"/"+getId(obj,scope.type);
+          }
+
+          if(Auth.isLoggedIn()){
+            $http.get(link).then(function (data) {
+              scope.states = data.data;
+              scope.checkColors();
+            },function (err) {
+
+            });
+          }
         };
         scope.like = function () {
           var id = getId(obj,scope.type);
@@ -862,23 +912,22 @@ module.exports = function(app){
             case "show":
             case "book":
             case "place":
-              //alert("/api/lists/"+scope.type+"/like/"+Auth
-              //    .getCurrentUser().username+"/"+id);
               $http.put("/api/lists/"+scope.type+"/like/"+Auth
                   .getCurrentUser().username+"/"+id)
-                .then(function (data) {},function (err) {
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
                   console.error(err);
                 });
-              //alert(Auth.getCurrentUser().username + " likes " + id);
               break;
             case "track":
               $http.put("/api/lists/"+scope.type+"/like/"+Auth
                   .getCurrentUser().username+"/"+id.artist+"/"+id.track)
-                .then(function (data) {},function (err) {
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
                   console.error(err);
                 });
-              //alert("/api/lists/"+scope.type+"/like/"+Auth
-              //.getCurrentUser().username+"/"+id.artist+"/"+id.track);
               break;
           }
         };
@@ -889,10 +938,22 @@ module.exports = function(app){
             case "show":
             case "book":
             case "place":
-              alert(Auth.getCurrentUser().username + " later " + id);
+              $http.put("/api/lists/"+scope.type+"/later/"+Auth
+                  .getCurrentUser().username+"/"+id)
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
+                  console.error(err);
+                });
               break;
             case "track":
-              alert(Auth.getCurrentUser().username + " later " + id.artist + " of " + id.track);
+              $http.put("/api/lists/"+scope.type+"/later/"+Auth
+                  .getCurrentUser().username+"/"+id.artist+"/"+id.track)
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
+                  console.error(err);
+                });
               break;
           }
         };
@@ -903,17 +964,32 @@ module.exports = function(app){
             case "show":
             case "book":
             case "place":
-              alert(Auth.getCurrentUser().username + " dislikes " + id);
+              $http.put("/api/lists/"+scope.type+"/dislike/"+Auth
+                  .getCurrentUser().username+"/"+id)
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
+                  console.error(err);
+                });
               break;
             case "track":
-              alert(Auth.getCurrentUser().username + " dislikes " + id.artist + " of " + id.track);
+              $http.put("/api/lists/"+scope.type+"/dislike/"+Auth
+                  .getCurrentUser().username+"/"+id.artist+"/"+id.track)
+                .then(function (data) {
+                  scope.resetColors();
+                },function (err) {
+                  console.error(err);
+                });
               break;
           }
         };
         scope.logged = Auth.isLoggedIn();
-        $(element).find(".card-content").css("background-color","#1A2327");
-        $(element).find(".card-content").css("color","white");
-        $(element).find(".card-content").css("border-radius","0");
+        $(element).find(".card").css("background-color","#1A2327");
+        $(element).find(".card").css("color","white");
+        //$(element).find(".card-content").css("border-radius","#1A2327");
+        //$(element).find(".card-action").css("background-color",colors.bg);
+
+        scope.resetColors();
 
       },
       scope: {

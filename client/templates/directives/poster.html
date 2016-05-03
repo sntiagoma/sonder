@@ -14,17 +14,17 @@
       ></image-cropper>
     <span class="card-title" style="background-color:rgba(0,0,0,0.5);">{{title}}</span>
   </div>
-  <div class="card-content">
+  <div class="card-content" ng-click="checkColors()">
     <p>{{description | limitTo : 34}} {{description.length>=34?'...':''}}</p>
   </div>
   <div class="card-action" ng-if="logged" style="border-top:0;padding: 0;display: flex; flex-wrap: nowrap;justify-content: space-between">
-    <div class="rate like indigo-text text-accent-2" style="background-color:#1A2327; flex-grow: 1" ng-click="like()">
-      <i class="material-icons">thumb_up</i>
+    <div class="rate like" style="flex-grow: 1" ng-click="like()">
+      <i class="material-icons">thumb_up</i> {{}}
     </div>
-    <div class="rate later green-text text-lighten-3" style="background-color: #1A2327; flex-grow: 1" ng-click="later()">
+    <div class="rate later" style="flex-grow: 1" ng-click="later()">
       <i class="material-icons">receipt</i>
     </div>
-    <div class="rate dislike red-text text-lighten-1" style="background-color: #1A2327;flex-grow: 1" ng-click="dislike()">
+    <div class="rate dislike" style="flex-grow: 1" ng-click="dislike()">
       <i class="material-icons">thumb_down</i>
     </div>
   </div>

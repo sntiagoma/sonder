@@ -1,12 +1,13 @@
 'use strict';
 var Promise = require("bluebird");
-
+var mongoose = require("mongoose");
 var Movie = require("../movie/movie.model");
 var Show  = require("../show/show.model");
 var Track = require("../music/track.model");
 var Book  = require("../book/book.model");
 var Place = require("../place/place.model");
 var User  = require("../user/user.model");
+var ObjectId = mongoose.Types.ObjectId;
 
 var checkNull = function (dbObject) {
   if(dbObject == null){
@@ -164,6 +165,44 @@ exports.ctrl = function(req, res) {
           res.send();
           return null; //avoid warning
         });
+      return null;
+    })
+    .catch((err)=>{
+      res.status(400).send(err);
+    });
+};
+
+
+exports.check = function(req, res) {
+  var type     = req.params.type;
+  var username = req.params.username;
+  var id       = req.params.id;
+  var artist   = req.params.artist;
+  var track    = req.params.track;
+  console.log(type,username,id,artist,track);
+  getUser(username)
+    .then((dbUser)=>{
+      let contentId;
+      if(type=="track"){
+        contentId = {artist:artist, track:track};
+      }else{
+        contentId = id;
+      }
+      getItem(type, contentId)
+        .then((dbContent)=>{
+          var objId = new ObjectId(dbContent._id);
+          res.json(
+            {
+              like: dbUser[parseDb(type)]["liked"].indexOf(objId)!=(-1),
+              later: dbUser[parseDb(type)]["later"].indexOf(objId)!=(-1),
+              dislike: dbUser[parseDb(type)]["disliked"].indexOf(objId)!=(-1)
+            }
+          );
+          return null;
+        }).catch((err)=>{
+          res.status(400).send(err);
+        }
+      );
       return null;
     })
     .catch((err)=>{
