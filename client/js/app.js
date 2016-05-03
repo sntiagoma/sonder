@@ -855,7 +855,8 @@ module.exports = function(app){
           indigo: "#536dfe",
           green: "#A5D6A7",
           red: "#EF5350",
-          bg: "#1A2327"
+          bg: "#1A2327",
+          white: "#FFFFFF"
         };
         var obj = JSON.parse(scope.state);
         scope.states = {
@@ -869,19 +870,19 @@ module.exports = function(app){
         scope.checkColors = function () {
           if(scope.states.like){
             $(element).find(".rate.like").css("background-color",colors.indigo);
-            $(element).find(".rate.like").css("color",colors.bg);
+            $(element).find(".rate.like").css("color",colors.white);
           }else{
             $(element).find(".rate.like").css("background-color",colors.bg);
             $(element).find(".rate.like").css("color",colors.indigo);
           }if(scope.states.later){
             $(element).find(".rate.later").css("background-color",colors.green);
-            $(element).find(".rate.later").css("color",colors.bg);
+            $(element).find(".rate.later").css("color",colors.white);
           }else{
             $(element).find(".rate.later").css("background-color",colors.bg);
             $(element).find(".rate.later").css("color",colors.green);
           }if(scope.states.dislike){
             $(element).find(".rate.dislike").css("background-color",colors.red);
-            $(element).find(".rate.dislike").css("color",colors.bg);
+            $(element).find(".rate.dislike").css("color",colors.white);
           }else{
             $(element).find(".rate.dislike").css("background-color",colors.bg);
             $(element).find(".rate.dislike").css("color",colors.red);
