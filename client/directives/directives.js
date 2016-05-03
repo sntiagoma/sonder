@@ -57,10 +57,34 @@ module.exports = function(app){
               alert(Auth.getCurrentUser().username + " likes " + id.artist + " of " + id.track);
               break;
           }
-          alert("Done");
-          window.debugType = scope.type;
-          window.debugState = scope.state;
-          //$state.go("movie",{traktSlug:"deadpool-2016"});
+        };
+        scope.later = function () {
+          var id = getId(obj,scope.type);
+          switch (scope.type){
+            case "movie":
+            case "show":
+            case "book":
+            case "place":
+              alert(Auth.getCurrentUser().username + " later " + id);
+              break;
+            case "track":
+              alert(Auth.getCurrentUser().username + " later " + id.artist + " of " + id.track);
+              break;
+          }
+        };
+        scope.dislike = function () {
+          var id = getId(obj,scope.type);
+          switch (scope.type){
+            case "movie":
+            case "show":
+            case "book":
+            case "place":
+              alert(Auth.getCurrentUser().username + " dislikes " + id);
+              break;
+            case "track":
+              alert(Auth.getCurrentUser().username + " dislikes " + id.artist + " of " + id.track);
+              break;
+          }
         };
         scope.logged = Auth.isLoggedIn();
         $(element).find(".card-content").css("background-color","#1A2327");
