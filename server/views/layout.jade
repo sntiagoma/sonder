@@ -54,7 +54,7 @@ html(ng-app="Sonder")
                 i.material-icons more_vert
           ul#slide-out.side-nav
             li
-              a(ui-sref="Search")
+              a(ui-sref="search")
                 |Search
             li
               a(ui-sref="movies")
@@ -98,14 +98,10 @@ html(ng-app="Sonder")
           .col.l3.m4.s12
             h5.white-text Special Thanks
             .div(style="display:flex;flex-direction:row;flex-wrap:wrap;justify-content:space-around")
-              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Trakt')
-                img(src="/images/trakt-logo.png", alt="Trakt", height="48", width="48")
-              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Last.fm')
-                img(src="/images/lastfm-logo.png", alt="Last.fm", height="48", width="48")
-              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Open Library')
-                img(src="/images/openlibrary-logo.png", alt="Open Library", height="48", width="48")
-              a.tooltipped(data-position='bottom', data-delay='50', data-tooltip='Foursquare')
-                img(src="//www.brandfit.ca/images/social-icons-48/foursquare-48.png", alt="Foursquare", height="40", width="40")
+              img(src="/images/trakt-logo.png", alt="Trakt", height="48", width="48")
+              img(src="/images/lastfm-logo.png", alt="Last.fm", height="48", width="48")
+              img(src="/images/openlibrary-logo.png", alt="Open Library", height="48", width="48")
+              img(src="/images/foursquare-logo.png", alt="Foursquare", height="40", width="40")
 
       .footer-copyright
         .container
@@ -116,7 +112,6 @@ html(ng-app="Sonder")
     script.
       $(".dropdown-button").dropdown();
       $(document).ready(function(){
-        $('.tooltipped').tooltip({delay: 50});
         $('.materialboxed').materialbox();
         $(".button-collapse").sideNav();
       });

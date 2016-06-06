@@ -873,19 +873,19 @@ module.exports = function(app){
             $(element).find(".rate.like").css("color",colors.white);
           }else{
             $(element).find(".rate.like").css("background-color",colors.bg);
-            $(element).find(".rate.like").css("color",colors.indigo);
+            $(element).find(".rate.like").css("color",colors.white);
           }if(scope.states.later){
             $(element).find(".rate.later").css("background-color",colors.green);
             $(element).find(".rate.later").css("color",colors.white);
           }else{
             $(element).find(".rate.later").css("background-color",colors.bg);
-            $(element).find(".rate.later").css("color",colors.green);
+            $(element).find(".rate.later").css("color",colors.white);
           }if(scope.states.dislike){
             $(element).find(".rate.dislike").css("background-color",colors.red);
             $(element).find(".rate.dislike").css("color",colors.white);
           }else{
             $(element).find(".rate.dislike").css("background-color",colors.bg);
-            $(element).find(".rate.dislike").css("color",colors.red);
+            $(element).find(".rate.dislike").css("color",colors.white);
           }
         };
         scope.resetColors = function () {
@@ -906,8 +906,32 @@ module.exports = function(app){
             });
           }
         };
+        scope.exists = function (id, type) {
+          switch (type){
+            case "movie":
+            case "show":
+            case "book":
+            case "place":
+              $http.get("/"+type+"/game-of-thrones")
+                .then(function (data) {
+
+                }, function (err) {
+                  console.error(err);
+                });
+              break;
+            case "track":
+              $http.get("/"+type+"/"+id.artist+"/tracks/"+id.track)
+                .then(function (data) {
+
+                }, function (err) {
+                  console.error(err);
+                });
+              break;
+          }
+        };
         scope.like = function () {
           var id = getId(obj,scope.type);
+          scope.exists(id,scope.type);
           switch (scope.type){
             case "movie":
             case "show":
@@ -934,6 +958,7 @@ module.exports = function(app){
         };
         scope.later = function () {
           var id = getId(obj,scope.type);
+          scope.exists(id,scope.type);
           switch (scope.type){
             case "movie":
             case "show":
@@ -960,6 +985,7 @@ module.exports = function(app){
         };
         scope.dislike = function () {
           var id = getId(obj,scope.type);
+          scope.exists(id,scope.type);
           switch (scope.type){
             case "movie":
             case "show":
