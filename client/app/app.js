@@ -8,7 +8,9 @@ var app = angular.module('Sonder', [
         'ngMessages',
         'btford.socket-io',
         'ui.router',
-        'imageCropper'
+        'imageCropper',
+        'nlFramework',
+        'angular-md5'
     ])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {

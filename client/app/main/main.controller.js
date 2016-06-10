@@ -2,7 +2,23 @@
 
 module.exports = function(app){
   app.controller('MainCtrl', function ($scope, $http, //socket
-    Auth, $state) {
+    Auth, $state, $nlFramework, $nlDrawer, $nlBurger, $nlRefresh, $nlConfig, $nlToast, $nlMenu) {
+    var nlOptions = {
+      drawer: {
+        maxWidth: 300,
+        openCb: function() {
+          //console.log('nlDrawer: openned')
+        },
+        closeCb: function() {
+          //console.log('nlDrawer closed')
+        }
+      },
+      burger: {
+        use: true
+      }
+    };
+    $nlFramework.init(nlOptions);
+    //$nlDrawer.show();
     $scope.Auth = Auth;
     $scope.date = new Date();
     $scope.search = true;

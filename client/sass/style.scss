@@ -284,3 +284,12 @@ main {
     cursor: pointer; cursor: hand;
   }
 }
+
+main {
+  position: relative;
+  top: -20px;
+}
+
+body > main > div > div.container {
+  margin-top: 20px;
+}
