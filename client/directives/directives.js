@@ -233,4 +233,12 @@ module.exports = function(app){
       }
     }
   });
+  app.directive("sidenav",function ($compile, Auth, $state, $http, md5) {
+    return {
+      restrict: "E",
+      templateUrl: "/templates/directives/sidenav.html",
+      link: function (scope, element, attrs) {
+      }
+    }
+  });
 };

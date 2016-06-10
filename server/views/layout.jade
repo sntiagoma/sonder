@@ -10,8 +10,11 @@ html(ng-app="Sonder")
     link(rel='stylesheet', href='/css/materialize.min.css')
     link(rel='stylesheet', href='/css/MaterialIcons-Regular.css')
     link(rel='stylesheet', href='/css/style.css')
+    link(rel='stylesheet', href='/css/ng-nlFramework.css')
     script(type="text/javascript", src="/js/prefixfree.min.js")
   body
+    #nlDrawer(ui-view="side")
+      sidenav
     div(ng-controller="MainCtrl")
       ul#dropdown1.dropdown-content
         li(ng-hide="Auth.isLoggedIn()")
@@ -108,7 +111,24 @@ html(ng-app="Sonder")
           |© {{date.getFullYear()}} Ampere Team
           a.grey-text.text-lighten-4.right(href='#!') More Links
 
-    script(src="//cdnjs.cloudflare.com/ajax/libs/materialize/0.97.5/js/materialize.min.js")
+    script(src="/js/jquery-2.2.3.min.js")
+    script(src="/js/hammer.js")
+    script(src="/js/lodash.min.js")
+    script(src="/js/angular.min.js")
+    script(src="/js/angular-resource.min.js")
+    script(src="/js/angular-cookies.min.js")
+    script(src="/js/angular-messages.min.js")
+    script(src="/js/angular-sanitize.min.js")
+    script(src="/js/angular-animate.min.js")
+    script(src="/js/angular-aria.min.js")
+    script(src="/js/angular-socket-io/socket.js")
+    script(src="/js/angular-ui-router.min.js")
+    script(src="/js/socket.io.min.js")
+    script(src="/js/angular-image-cropper.js")
+    script(src="/js/ng-nlFramework-min.js")
+    script(src="/js/angular-md5.js")
+    script(src="/js/app.js")
+    script(src="/js/materialize.min.js")
     script.
       $(".dropdown-button").dropdown();
       $(document).ready(function(){

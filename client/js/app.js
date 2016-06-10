@@ -184,7 +184,9 @@ var app = angular.module('Sonder', [
         'ngMessages',
         'btford.socket-io',
         'ui.router',
-        'imageCropper'
+        'imageCropper',
+        'nlFramework',
+        'angular-md5'
     ])
 
 .config(function($stateProvider, $urlRouterProvider, $locationProvider, $httpProvider) {
@@ -268,7 +270,23 @@ module.exports = app;
 
 module.exports = function(app){
   app.controller('MainCtrl', function ($scope, $http, //socket
-    Auth, $state) {
+    Auth, $state, $nlFramework, $nlDrawer, $nlBurger, $nlRefresh, $nlConfig, $nlToast, $nlMenu) {
+    var nlOptions = {
+      drawer: {
+        maxWidth: 300,
+        openCb: function() {
+          //console.log('nlDrawer: openned')
+        },
+        closeCb: function() {
+          //console.log('nlDrawer closed')
+        }
+      },
+      burger: {
+        use: true
+      }
+    };
+    $nlFramework.init(nlOptions);
+    //$nlDrawer.show();
     $scope.Auth = Auth;
     $scope.date = new Date();
     $scope.search = true;
@@ -320,7 +338,7 @@ module.exports = function(app){
       })
       ;
   });
-}
+};
 
 },{}],12:[function(require,module,exports){
 'use strict';
@@ -329,7 +347,8 @@ module.exports = function(app){
   app.controller('BooksCtrl', function ($scope, $http) {
     $scope.books = [];
     $http.get("/api/books").success(function(books){
-      $scope.books = books.sort(function() {return Math.random() - 0.5});
+      //$scope.books = books.sort(function() {return Math.random() - 0.5});
+      $scope.books = books;
     });
   });
 
@@ -445,12 +464,16 @@ module.exports = function(app){
 			}
 		);
 		$scope.filterDirector = function(movie){
-			return _.find(movie.people.crew.directing,function(sm){
-				return (sm.job=="Director");
-			});
+			try {
+        return _.find(movie.people.crew.directing,function(sm){
+          return (sm.job=="Director");
+        });
+      }catch (err) {
+        console.log("Error Filtering by Director");
+      }
 		}
 	});
-}
+};
 
 },{}],15:[function(require,module,exports){
 'use strict';
@@ -1041,6 +1064,14 @@ module.exports = function(app){
         scope.search = function(term){
           $state.go("search-result",{term:term});
         };
+      }
+    }
+  });
+  app.directive("sidenav",function ($compile, Auth, $state, $http, md5) {
+    return {
+      restrict: "E",
+      templateUrl: "/templates/directives/sidenav.html",
+      link: function (scope, element, attrs) {
       }
     }
   });

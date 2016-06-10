@@ -8,28 +8,29 @@
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
+          <div class="input-field col s11">
             <i class="mdi-social-person-outline prefix"></i>
             <input id="email" type="text" ng-model="user.email" class="form-control">
             <label for="email" class="center-align">Email</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12">
+          <div class="input-field col s11">
             <i class="mdi-action-lock-outline prefix"></i>
             <input id="password" type="password" name="password" ng-model="user.password" class="form-control">
             <label for="password">Password</label>
           </div>
         </div>
         <div class="row">
-          <div class="input-field col s12 m12 l12  login-text">
+          <div class="input-field col s11 offset-s1 login-text">
             <input type="checkbox" id="remember-me"/>
             <label for="remember-me">Remember me</label>
           </div>
         </div>
         <div class="row">
           <div class="input-field col s12">
-            <input type="submit" class="btn waves-effect waves-light col s12" value="Login"/>
+            <input type="submit" class="btn waves-effect waves-light col s10 offset-s1" value="Login"/>
+            <p class="center"><br><br>Or go to <a ui-sref="signup">register</a></p>
           </div>
         </div>
       </form>

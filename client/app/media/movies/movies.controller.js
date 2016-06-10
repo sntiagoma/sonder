@@ -25,9 +25,13 @@ module.exports = function(app){
 			}
 		);
 		$scope.filterDirector = function(movie){
-			return _.find(movie.people.crew.directing,function(sm){
-				return (sm.job=="Director");
-			});
+			try {
+        return _.find(movie.people.crew.directing,function(sm){
+          return (sm.job=="Director");
+        });
+      }catch (err) {
+        console.log("Error Filtering by Director");
+      }
 		}
 	});
-}
+};

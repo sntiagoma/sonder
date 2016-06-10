@@ -207,4 +207,4 @@ exports.olid = function(req, res){
     log.error("On API /books/:olid, OLID:%s, ERROR:%s",olid, err);
     res.status(400).send(err);
   })
-}
+};
