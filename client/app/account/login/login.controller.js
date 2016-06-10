@@ -10,9 +10,9 @@ module.exports = function(app){
         email: $scope.user.email,
         password: $scope.user.password
       })
-      .then( function() {
+      .then( function(res) {
         console.info("Logged");
-        $location.path('/');
+        $location.path('/recommendations');
       })
       .catch( function(err) {
         console.error("On error: %s", err);
@@ -25,3 +25,7 @@ module.exports = function(app){
     };
   });
 };
+
+
+
+

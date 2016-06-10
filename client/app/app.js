@@ -84,5 +84,6 @@ require("./media/music/music.controller.js")(app);
 require("./media/movies/movies.controller.js")(app);
 require("./media/shows/shows.controller.js")(app);
 require("./media/search/search.controller.js")(app);
+require("./media/recommendations/recommendations.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;

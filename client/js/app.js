@@ -48,9 +48,9 @@ module.exports = function(app){
         email: $scope.user.email,
         password: $scope.user.password
       })
-      .then( function() {
+      .then( function(res) {
         console.info("Logged");
-        $location.path('/');
+        $location.path('/recommendations');
       })
       .catch( function(err) {
         console.error("On error: %s", err);
@@ -63,6 +63,10 @@ module.exports = function(app){
     };
   });
 };
+
+
+
+
 
 },{}],3:[function(require,module,exports){
 'use strict';
@@ -260,10 +264,11 @@ require("./media/music/music.controller.js")(app);
 require("./media/movies/movies.controller.js")(app);
 require("./media/shows/shows.controller.js")(app);
 require("./media/search/search.controller.js")(app);
+require("./media/recommendations/recommendations.controller.js")(app);
 require("./media/media.js")(app);
 module.exports = app;
 
-},{"../components/auth/auth.service.js":19,"../components/mongoose-error/mongoose-error.directive.js":20,"../directives/directives.js":21,"../filters/filters.js":22,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./account/users/users.controller":6,"./admin/admin.controller.js":7,"./admin/admin.js":8,"./main/main.controller.js":10,"./main/main.js":11,"./media/books/books.controller.js":12,"./media/media.js":13,"./media/movies/movies.controller.js":14,"./media/music/music.controller.js":15,"./media/places/places.controller.js":16,"./media/search/search.controller.js":17,"./media/shows/shows.controller.js":18}],10:[function(require,module,exports){
+},{"../components/auth/auth.service.js":20,"../components/mongoose-error/mongoose-error.directive.js":21,"../directives/directives.js":22,"../filters/filters.js":23,"./account/account.js":1,"./account/login/login.controller.js":2,"./account/profile/profile.controller.js":3,"./account/settings/settings.controller.js":4,"./account/signup/signup.controller.js":5,"./account/users/users.controller":6,"./admin/admin.controller.js":7,"./admin/admin.js":8,"./main/main.controller.js":10,"./main/main.js":11,"./media/books/books.controller.js":12,"./media/media.js":13,"./media/movies/movies.controller.js":14,"./media/music/music.controller.js":15,"./media/places/places.controller.js":16,"./media/recommendations/recommendations.controller.js":17,"./media/search/search.controller.js":18,"./media/shows/shows.controller.js":19}],10:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -408,6 +413,11 @@ module.exports = function(app){
 				templateUrl: 'templates/search.html',
 				controller: 'SearchCtrl'
 			})
+      .state('recommendations', {
+        url: '/recommendations',
+        templateUrl: 'templates/recommendations.html',
+        controller: 'RecommendationsCtrl'
+      })
       .state('search-result',{
         url: '/search/:term',
         templateUrl: 'templates/search.html',
@@ -529,6 +539,35 @@ module.exports = function(app){
 'use strict';
 
 module.exports = function (app) {
+  app.controller('RecommendationsCtrl', function ($scope, $http, Auth) {
+    $scope.songs = [];
+    $scope.books = [];
+    $scope.movies = [];
+    $scope.shows = [];
+    $scope.places = [];
+    var user = Auth.getCurrentUser().username
+    if(user == undefined){
+      user = "manuela6";
+    }
+    $http.get("/api/recommender/"+user).then(
+      function (data) {
+        $scope.books = data.data.books_recom;
+        $scope.shows = data.data.shows_recom;
+        $scope.places = data.data.places_recom;
+        $scope.movies = data.data.movies_recom;
+        $scope.songs = data.data.music_recom;
+      },
+      function (err) {
+        console.log(err);
+      }
+    );
+
+  });
+}
+},{}],18:[function(require,module,exports){
+'use strict';
+
+module.exports = function (app) {
   app.controller('SearchCtrl', function ($scope, $http, $stateParams, $state) {
     $scope.songs = [];
     $scope.books = [];
@@ -587,7 +626,7 @@ module.exports = function (app) {
   });
 }
 
-},{}],18:[function(require,module,exports){
+},{}],19:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -617,7 +656,7 @@ module.exports = function(app){
 	});
 }
 
-},{}],19:[function(require,module,exports){
+},{}],20:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -792,7 +831,7 @@ module.exports = function(app){
   });
 }
 
-},{}],20:[function(require,module,exports){
+},{}],21:[function(require,module,exports){
 'use strict';
 
 module.exports = function(app){
@@ -808,7 +847,7 @@ module.exports = function(app){
     };
   });
 }
-},{}],21:[function(require,module,exports){
+},{}],22:[function(require,module,exports){
 "use strict";
 var getId = function (obj,type) {
   var retObj = null;
@@ -1046,7 +1085,7 @@ module.exports = function(app){
   });
 };
 
-},{}],22:[function(require,module,exports){
+},{}],23:[function(require,module,exports){
 "use strict";
 module.exports = function(app){
 app.filter('msToMin', function() {

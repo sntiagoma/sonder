@@ -58,6 +58,11 @@ module.exports = function(app){
 				templateUrl: 'templates/search.html',
 				controller: 'SearchCtrl'
 			})
+      .state('recommendations', {
+        url: '/recommendations',
+        templateUrl: 'templates/recommendations.html',
+        controller: 'RecommendationsCtrl'
+      })
       .state('search-result',{
         url: '/search/:term',
         templateUrl: 'templates/search.html',

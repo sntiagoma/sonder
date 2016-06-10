@@ -1,0 +1,52 @@
+<div class="container">
+<h1><b>Sonder Recommends:</b></h1>
+<br> 
+  <div>
+    <h1>Music</h1>
+    <div class="row sndr-align-children">
+    <div class="col s6 m4 l3" ng-repeat="song in songs">
+      <poster image="{{song.album.image[3]['#text']}}" width="304" height="304" title="{{song.name}}"
+              description="Written by {{song.artist.name}}"
+              type="track" state='{"artist": "{{song.artist}}","track": "{{song.name}}"}'
+      ></poster>
+    </div>
+  </div>
+    <h1>Books</h1>
+    <div class='row sndr-align-children'>
+    <div class="col s6 m4 l3" ng-repeat="book in books">
+      <poster image="{{book.cover.medium}}"
+              width="180" height="270" title="{{book.title}}"
+              description="Written by {{book.authors[0].name}}"
+              type="book"
+              state='{"olid": "{{book.cover_edition_key}}"}'></poster>
+    </div>
+  </div>
+    <h1>Movies</h1>
+    <div class='row sndr-align-children'>
+    <div class="col s6 m4 l3" ng-repeat="movie in movies">
+      <poster image="{{movie.images.poster.thumb?movie.images.poster.thumb:'/images/poster.png'}}" width="300"
+              height="450" title="{{movie.title}}" description="Released in {{movie.year}}"
+              state='{"traktSlug": "{{movie.ids.slug}}"}' type="movie"></poster>
+    </div>
+  </div>
+    <h1>Shows</h1>
+    <div class='row sndr-align-children'>
+    <div class="col s6 m4 l3" ng-repeat="show in shows">
+      <poster image="{{show.images.poster.thumb?show.images.poster.thumb:'/images/poster.png'}}" width="300"
+              height="450" title="{{show.title}}" description="Released in {{show.year}}"
+              type="show" state='{"traktSlug": "{{show.ids.slug}}"}'></poster>
+    </div>
+  </div>
+    <h1>Places</h1>
+    <div class='row sndr-align-children'>
+    <div class="col s6 m4 l3" ng-repeat="place in places">
+      <poster image="{{(place.bestPhoto.prefix&&place.bestPhoto.suffix)?place.bestPhoto.prefix+'width600'
+              +place.bestPhoto.suffix:'/images/poster.png'}}" width="480"
+              height="640" title="{{place.name}}"
+              description="Listed in {{place.categories[0].pluralName}}"
+              type="place" state='{"venueid": "{{place.id}}"}'></poster>
+    </div>
+  </div>
+</div>
+</div>
+
