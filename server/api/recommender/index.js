@@ -1,9 +1,7 @@
 'use strict';
-
 var express = require('express');
-var controller = require('./search.controller');
-
+var controller = require('./recommender.controller');
 var router = express.Router();
 
-router.get('/test', controller.index);
+router.get('/:username', controller.index);
 module.exports = router;
